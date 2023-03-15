@@ -35,6 +35,7 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
     //We return true if the compilation succeeded
     if(compilation_check.size() == 0) {
         glAttachShader(this->program, shader);
+        glDeleteShader(shader);
         return true;
     }
     

@@ -18,7 +18,6 @@ namespace our {
     public:
         ShaderProgram(){
             //TODO: (Req 1) Create A shader program
-            
             program = glCreateProgram();
         }
         ~ShaderProgram(){
@@ -36,7 +35,7 @@ namespace our {
 
         GLuint getUniformLocation(const std::string &name) {
             //TODO: (Req 1) Return the location of the uniform with the given name
-            return glGetAttribLocation(program, name.c_str());
+            return glGetUniformLocation(program, &name[0]);
         }
 
         void set(const std::string &uniform, GLfloat value) {
@@ -56,17 +55,17 @@ namespace our {
 
         void set(const std::string &uniform, glm::vec2 value) {
             //TODO: (Req 1) Send the given 2D vector value to the given uniform
-            glUniform2fv(getUniformLocation(uniform), 1, &value[0]);
+            glUniform2f(getUniformLocation(uniform), value.x, value.y);
         }
 
         void set(const std::string &uniform, glm::vec3 value) {
             //TODO: (Req 1) Send the given 3D vector value to the given uniform
-            glUniform3fv(getUniformLocation(uniform), 1, &value[0]);
+            glUniform3f(getUniformLocation(uniform), value.x, value.y, value.z);
         }
 
         void set(const std::string &uniform, glm::vec4 value) {
             //TODO: (Req 1) Send the given 4D vector value to the given uniform
-            glUniform4fv(getUniformLocation(uniform),1, &value[0]);
+            glUniform4f(getUniformLocation(uniform), value.x, value.y, value.z, value.w);
         }
 
         void set(const std::string &uniform, glm::mat4 matrix) {
@@ -78,7 +77,7 @@ namespace our {
         //TODO: (Req 1) Delete the copy constructor and assignment operator.
         //Question: Why do we delete the copy constructor and assignment operator?
 
-        // To achieve Resource Acquisition Is Initialization 
+        // To achieve Resource Acquisition Is Initialization (prevent other instances from accessing the same program, which might be deleted)
         ShaderProgram(const ShaderProgram&) = delete;
         ShaderProgram& operator=(const ShaderProgram&) = delete;
 
