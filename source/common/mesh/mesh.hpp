@@ -70,7 +70,7 @@ namespace our {
             // Teach it how to read the bits inside the buffer
             // index: position_location || size: 3 (x,y,z) || 3*sizeof(float) ==> kol mara jump 3 bytes
             // false: means not normalized || sizeof(Vertex): means jump to the next vertex || (void*)0: means start from the beginning
-            glVertexAttribPointer(ATTRIB_LOC_POSITION, 3, 3*sizeof(float), false, sizeof(Vertex), (void*)0); 
+            glVertexAttribPointer(ATTRIB_LOC_POSITION, 3, GL_FLOAT, false, sizeof(Vertex), (void*)0); 
 
             // 3.2 Color
             // Enable the attribute location for color

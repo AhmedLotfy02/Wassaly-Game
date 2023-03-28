@@ -20,7 +20,7 @@ namespace our {
         // 3. Compute the scaling matrix
         glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), scale);
         // 4. Compute the final matrix
-        return translationMatrix * rotationMatrix * scalingMatrix;
+        return translationMatrix * rotationMatrix * scalingMatrix;    
     }
 
      // Deserializes the entity data and components from a json object

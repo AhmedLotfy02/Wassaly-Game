@@ -42,35 +42,45 @@ namespace our {
         // For example, if faceCulling.enabled is true, you should call glEnable(GL_CULL_FACE), otherwise, you should call glDisable(GL_CULL_FACE)
         void setup() const {
             //TODO: (Req 4) Write this function
-            // 1. Set the face culling options
             if (this->faceCulling.enabled) {
+                // Enable face culling
                 glEnable(GL_CULL_FACE);
+                // Set the culled face
                 glCullFace(this->faceCulling.culledFace);
+                // Set the front face
                 glFrontFace(this->faceCulling.frontFace);
             } else {
+                // Disable face culling
                 glDisable(GL_CULL_FACE);
             }
 
-            // 2. Set the depth testing options
             if (this->depthTesting.enabled) {
+                // Enable depth testing
                 glEnable(GL_DEPTH_TEST);
+                // Set the depth function
                 glDepthFunc(this->depthTesting.function);
             } else {
+                // Disable depth testing
                 glDisable(GL_DEPTH_TEST);
             }
 
-            // 3. Set the blending options
             if (this->blending.enabled) {
+                // Enable blending
                 glEnable(GL_BLEND);
+                // Set the blending equation
                 glBlendEquation(this->blending.equation);
+                // Set the blending factors 
                 glBlendFunc(this->blending.sourceFactor, this->blending.destinationFactor);
+                // Set the blending constant color
                 glBlendColor(this->blending.constantColor.r, this->blending.constantColor.g, this->blending.constantColor.b, this->blending.constantColor.a);
             } else {
+                // Disable blending
                 glDisable(GL_BLEND);
             }
 
-            // 4. Set the color and depth mask
+            // Set the color mask
             glColorMask(colorMask.r, colorMask.g, colorMask.b, colorMask.a);
+            // Set the depth mask
             glDepthMask(depthMask);
         }
 
