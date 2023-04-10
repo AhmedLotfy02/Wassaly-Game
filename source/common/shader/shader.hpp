@@ -17,7 +17,7 @@ namespace our {
 
     public:
         ShaderProgram(){
-            //TODO: (Req 1) Create A shader program
+            //TODO: (Req 1) Create A shaxder program
             program = glCreateProgram();
         }
         ~ShaderProgram(){

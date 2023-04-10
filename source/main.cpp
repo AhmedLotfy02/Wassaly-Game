@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     // Default: 0 where the application runs indefinitely until manually closed
     int run_for_frames = args.get<int>("f", 0);
 
-    // Open the config file and exit if failed
+    // Open the config file. and exit if failed
     std::ifstream file_in(config_path);
     if(!file_in){
         std::cerr << "Couldn't open file: " << config_path << std::endl;
