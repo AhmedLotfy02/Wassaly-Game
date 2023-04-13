@@ -29,7 +29,7 @@ namespace our
 
         glm::mat4 getLocalToWorldMatrix() const;  // Computes and returns the transformation from the entities local space to the world space
         void deserialize(const nlohmann::json &); // Deserializes the entity data and components from a json object
-
+        
         // This template method create a component of type T,
         // adds it to the components map and returns a pointer to it
         template <typename T>
@@ -74,7 +74,7 @@ namespace our
             auto it = components.begin();
             std::advance(it, index);
             if (it != components.end())
-                return dynamic_cast<T *>(*it);
+                return dynamic_cast<T *>(it);
             return nullptr;
         }
 
@@ -104,13 +104,13 @@ namespace our
         // This template method searhes for a component of type T and deletes it
         void deleteComponent(size_t index)
         {
-            // auto it = components.begin();
-            // std::advance(it, index);
-            // if (it != components.end())
-            // {
-            //     delete *it;
-            //     components.erase(it);
-            // }
+            auto it = components.begin();
+            std::advance(it, index);
+            if (it != components.end())
+            {
+                delete *it;
+                components.erase(it);
+            }
         }
 
         // This template method searhes for the given component and deletes it
@@ -120,16 +120,16 @@ namespace our
             // TODO: (Req 8) Go through the components list and find the given component "component".
             //  If found, delete the found component and remove it from the components list
 
-            // for (std::list<Component *>::iterator it = components.begin(); it != components.end(); ++it)
-            // {
-            //     Component *component1 = *it;
-            //     if (component1 == component)
-            //     {
-            //         delete *it;
-            //         components.erase(it);
-            //         return;
-            //     }
-            // }
+            for (std::list<Component *>::iterator it = components.begin(); it != components.end(); ++it)
+            {
+                Component *component1 = *it;
+                if (component1 == component)
+                {
+                    delete *it;
+                    components.erase(it);
+                    return;
+                }
+            }
             // for (Component *component : components)
             // {
             //     T *tComponent = dynamic_cast<T *>(component);
@@ -146,13 +146,18 @@ namespace our
         ~Entity()
         {
             // TODO: (Req 8) Delete all the components in "components".
-            for (std::list<Component *>::iterator it = components.begin(); it != components.end(); ++it)
-            {
-                Component *component1 = *it;
+            // for (std::list<Component *>::iterator it = components.begin(); it != components.end(); ++it)
+            // {
+            //     Component *component1 = *it;
 
-                delete *it;
-                components.erase(it);
+            //     delete *it;
+            //     components.erase(it);
+            // }
+              for (auto component : components)
+            {
+                delete component;
             }
+            components.clear();
         }
 
         // Entities should not be copyable

@@ -17,6 +17,7 @@ namespace our
         glm::mat4 localTr = this->localTransform.toMat4();
 
         Entity *p = this->parent;
+        while(p)
         {
             localTr = p->localTransform.toMat4() * localTr;
             p = p->parent;

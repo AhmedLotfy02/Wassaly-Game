@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include <unordered_set>
 #include "entity.hpp"
 
@@ -68,10 +68,17 @@ namespace our
         void clear()
         {
             // TODO: (Req 8) Delete all the entites and make sure that the containers are empty
-            for (auto entity : entities)
-            {
-                delete entity;
+            //  for (auto entity : entities)
+            // {
+            //     entities.erase(entity);
+            //     delete entity;
+            // }
+
+           
+            for (auto entityPtr : entities) {
+                 delete entityPtr;
             }
+
             entities.clear();
             markedForRemoval.clear();
         }

@@ -19,10 +19,19 @@ namespace our
 
             if (entityData.contains("children"))
             {
+                
+                     this->deserialize(entityData["children"], entity);
+
                 // TODO: (Req 8) Recursively call this world's "deserialize" using the children data
                 //  and the current entity as the parent
+                // if (const auto &entites = entityData["children"]; entites.is_array())
+                // {
+                    
+                // this->deserialize(entites, entity);
+                    
+                // }
 
-                this->deserialize(entityData["children"], entity);
+               
             }
         }
     }
