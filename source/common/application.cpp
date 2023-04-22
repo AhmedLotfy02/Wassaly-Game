@@ -306,7 +306,7 @@ int our::Application::run(int run_for_frames) {
         }
 
         // Swap the frame buffers
-        
+        glfwSwapBuffers(window);
         // Update the keyboard and mouse data
         keyboard.update();
         mouse.update();
