@@ -57,10 +57,16 @@ namespace our
         // the texture unit number is 0
         shader->set("tex", 0);
         // by default texture is binded to texuture 0
-        texture->bind();
+        if(texture != NULL)
+            texture->bind();
+        else
+            Texture2D::unbind();
         // bind the smapler to texture unit 0
-        sampler->bind(0);
-        }
+        if( sampler != NULL)
+            sampler->bind(0);
+        else
+            Sampler::unbind(0);
+    }
 
     // This function read the material data from a json object
     void TexturedMaterial::deserialize(const nlohmann::json &data)
