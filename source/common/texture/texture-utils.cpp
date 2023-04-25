@@ -10,15 +10,14 @@ our::Texture2D *our::texture_utils::empty(GLenum format, glm::ivec2 size)
     // TODO: (Req 11) Finish this function to create an empty texture with the given size and format
     our::Texture2D *texture = new our::Texture2D();
     texture->bind();
-    
-    if(format == GL_RGBA8)
+
+    if (format == GL_RGBA8)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size[0], size[1], 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-    else if(format == GL_DEPTH_COMPONENT24)
+    else if (format == GL_DEPTH_COMPONENT24)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, size[0], size[1], 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, NULL);
-    
+
     return texture;
 }
-// go ahead
 
 our::Texture2D *our::texture_utils::loadImage(const std::string &filename, bool generate_mipmap)
 {
@@ -46,17 +45,44 @@ our::Texture2D *our::texture_utils::loadImage(const std::string &filename, bool 
 
     // Bind the texture such that we upload the image data to its storage
     texture->bind();
-    // This line sets the pixel storage mode, which affects how pixel data is unpacked from CPU memory into GPU memory. In this case,
-    // it sets the alignment to 4 bytes per row, which is the default value and works well for most cases.
+
     glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-    // This line uploads the texture image data to the GPU. It specifies the target (2D texture), the level of detail (0 for base level),
-    // the internal format (RGBA8, which means 8 bits per channel), the texture dimensions (size.x and size.y), the border width (0), the pixel format (RGBA),
-    // the data type (unsigned byte), and a pointer to the pixel data.
+    /***************************************************************************************************************
+      'glPixelStorei() is a function in OpenGL that sets pixel storage modes.
+
+     -- The function takes two parameters:
+         1) 'GL_UNPACK_ALIGNMENT, specifies the parameter being set. In this case, it is the alignment requirement for unpacking pixel data from memory.
+         2) '4', sets the alignment requirement to 4 bytes.
+
+     -- This means that when pixel data is being read from memory and unpacked for use in OpenGL, it will be aligned on a 4-byte boundary.
+        This can improve performance by allowing the data to be read more efficiently by the graphics hardware.
+     ****************************************************************************************************************/
+
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-    // This line generates a series of mipmaps for the texture, which are smaller versions of the texture that can be used for mipmapping filtering.
-    // If the generate_mipmap flag is set to true, it will generate mipmaps for the texture.
+    /***************************************************************************************************************
+      'glTexImage2D' is a function that specifys a two-dimensional texture image.
+
+     -- The function parameters are:
+        1) GL_TEXTURE_2D: Specifies the target texture. In this case, it is a two-dimensional texture.
+        2) 0: Specifies the level-of-detail number. Level 0 is the base image level.
+        3) GL_RGBA8: Specifies the internal format of the texture. In this case, it is RGBA with 8 bits per channel.
+        4) size.x and size.y: Specifies the width and height of the texture image in pixels.
+        5) 0: Specifies the border width. Must be 0.
+        6) GL_RGBA: Specifies the format of the pixel data. In this case, it is RGBA.
+        7) GL_UNSIGNED_BYTE: Specifies the data type of the pixel data. In this case, it is unsigned bytes.
+        8) pixels: A pointer to the image data in memory.
+    ****************************************************************************************************************/
+
     if (generate_mipmap)
         glGenerateMipmap(GL_TEXTURE_2D);
+    /***************************************************************************************************************
+      'glGenerateMipmap' is a function in the OpenGL graphics library that automatically generates a complete set of mipmaps for a specified texture object.
+
+     -- The function takes one parameter:
+        1) 'GL_TEXTURE_2D' is the texture target for which to generate the mipmaps. In this case, we are generating mipmaps for a 2D texture.
+
+     -- Therefore, the glGenerateMipmap(GL_TEXTURE_2D) call generates a complete set of mipmaps for the currently bound 2D texture.
+    ****************************************************************************************************************/
     stbi_image_free(pixels); // Free image data after uploading to GPU
     return texture;
 }
