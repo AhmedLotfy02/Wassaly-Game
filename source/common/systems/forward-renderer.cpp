@@ -157,6 +157,18 @@ namespace our {
             float firstDistance = glm::dot(first.center, cameraForward);
             float secondDistance = glm::dot(second.center, cameraForward);
             return firstDistance < secondDistance;
+
+            /******************************************************************************************************
+              -- Function parameters:
+                  1,2) transparentCommands.begin() and transparentCommands.end() are the iterators that define the range of elements to be sorted.
+                       transparentCommands is a vector of RenderCommand objects that need to be sorted.
+                  3) a lambda function that compares two RenderCommand objects based on their distance from the camera's forward vector.
+                     The lambda function takes two RenderCommand objects as input and returns a boolean value indicating whether the first object is less than the second object.
+  
+              -- It calculates the distance of the center of each object from the camera's forward vector using the dot product of the center vector
+                 and the camera's forward vector. The object with the smaller distance is considered "less than" the object with the larger distance
+                 and will be placed before it in the sorted range.
+             ******************************************************************************************************/
  
         });
 
@@ -166,15 +178,47 @@ namespace our {
         
         //TODO: (Req 9) Set the OpenGL viewport using viewportStart and viewportSize
         glViewport(0,0, windowSize.x, windowSize.y);
+        /***************************************************************************************************************
+          'glViewport' is a function that sets the viewport dimensions of the rendering window.
 
-        
+          -- The function takes four parameters:
+             1) '0' an integer value that specifies the x-coordinate of the lower-left corner of the viewport, in window coordinates.
+                    In this case, the viewport starts at the left edge of the window.
+             2) '0' an integer value that specifies the y-coordinate of the lower-left corner of the viewport, in window coordinates.
+                    In this case, the value is set to 0, which means that the viewport starts at the bottom edge of the window.
+             3) 'windowSize.x' an integer value that specifies the width of the viewport in pixels.
+             4) 'windowSize.x' an integer value that specifies the height of the viewport in pixels.
+         ***************************************************************************************************************/
+
         //TODO: (Req 9) Set the clear color to black and the clear depth to 1
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClearDepth(1.0f);
-        //TODO: (Req 9) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
-        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-        glDepthMask(GL_TRUE);
+        /***************************************************************************************************************
+          'glClearColor' is a function that specifys the clear color for the color buffer.
+          -- The function takes four parameters: which represent the red, green, blue, and alpha.
+         ***************************************************************************************************************/
 
+        glClearDepth(1.0f);
+        /***************************************************************************************************************
+          'glClearDepth()' is a function that specifys the clear value for the depth buffer.
+          -- The function takes a single parameter, which represents the clear value for the depth buffer.
+         ***************************************************************************************************************/
+
+        // TODO: (Req 9) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        /***************************************************************************************************************
+          'glColorMask' is a function that  enables or disables writing to the color buffer for each color component (red, green, blue, and alpha).
+
+          -- The function takes four parameters, each representing a boolean value that determines whether writing
+             to the corresponding color component is enabled (GL_TRUE) or disabled (GL_FALSE).
+             The four parameters correspond to the red, green, blue, and alpha components of the color buffer, respectively.
+         ***************************************************************************************************************/
+
+        glDepthMask(GL_TRUE);
+        /***************************************************************************************************************
+          'glDepthMask' is a function that enables or disables writing to the depth buffer.
+          -- The function takes a single parameter, which represents a boolean value that determines whether writing
+              to the depth buffer is enabled (GL_TRUE) or disabled (GL_FALSE).
+         ***************************************************************************************************************/
 
         // If there is a postprocess material, bind the framebuffer
         if(postprocessMaterial){
@@ -184,9 +228,25 @@ namespace our {
 
         //TODO: (Req 9) Clear the color and depth buffers
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glEnable(GL_DEPTH_TEST);
+        /***************************************************************************************************************
+          'glClear' is a function that clears the specified buffers to their default values.
 
-        
+          -- The function takes a single parameter, which is a bitwise OR combination of one or more constants that represent the buffers to be cleared.
+             In this case, both the color buffer and the depth buffer should be cleared.
+         ***************************************************************************************************************/
+
+        glEnable(GL_DEPTH_TEST);
+        /***************************************************************************************************************
+         'glEnable' is a function that enables various features and capabilities in the graphics pipeline.
+
+         -- The function takes a single parameter, which is a constant that represents the feature or capability to be enabled.
+            In this case, GL_DEPTH_TEST enables depth testing in the graphics pipeline.
+            
+         -- Depth testing is a technique used to ensure that closer objects are rendered in front of farther objects,
+            based on their distance from the viewer's perspective. This is typically achieved by comparing the depth values of pixels
+             in the depth buffer during the rendering process.
+        ***************************************************************************************************************/
+
         //TODO: (Req 9) Draw all the opaque commands
         // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
         for(auto command : opaqueCommands){
