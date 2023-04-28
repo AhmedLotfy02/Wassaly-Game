@@ -42,6 +42,13 @@ namespace our {
         // For example, if faceCulling.enabled is true, you should call glEnable(GL_CULL_FACE), otherwise, you should call glDisable(GL_CULL_FACE)
         void setup() const {
             //TODO: (Req 4) Write this function
+
+            // ==> if daceCulling is enabled, enable face culling and set the culled face and front face
+            // face culling:
+            //  ==> if front face, the order is CCW, then show the front face
+            //  ==> if back face, the order is CW, then don't show the back face
+            //  ==> rotation 180 degree of front face around x or y axis will not affect back face
+            //  ==> rotation 180 degree of back face around z axis will make back face become front face
             if (this->faceCulling.enabled) {
                 // Enable face culling
                 glEnable(GL_CULL_FACE);
@@ -49,11 +56,15 @@ namespace our {
                 glCullFace(this->faceCulling.culledFace);
                 // Set the front face
                 glFrontFace(this->faceCulling.frontFace);
+
             } else {
                 // Disable face culling
                 glDisable(GL_CULL_FACE);
             }
 
+            // ==> if depthTesting is enabled, enable depth testing and set the depth function
+            // depth testing:
+            //  ==> if depth function is GL_LEQUAL, then the fragment will be drawn if the depth value of the fragment is less than or equal to the depth value stored in the depth buffer
             if (this->depthTesting.enabled) {
                 // Enable depth testing
                 glEnable(GL_DEPTH_TEST);
@@ -64,6 +75,9 @@ namespace our {
                 glDisable(GL_DEPTH_TEST);
             }
 
+            // ==> if blending is enabled, enable blending and set the blending equation, blending factors and blending constant color
+            // blending:
+            //  ==> if blending equation is GL_FUNC_ADD, then the source and destination data are added to each other
             if (this->blending.enabled) {
                 // Enable blending
                 glEnable(GL_BLEND);

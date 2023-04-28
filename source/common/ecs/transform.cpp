@@ -16,6 +16,8 @@ namespace our {
         // 1. Compute the translation matrix
         glm::mat4 translationMatrix = glm::translate(glm::mat4(1.0f), position);
         // 2. Compute the rotation matrix
+        // ==> the order of rotations is: roll, pitch, yaw (or z, x, y)
+        // ==> but on opengl, the order is: yaw, pitch, roll (or y, x, z)
         glm::mat4 rotationMatrix = glm::yawPitchRoll(rotation.y, rotation.x, rotation.z);
         // 3. Compute the scaling matrix
         glm::mat4 scalingMatrix = glm::scale(glm::mat4(1.0f), scale);
