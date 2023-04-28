@@ -46,62 +46,110 @@ namespace our {
             
             // 1. Create a vertex array object
 
-            // Generate a VAO to define how to read the vertex & element buffer during rendering
+            // ==> Generate an ID for a vertex array object corresponding to vertex data
+            // ==> A Vertex Array Object (VAO) stores all of the state needed to supply vertex data. It stores the format of the vertex data as well as the Buffer Objects providing the vertex data arrays.
             glGenVertexArrays(1, &VAO); 
-            // Bind the VAO
+
+            // ==> Bind the vertex array object
+            // ==> When a Vertex Array Object is bound, the previous binding is automatically broken.
             glBindVertexArray(VAO);     
 
 
             // 2. Create a vertex buffer object
-            // The VBO is a buffer that stores the vertex data to store the them on the VRAM
+
+            // ==> A vertex buffer object (VBO) provides methods for uploading vertex data (position, color, etc.) to the video device for non-immediate-mode rendering.
             glGenBuffers(1, &VBO);                                                          
-            // Bind the VBO
+            
+            // ==> Bind the VBO
+            // ==> When a Vertex Buffer Object is bound, the previous binding is automatically broken.
             glBindBuffer(GL_ARRAY_BUFFER, VBO);         
+
             // Copy the vertex data to the VBO
+            // ==> glBufferData() creates a new data store for the buffer object currently bound to target. Any pre-existing data store is deleted.
+            // parameters:
+            //  ==> target: Specifies the target buffer object.
+            //  ==> size: Specifies the size in bytes of the buffer object's new data store.
+            //  ==> data: Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
+            //  ==> usage: Specifies the expected usage pattern of the data store.
             glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), (void*)vertices.data(), GL_STATIC_DRAW); 
+            
             // remember to store the number of elements in "elementCount" since you will need it for drawing
-            // Store the number of elements in "elementCount" since we will need it for drawing
+            
+            // ==> Store the number of elements in "elementCount" since we will need it for drawing
             elementCount = (GLsizei)elements.size(); 
 
             // 3.1 Position
-            // Enable the attribute location for position
+            
+            // ==> Enable the attribute location for position
             glEnableVertexAttribArray(ATTRIB_LOC_POSITION);       
-            //  define an array of generic vertex attribute data
-            // Teach it how to read the bits inside the buffer
-            // index: position_location || size: 3 (x,y,z) || 3*sizeof(float) ==> kol mara jump 3 bytes
-            // false: means not normalized || sizeof(Vertex): means jump to the next vertex || (void*)0: means start from the beginning
+            
+            // ==> define an array of generic vertex attribute data
+            // parameters:
+            //  ==> index: Specifies the index of the generic vertex attribute to be modified
+            //  ==> size: Specifies the number of components per generic vertex attribute ==> 3 (x,y,z) 
+            //  ==> type: Specifies the data type of each component in the array ==> GL_FLOAT
+            //  ==> normalized: Specifies whether fixed-point data values should be normalized (GL_TRUE) or converted directly as fixed-point values (GL_FALSE) when they are accessed.
+            //  ==> stride: Specifies the byte offset between consecutive generic vertex attributes. ==> sizeof(Vertex): means jump to the next vertex
+            //  ==> pointer: Specifies a offset of the first component of the first generic vertex attribute in the array in the data store of the buffer currently bound to the GL_ARRAY_BUFFER target. ==> (void*)0: means start from the beginning of the position
             glVertexAttribPointer(ATTRIB_LOC_POSITION, 3, GL_FLOAT, false, sizeof(Vertex), (void*)0); 
 
             // 3.2 Color
+
             // Enable the attribute location for color
             glEnableVertexAttribArray(ATTRIB_LOC_COLOR);          
-            //  define an array of generic vertex attribute data
-            // index: color_location || size: 4 (r,g,b,a) || 4*sizeof(unsigned char) ==> kol mara jump 4 bytes 
-            // true: means normalized ||sizeof(Vertex): means jump to the next vertex || (void*)(offsetof(Vertex, color)): means start from the beginning of the color
+
+            // define an array of generic vertex attribute data
+            // parameters:
+            //  ==> index: Specifies the index of the generic vertex attribute to be modified
+            //  ==> size: 4 (r,g,b,a)
+            //  ==> type: GL_UNSIGNED_BYTE
+            //  ==> normalized: true
+            //  ==> stride: sizeof(Vertex): means jump to the next vertex
+            //  ==> pointer: (void*)(offsetof(Vertex, color)): means start from the beginning of the color
             glVertexAttribPointer(ATTRIB_LOC_COLOR, 4, GL_UNSIGNED_BYTE, true, sizeof(Vertex), (void*)(offsetof(Vertex, color))); 
 
             // 3.3 Texture Coordinates
+
             // Enable the attribute location for texture coordinates
             glEnableVertexAttribArray(ATTRIB_LOC_TEXCOORD);  
+            
             //  define an array of generic vertex attribute data
-            // index: texcoord_location || size: 2 (u,v) || 2*sizeof(float) ==> kol mara jump 2 bytes
-            // false: means not normalized || sizeof(Vertex): means jump to the next vertex || (void*)(offsetof(Vertex, tex_coord)): means start from the beginning of the tex_coord
+            // parameters:
+            //  ==> index: Specifies the index of the generic vertex attribute to be modified
+            //  ==> size: 2 (u,v)
+            //  ==> type: GL_FLOAT
+            //  ==> normalized: false
+            //  ==> stride: sizeof(Vertex): means jump to the next vertex
+            //  ==> pointer: (void*)(offsetof(Vertex, tex_coord)): means start from the beginning of the texture coordinates
             glVertexAttribPointer(ATTRIB_LOC_TEXCOORD, 2, GL_FLOAT, false, sizeof(Vertex), (void*)(offsetof(Vertex, tex_coord))); 
 
             // 3.4 Normal
+
             // Enable the attribute location for normal
             glEnableVertexAttribArray(ATTRIB_LOC_NORMAL);          
-            //  define an array of generic vertex attribute data                                                          
-            // index: normal_location || size: 3 (x,y,z) || 3*sizeof(float) ==> kol mara jump 3 bytes
-            // false: means not normalized || sizeof(Vertex): means jump to the next vertex || (void*)(offsetof(Vertex, normal)): means start from the beginning of the normal
+
+            //  define an array of generic vertex attribute data
+            // parameters:
+            //  ==> index: Specifies the index of the generic vertex attribute to be modified
+            //  ==> size: 3 (x,y,z)
+            //  ==> type: GL_FLOAT
+            //  ==> normalized: false
+            //  ==> stride: sizeof(Vertex): means jump to the next vertex
+            //  ==> pointer: (void*)(offsetof(Vertex, normal)): means start from the beginning of the normal
             glVertexAttribPointer(ATTRIB_LOC_NORMAL, 3, GL_FLOAT, false, sizeof(Vertex), (void*)(offsetof(Vertex, normal))); 
 
             // 4. Create an element buffer object
-            // The EBO is a buffer that stores the element data on the VRAM
+
+            // An EBO is a buffer, just like a vertex buffer object, that stores indices that OpenGL uses to decide what vertices to draw.
             glGenBuffers(1, &EBO);                      
             // Bind the EBO                                                                           
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); 
-            // Copy the element data to the EBO
+            // glBufferData: create a new data store for a buffer object
+            // parameters:
+            //  ==> target: Specifies the target buffer object.
+            //  ==> size: Specifies the size in bytes of the buffer object's new data store.
+            //  ==> data: Specifies a pointer to data that will be copied into the data store for initialization, or NULL if no data is to be copied.
+            //  ==> usage: Specifies the expected usage pattern of the data store ==> GL_STATIC_DRAW: the data store contents will be specified once by the application, and used many times as the source for GL drawing commands.
             glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(unsigned int), (void*)elements.data(), GL_STATIC_DRAW); 
 
         }
@@ -115,7 +163,16 @@ namespace our {
             // Bind the VAO
             glBindVertexArray(VAO);                  
 
-            // Draw the mesh
+            // ==> render the mesh
+            // ==> When glDrawElements is called, it uses count sequential elements from an enabled array,
+            // ==> starting at indices to construct a sequence of geometric primitives.
+            // ==> mode specifies what kind of primitives are constructed and how the array elements construct these primitives.
+            
+            // parameters:
+            //  ==> mode: Specifies what kind of primitives to render. ==> GL_TRIANGLES: Treats each triplet of vertices as an independent triangle.
+            //  ==> count: Specifies the number of elements to be rendered.
+            //  ==> type: Specifies the type of the values in indices. ==> GL_UNSIGNED_INT: Specifies the type of the values in indices.
+            //  ==> indices: Specifies a pointer to the location where the indices are stored.
             glDrawElements(GL_TRIANGLES, elementCount, GL_UNSIGNED_INT, (void*)0); 
         }
 
