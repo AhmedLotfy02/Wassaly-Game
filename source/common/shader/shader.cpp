@@ -26,16 +26,29 @@ bool our::ShaderProgram::attach(const std::string &filename, GLenum type) const 
     // compilation error and print it so that you can know what is wrong with
     // the shader. The returned string will be empty if there is no errors.
 
-
+    // ==> glCreateShader: create a shader object
     GLuint shader = glCreateShader(type);    
+    
+    // ==> glShaderSource: give it the shader object and the source code
+    // ==> 1: number of shaders in the array
+    // ==> &sourceCStr: pointer to the shader
     glShaderSource(shader, 1, &sourceCStr, nullptr);
+    
+    // ==> glCompileShader: compile the shader
     glCompileShader(shader);
+    
+    // ==> checkForShaderCompilationErrors: check if there is a compilation error
     std::string compilation_check = checkForShaderCompilationErrors(shader);
 
     //We return true if the compilation succeeded
     if(compilation_check.size() == 0) {
+
+        // ==> glAttachShader: attach the shader to the program
         glAttachShader(this->program, shader);
+
+        // ==> glDeleteShader: delete the shader
         glDeleteShader(shader);
+
         return true;
     }
     
@@ -52,8 +65,13 @@ bool our::ShaderProgram::link() const {
     // an error in the given program. You should use it to check if there is a
     // linking error and print it so that you can know what is wrong with the
     // program. The returned string will be empty if there is no errors.
+    
+    // ==> glLinkProgram: link the program
     glLinkProgram(this->program);
+
+    // ==> checkForLinkingErrors: check if there is a linking error
     std::string link_check = checkForLinkingErrors(this->program);
+    
     if(link_check.size() > 0) {
         std::cerr << "Error in shader.cpp in link: " << link_check << '\n';
         return false;
