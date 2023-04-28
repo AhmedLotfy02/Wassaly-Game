@@ -23,10 +23,15 @@ namespace our {
             // Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth funtion should we pick?
             // We will draw the sphere from the inside, so what options should we pick for the face culling.
             PipelineState skyPipelineState{};
-
+            
+            // ==> enavle face culling
             skyPipelineState.faceCulling.enabled = true;
-            skyPipelineState.faceCulling.culledFace = GL_FRONT;
+            // ==> make the culled face the back face
+            skyPipelineState.faceCulling.culledFace = GL_BACK;
+
+            // Enable depth testing and set the depth function to GL_LEQUAL
             skyPipelineState.depthTesting.enabled = true;
+            //  ==> if depth function is GL_LEQUAL, then the fragment will be drawn if the depth value of the fragment is less than or equal to the depth value stored in the depth buffer
             skyPipelineState.depthTesting.function = GL_LEQUAL;
             
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
@@ -54,18 +59,41 @@ namespace our {
         // Then we check if there is a postprocessing shader in the configuration
         if(config.contains("postprocess")){
             //TODO: (Req 11) Create a framebuffer
+            // ==> create a framebuffer
+            // parameters:
+            //  ==> 1. the number of framebuffers to be generated
+            //  ==> 2. the address of the framebuffer object names to be generated
             glGenFramebuffers(1, &postprocessFrameBuffer);
+
+            // ==> bind the framebuffer
             glBindFramebuffer(GL_FRAMEBUFFER, postprocessFrameBuffer);
 
             //TODO: (Req 11) Create a color and a depth texture and attach them to the framebuffer
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
             // The depth format can be (Depth component with 24 bits).
+
+            // ==> create a color texture with the format of RGBA8
             colorTarget = texture_utils::empty(GL_RGBA8, windowSize);
 
+            // ==> create a depth texture with the format of DEPTH_COMPONENT24
             depthTarget = texture_utils::empty(GL_DEPTH_COMPONENT24, windowSize);
 
+            // ==> attach the color texture to the framebuffer
+            // parameters:
+            //  ==> 1. the target of the framebuffer ==> GL_FRAMEBUFFER
+            //  ==> 2. the attachment point ==> GL_COLOR_ATTACHMENT
+            //  ==> 3. the texture target ==> 2D texture
+            //  ==> 4. the texture object name
+            //  ==> 5. the mipmap level of the texture ==> 0 means the base level
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTarget->getOpenGLName(), 0);
 
+            // ==> attach the depth texture to the framebuffer
+            // parameters:
+            //  ==> 1. the target of the framebuffer ==> GL_FRAMEBUFFER
+            //  ==> 2. the attachment point ==> GL_DEPTH_ATTACHMENT0
+            //  ==> 3. the texture target ==> 2D texture
+            //  ==> 4. the texture object name
+            //  ==> 5. the mipmap level of the texture ==> 0 means the base level
             glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTarget->getOpenGLName(), 0);
              
             //TODO: (Req 11) Unbind the framebuffer just to be safe
@@ -223,6 +251,7 @@ namespace our {
         // If there is a postprocess material, bind the framebuffer
         if(postprocessMaterial){
             //TODO: (Req 11) bind the framebuffer
+            // bind the postprocess framebuffer
             glBindFramebuffer(GL_FRAMEBUFFER, postprocessFrameBuffer);
         }
 
@@ -263,13 +292,17 @@ namespace our {
             skyMaterial->setup();
 
             //TODO: (Req 10) Get the camera position
+            // ==> The camera position is the origin of the world in camera space
             glm::vec3 cameraPosition = camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0, 0, 0, 1);
 
-            //TODO: (Req 10) Create a model matrix for the sy such that it always follows the camera (sky sphere center = camera position)
+            //TODO: (Req 10) Create a model matrix for the sky such that it always follows the camera (sky sphere center = camera position)
+            // ==> The sky sphere is centered at the camera position
             glm::mat4 skyModelMatrix = glm::translate(glm::mat4(1.0f), cameraPosition);
             
             //TODO: (Req 10) We want the sky to be drawn behind everything (in NDC space, z=1)
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
+            // ==> The sky sphere is always behind everything (in NDC space, z=1)
+
             glm::mat4 alwaysBehindTransform = glm::mat4(
                 //  Row1, Row2, Row3, Row4
                 1.0, 0.0f, 0.0f, 0.0f,  // Column1
@@ -278,6 +311,7 @@ namespace our {
                 0.0f, 0.0f, 1.0f, 1.0f  // Column4
             );
             //TODO: (Req 10) set the "transform" uniform
+            // ==> the matrix that we want to set is the product of the alwaysBehindTransform, the projection matrix, the view matrix, and the skyModelMatrix
             skyMaterial->shader->set("transform", alwaysBehindTransform * camera->getProjectionMatrix(windowSize) * camera->getViewMatrix() * skyModelMatrix);
 
             //TODO: (Req 10) draw the sky sphere
@@ -296,10 +330,17 @@ namespace our {
         // If there is a postprocess material, apply postprocessing
         if(postprocessMaterial){
             //TODO: (Req 11) Return to the default framebuffer
+            // bind the default framebuffer
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
             //TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
             postprocessMaterial->setup();
+            // draw the fullscreen triangle
+            // ==> The fullscreen triangle is drawn using the postprocess shader
+            // parameters:
+            // 1. The type of primitive to render (GL_TRIANGLES)
+            // 2. The starting index in the array
+            // 3. The number of vertices to render
             glDrawArrays(GL_TRIANGLES, 0, 3);
 
         }
