@@ -44,7 +44,7 @@ void main(){
     // ==> if 0.0 then it is a vector and we can't translate vectors
     vec3 scale_3d = vec3(scale, 1.0);
     // ==> translation_3d: the translation in 3D
-    vec3 translation_3d = vec3(translation, 1.0);
+    vec3 translation_3d = vec3(translation, 0.0);
  
     // new_position is the new position of the vertex   
     vec3 new_position = (positions[gl_VertexID] * scale_3d) + translation_3d;
