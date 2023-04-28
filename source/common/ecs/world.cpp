@@ -12,26 +12,20 @@ namespace our
             return;
         for (const auto &entityData : data)
         {
-            // TODO: (Req 8) Create an entity, make its parent "parent" and call its deserialize with "entityData".
+            /******************************************************************************************************
+             // TODO: (Req 8) Create an entity, make its parent "parent" and call its deserialize with "entityData".
+            ******************************************************************************************************/
             Entity *entity = add();
             entity->parent = parent;
             entity->deserialize(entityData);
 
             if (entityData.contains("children"))
             {
-                
-                     this->deserialize(entityData["children"], entity);
-
-                // TODO: (Req 8) Recursively call this world's "deserialize" using the children data
-                //  and the current entity as the parent
-                // if (const auto &entites = entityData["children"]; entites.is_array())
-                // {
-                    
-                // this->deserialize(entites, entity);
-                    
-                // }
-
-               
+                 /******************************************************************************************************
+                     // TODO: (Req 8) Recursively call this world's "deserialize" using the children data
+                    //  and the current entity as the parent
+                ******************************************************************************************************/
+                this->deserialize(entityData["children"], entity);
             }
         }
     }

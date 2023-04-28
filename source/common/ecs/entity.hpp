@@ -30,8 +30,10 @@ namespace our
         glm::mat4 getLocalToWorldMatrix() const;  // Computes and returns the transformation from the entities local space to the world space
         void deserialize(const nlohmann::json &); // Deserializes the entity data and components from a json object
         
-        // This template method create a component of type T,
-        // adds it to the components map and returns a pointer to it
+         /******************************************************************************************************
+                 This template method create a component of type T,
+                 adds it to the components map and returns a pointer to it
+         ******************************************************************************************************/
         template <typename T>
         T *addComponent()
         {
@@ -47,8 +49,10 @@ namespace our
             return component;
         }
 
-        // This template method searhes for a component of type T and returns a pointer to it
-        // If no component of type T was found, it returns a nullptr
+         /******************************************************************************************************
+               // This template method searhes for a component of type T and returns a pointer to it
+               // If no component of type T was found, it returns a nullptr
+         ******************************************************************************************************/
         template <typename T>
         T *getComponent()
         {
@@ -66,8 +70,10 @@ namespace our
             return nullptr;
         }
 
-        // This template method dynami and returns a pointer to it
-        // If no component of type T was found, it returns a nullptr
+        /******************************************************************************************************
+             // This template method dynamiؤ and returns a pointer to it
+             // If no component of type T was found, it returns a nullptr
+         ******************************************************************************************************/
         template <typename T>
         T *getComponent(size_t index)
         {
@@ -78,7 +84,9 @@ namespace our
             return nullptr;
         }
 
-        // This template method searhes for a component of type T and deletes it
+        /******************************************************************************************************
+            // This template method searhes for a component of type T and deletes it
+         ******************************************************************************************************/
         template <typename T>
         void deleteComponent()
         {
@@ -101,7 +109,9 @@ namespace our
             }
         }
 
-        // This template method searhes for a component of type T and deletes it
+        /******************************************************************************************************
+            // This template method searhes for a component of type T and deletes it
+         ******************************************************************************************************/
         void deleteComponent(size_t index)
         {
             auto it = components.begin();
@@ -113,7 +123,9 @@ namespace our
             }
         }
 
-        // This template method searhes for the given component and deletes it
+        /******************************************************************************************************
+            // This template method searhes for the given component and deletes it
+         ******************************************************************************************************/
         template <typename T>
         void deleteComponent(T const *component)
         {
@@ -130,29 +142,15 @@ namespace our
                     return;
                 }
             }
-            // for (Component *component : components)
-            // {
-            //     T *tComponent = dynamic_cast<T *>(component);
-            //     if (tComponent != nullptr)
-            //     {xz
-
-            //         delete *tComponent;
-            //         components.erase(tComponent);
-            //     }
-            // }
+          
         }
 
-        // Since the entity owns its components, they should be deleted alongside the entity
+        /******************************************************************************************************
+            // Since the entity owns its components, they should be deleted alongside the entity
+         ******************************************************************************************************/
         ~Entity()
         {
-            // TODO: (Req 8) Delete all the components in "components".
-            // for (std::list<Component *>::iterator it = components.begin(); it != components.end(); ++it)
-            // {
-            //     Component *component1 = *it;
-
-            //     delete *it;
-            //     components.erase(it);
-            // }
+           
               for (auto component : components)
             {
                 delete component;

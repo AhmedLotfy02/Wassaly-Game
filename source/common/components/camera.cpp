@@ -42,9 +42,41 @@ namespace our
         //  - the center position which is the point (0,0,-1) but after being transformed by M
         //  - the up direction which is the vector (0,1,0) but after being transformed by M
         //  then you can use glm::lookAt
+
+         /******************************************************************************************************
+            This line creates a 3D vector representing the position of the camera, or "eye". 
+            It does this by multiplying the model matrix M by a 4D vector (0, 0, 0, 1) that represents the origin of the scene in homogeneous coordinates. 
+            The resulting vector is then truncated to a 3D vector.
+        ******************************************************************************************************/
         glm::vec3 eye = glm::vec3(M * glm::vec4(0, 0, 0, 1));
+        
+        /******************************************************************************************************
+            This line creates a 3D vector representing the point in the scene that the camera is looking at, or "center". 
+            It does this by multiplying the model matrix M by a 4D vector (0, 0, -1, 1) that represents a point one unit in front of the camera along the negative z-axis.
+            The resulting vector is then truncated to a 3D vector.
+        ******************************************************************************************************/
         glm::vec3 center = glm::vec3(M * glm::vec4(0, 0, -1, 1)); // as its point w=1
+        
+        /******************************************************************************************************
+            This line creates a 3D vector representing the direction that is "up" relative to the camera, or "up". 
+            It does this by multiplying the model matrix M by a 4D vector (0, 1, 0, 0) that represents the y-axis direction in homogeneous coordinates. 
+            Since the resulting vector is a direction and not a point,
+            it is not affected by the translation component of the model matrix.
+        ******************************************************************************************************/
         glm::vec3 up = glm::vec3(M * glm::vec4(0, 1, 0, 0));      // as its vector w =0
+        
+        /******************************************************************************************************
+           generates a view matrix that simulates a camera positioned at eye looking towards the point center, 
+           with the vector up indicating the camera's "up" direction. The resulting view matrix transforms objects from world space to camera space,
+           making them appear as if they are viewed through the camera. 
+
+           Parameters:
+                eye: a glm::vec3 representing the camera's position in world space.
+                center: a glm::vec3 representing the point in world space that the camera is looking at.
+                up: a glm::vec3 representing the "up" direction of the camera.
+            Return value:
+            The function returns a glm::mat4 representing the resulting view matrix.
+        ******************************************************************************************************/
         glm::mat4 view = glm::lookAt(eye, center, up);
 
         return view;
@@ -52,7 +84,18 @@ namespace our
 
     // Creates and returns the camera projection matrix
     // "viewportSize" is used to compute the aspect ratio
-    glm::mat4 CameraComponent::getProjectionMatrix(glm::ivec2 viewportSize) const
+
+    /******************************************************************************************************
+    This Function calculates and returns the projection matrix for the camera based on its cameraType, orthoHeight, fovY, near, far and the viewportSize of the camera. 
+    The projection matrix transforms vertices from camera space to clip space,
+    which is then used to perform perspective or orthographic projection.
+
+    Parameters:
+        viewportSize: a glm::ivec2 representing the viewport size of the camera.
+    Return value:
+        The function returns a glm::mat4 representing the calculated projection matrix.
+    ******************************************************************************************************/
+     glm::mat4 CameraComponent::getProjectionMatrix(glm::ivec2 viewportSize) const
     {
         // TODO: (Req 8) Wrtie this function
         //  NOTE: The function glm::ortho can be used to create the orthographic projection matrix
