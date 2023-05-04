@@ -147,29 +147,34 @@ namespace our {
         }
     }
 
+
+
     void ForwardRenderer::render(World* world){
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent* camera = nullptr;
         opaqueCommands.clear();
         transparentCommands.clear();
+        // world->deleteMarkedEntities();
         for(auto entity : world->getEntities()){
             // If we hadn't found a camera yet, we look for a camera in this entity
             if(!camera) camera = entity->getComponent<CameraComponent>();
             // If this entity has a mesh renderer component
             if(auto meshRenderer = entity->getComponent<MeshRendererComponent>(); meshRenderer){
+               if(!(world->checkIfMarkedRemoval(entity))){ 
                 // We construct a command from it
-                RenderCommand command;
-                command.localToWorld = meshRenderer->getOwner()->getLocalToWorldMatrix();
-                command.center = glm::vec3(command.localToWorld * glm::vec4(0, 0, 0, 1));
-                command.mesh = meshRenderer->mesh;
-                command.material = meshRenderer->material;
-                // if it is transparent, we add it to the transparent commands list
-                if(command.material->transparent){
-                    transparentCommands.push_back(command);
-                } else {
-                // Otherwise, we add it to the opaque command list
-                    opaqueCommands.push_back(command);
-                }
+                    RenderCommand command;
+                    command.localToWorld = meshRenderer->getOwner()->getLocalToWorldMatrix();
+                    command.center = glm::vec3(command.localToWorld * glm::vec4(0, 0, 0, 1));
+                    command.mesh = meshRenderer->mesh;
+                    command.material = meshRenderer->material;
+                    // if it is transparent, we add it to the transparent commands list
+                    if(command.material->transparent){
+                        transparentCommands.push_back(command);
+                    } else {
+                    // Otherwise, we add it to the opaque command list
+                        opaqueCommands.push_back(command);
+                    }
+               }
             }
         }
 

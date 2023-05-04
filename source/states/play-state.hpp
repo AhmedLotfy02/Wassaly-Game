@@ -1,5 +1,5 @@
 #pragma once
-
+#include <iostream>
 #include <application.hpp>
 
 #include <ecs/world.hpp>
@@ -15,8 +15,77 @@ class Playstate: public our::State {
     our::ForwardRenderer renderer;
     our::FreeCameraControllerSystem cameraController;
     our::MovementSystem movementSystem;
+    int numberOfBatteries=5;
+    int counterToRemove=0;
+    int tempCount=0;
 
+    void increaseBatteries(){
+        if(numberOfBatteries==4){
+                numberOfBatteries=5;
+              
+               world.markAsUnRemoval("e5");
+                cameraController.changeSpeed(0.7f);
+            }
+            else if(numberOfBatteries==3)
+            {
+                numberOfBatteries=4;
+                world.markAsUnRemoval("e4");
+                 cameraController.changeSpeed(0.6f);
+            }
+                        else if(numberOfBatteries==2)
+            {
+                numberOfBatteries=3;
+                world.markAsUnRemoval("e3");
+                 cameraController.changeSpeed(0.5f);
+            }
+             else if(numberOfBatteries==1)
+            {
+                numberOfBatteries=2;
+                world.markAsUnRemoval("e3");
+                 cameraController.changeSpeed(0.4f);
+            }
+           
+
+    }
+    void decreaseBatteries(){
+        if(counterToRemove==180){
+            counterToRemove=0;
+            if(numberOfBatteries==5){
+                numberOfBatteries=4;
+                world.removeBatteryEntity("e5");
+                cameraController.changeSpeed(0.6f);
+            }
+            else if(numberOfBatteries==4)
+            {
+                numberOfBatteries=3;
+                world.removeBatteryEntity("e4");
+                 cameraController.changeSpeed(0.5f);
+            }
+                        else if(numberOfBatteries==3)
+            {
+                numberOfBatteries=2;
+                world.removeBatteryEntity("e3");
+                 cameraController.changeSpeed(0.4f);
+            }
+             else if(numberOfBatteries==2)
+            {
+                numberOfBatteries=1;
+                world.removeBatteryEntity("e2");
+                 cameraController.changeSpeed(0.3f);
+            }
+             else 
+            {
+                numberOfBatteries=0;
+                world.removeBatteryEntity("e1");
+                 getApp()->changeState("gameover");
+                /// Game over
+            }
+        }
+    }
     void onInitialize() override {
+         numberOfBatteries=5;
+         counterToRemove=0;
+        tempCount=0;
         // First of all, we get the scene configuration from the app config
         auto& config = getApp()->getConfig()["scene"];
         // If we have assets in the scene config, we deserialize them
@@ -38,7 +107,14 @@ class Playstate: public our::State {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime);
+        // tempCount++;
+        //   if(tempCount==400){
+        //     tempCount=0;
+        //     increaseBatteries();
+        // }
         // And finally we use the renderer system to draw the scene
+        counterToRemove++;
+        decreaseBatteries();
         renderer.render(&world);
 
         // Get a reference to the keyboard object

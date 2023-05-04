@@ -35,6 +35,8 @@ namespace our
             return;
         name = data.value("name", name);
         localTransform.deserialize(data);
+      
+
         if (data.contains("components"))
         {
             if (const auto &components = data["components"]; components.is_array())

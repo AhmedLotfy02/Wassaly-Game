@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <unordered_set>
+#include <string>
 #include "entity.hpp"
 
 namespace our
@@ -37,7 +38,21 @@ namespace our
             return entity;
         }
         
-
+        void removeBatteryEntity(std::string name){
+            for(auto entity:this->entities){
+                if(entity->name==name){
+                    this->markForRemoval(entity);
+                }
+            }
+        }
+        void markAsUnRemoval(std::string name){
+            for(auto entity:this->entities){
+                if(entity->name==name){
+                    
+                    this->markedForRemoval.erase(entity);
+                }
+            }   
+        }
         /******************************************************************************************************
           // This returns and immutable reference to the set of all entites in the world.
         ******************************************************************************************************/
@@ -59,7 +74,15 @@ namespace our
                 markedForRemoval.insert(entity);
             }
         }
+        
 
+        bool checkIfMarkedRemoval(Entity *entity){
+            if (markedForRemoval.find(entity) != markedForRemoval.end())
+            {
+                return true;
+            }
+            return false;
+        }
         
         /******************************************************************************************************
             // This removes the elements in "markedForRemoval" from the "entities" set.
