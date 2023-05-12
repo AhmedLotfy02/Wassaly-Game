@@ -147,6 +147,9 @@ namespace our
           
         }
 
+        glm::vec3 getWorldTranslation() const;
+
+
         /******************************************************************************************************
             // Since the entity owns its components, they should be deleted alongside the entity
          ******************************************************************************************************/

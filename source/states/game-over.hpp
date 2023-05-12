@@ -6,7 +6,6 @@
 #include <texture/texture-utils.hpp>
 #include <material/material.hpp>
 #include <mesh/mesh.hpp>
-#include "states/menu-state.hpp"
 #include <functional>
 #include <array>
 
@@ -79,7 +78,7 @@ class GameOverstate: public our::State {
        
        if(keyboard.justPressed(GLFW_KEY_ESCAPE)) {
             // If the escape key is pressed in this frame, exit the game
-             getApp()->changeState("menu");
+             //getApp()->changeState("menu");
         }
 
        

@@ -303,13 +303,13 @@ namespace our {
         for(auto command : opaqueCommands){
             command.material->setup();
             command.material->shader->set("transform", VP*command.localToWorld);
-             opaqueCommand.material->shader->set("view_projection", VP);
-            opaqueCommand.material->shader->set("camera_position", cameraForward);
-            opaqueCommand.material->shader->set("object_to_world", opaqueCommand.localToWorld);
-            opaqueCommand.material->shader->set("object_to_world_inv_transpose", glm::transpose(glm::inverse(opaqueCommand.localToWorld)));
+            command.material->shader->set("view_projection", VP);
+            command.material->shader->set("camera_position", cameraForward);
+            command.material->shader->set("object_to_world", command.localToWorld);
+            command.material->shader->set("object_to_world_inv_transpose", glm::transpose(glm::inverse(command.localToWorld)));
 
             const int MAX_LIGHT_COUNT = 8;
-            opaqueCommand.material->shader->set("light_count", numLights);
+            command.material->shader->set("light_count", numLights);
             int light_index = 0;
             for(LightComponent* light : lights) {
                 if(!light->enabled) continue;
@@ -319,27 +319,27 @@ namespace our {
 
                 std::string prefix = "lights[" + std::to_string(light_index) + "].";
 
-                opaqueCommand.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
+                command.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
 
                 switch(light->typeLight) {
                 case LightType::DIRECTIONAL:
-                    opaqueCommand.material->shader->set(prefix + "direction", light->direction);
-                    opaqueCommand.material->shader->set(prefix + "diffuse", light->diffuse);
-                    opaqueCommand.material->shader->set(prefix + "specular", light->specular);
+                    command.material->shader->set(prefix + "direction", light->direction);
+                    command.material->shader->set(prefix + "diffuse", light->diffuse);
+                    command.material->shader->set(prefix + "specular", light->specular);
                     break;
                 case LightType::POINT:
-                    opaqueCommand.material->shader->set(prefix + "position", light->position);
-                    opaqueCommand.material->shader->set(prefix + "diffuse", light->diffuse);
-                    opaqueCommand.material->shader->set(prefix + "specular", light->specular);
-                    opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic, light->attenuation.linear, light->attenuation.constant));
+                    command.material->shader->set(prefix + "position", light->position);
+                    command.material->shader->set(prefix + "diffuse", light->diffuse);
+                    command.material->shader->set(prefix + "specular", light->specular);
+                    command.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic, light->attenuation.linear, light->attenuation.constant));
                     break;
                 case LightType::SPOT:
-                    opaqueCommand.material->shader->set(prefix + "position", light->position);
-                    opaqueCommand.material->shader->set(prefix + "direction", light->direction);
-                    opaqueCommand.material->shader->set(prefix + "diffuse", light->diffuse);
-                    opaqueCommand.material->shader->set(prefix + "specular", light->specular);
-                    opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic, light->attenuation.linear, light->attenuation.constant));
-                    opaqueCommand.material->shader->set(prefix + "cone_angles", glm::vec2(light->spot_angle.inner, light->spot_angle.outer));
+                    command.material->shader->set(prefix + "position", light->position);
+                    command.material->shader->set(prefix + "direction", light->direction);
+                    command.material->shader->set(prefix + "diffuse", light->diffuse);
+                    command.material->shader->set(prefix + "specular", light->specular);
+                    command.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic, light->attenuation.linear, light->attenuation.constant));
+                    command.material->shader->set(prefix + "cone_angles", glm::vec2(light->spot_angle.inner, light->spot_angle.outer));
                     break;
                 case LightType::SKY:
                     break;
