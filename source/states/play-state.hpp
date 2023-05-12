@@ -18,33 +18,40 @@ class Playstate: public our::State {
     int numberOfBatteries=5;
     int counterToRemove=0;
     int tempCount=0;
-
+    void collision(){
+        // Entity* car = world.getEntityByName("player");
+        //car =get entity by name
+        //loop over all cars
+        //check if car.x==cars.x
+        //gameover
+        getApp()->changeState("gameover");
+    }
     void increaseBatteries(){
         if(numberOfBatteries==4){
-                numberOfBatteries=5;
-              
-               world.markAsUnRemoval("e5");
-                cameraController.changeSpeed(0.7f);
-            }
-            else if(numberOfBatteries==3)
-            {
-                numberOfBatteries=4;
-                world.markAsUnRemoval("e4");
-                 cameraController.changeSpeed(0.6f);
-            }
-                        else if(numberOfBatteries==2)
-            {
-                numberOfBatteries=3;
-                world.markAsUnRemoval("e3");
-                 cameraController.changeSpeed(0.5f);
-            }
-             else if(numberOfBatteries==1)
-            {
-                numberOfBatteries=2;
-                world.markAsUnRemoval("e3");
-                 cameraController.changeSpeed(0.4f);
-            }
-           
+            numberOfBatteries=5;
+
+            world.markAsUnRemoval("e5");
+            cameraController.changeSpeed(0.7f);
+        }
+        else if(numberOfBatteries==3)
+        {
+            numberOfBatteries=4;
+            world.markAsUnRemoval("e4");
+            cameraController.changeSpeed(0.6f);
+        }
+        else if(numberOfBatteries==2)
+        {
+            numberOfBatteries=3;
+            world.markAsUnRemoval("e3");
+            cameraController.changeSpeed(0.5f);
+        }
+        else if(numberOfBatteries==1)
+        {
+            numberOfBatteries=2;
+            world.markAsUnRemoval("e3");
+            cameraController.changeSpeed(0.4f);
+        }
+
 
     }
     void decreaseBatteries(){
@@ -59,32 +66,32 @@ class Playstate: public our::State {
             {
                 numberOfBatteries=3;
                 world.removeBatteryEntity("e4");
-                 cameraController.changeSpeed(0.5f);
+                cameraController.changeSpeed(0.5f);
             }
-                        else if(numberOfBatteries==3)
+            else if(numberOfBatteries==3)
             {
                 numberOfBatteries=2;
                 world.removeBatteryEntity("e3");
-                 cameraController.changeSpeed(0.4f);
+                cameraController.changeSpeed(0.4f);
             }
-             else if(numberOfBatteries==2)
+            else if(numberOfBatteries==2)
             {
                 numberOfBatteries=1;
                 world.removeBatteryEntity("e2");
-                 cameraController.changeSpeed(0.3f);
+                cameraController.changeSpeed(0.3f);
             }
-             else 
+            else
             {
                 numberOfBatteries=0;
                 world.removeBatteryEntity("e1");
-                 getApp()->changeState("gameover");
+                getApp()->changeState("gameover");
                 /// Game over
             }
         }
     }
     void onInitialize() override {
-         numberOfBatteries=5;
-         counterToRemove=0;
+        numberOfBatteries=5;
+        counterToRemove=0;
         tempCount=0;
         // First of all, we get the scene configuration from the app config
         auto& config = getApp()->getConfig()["scene"];
@@ -122,7 +129,7 @@ class Playstate: public our::State {
 
         if(keyboard.justPressed(GLFW_KEY_ESCAPE)){
             // If the escape  key is pressed in this frame, go to the play state
-            //getApp()->changeState("menu");
+            getApp()->changeState("menu");
         }
     }
 

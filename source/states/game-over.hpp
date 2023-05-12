@@ -6,6 +6,7 @@
 #include <texture/texture-utils.hpp>
 #include <material/material.hpp>
 #include <mesh/mesh.hpp>
+#include "states/menu-state.hpp"
 #include <functional>
 #include <array>
 
@@ -22,7 +23,7 @@ class GameOverstate: public our::State {
     // A variable to record the time since the state is entered (it will be used for the fading effect).
     float time;
     // An array of the button that we can interact with
-   void onInitialize() override {
+    void onInitialize() override {
         // First, we create a material for the menu's background
         menuMaterial = new our::TexturedMaterial();
         // Here, we load the shader that will be used to draw the background
@@ -47,41 +48,41 @@ class GameOverstate: public our::State {
         //AL: i made it red
         highlightMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
         // To create a negative effect, we enable blending, set the equation to be subtract,
-        // and set the factors to be one for both the source and the destination. 
+        // and set the factors to be one for both the source and the destination.
         highlightMaterial->pipelineState.blending.enabled = true;
         highlightMaterial->pipelineState.blending.equation = GL_FUNC_SUBTRACT;
         highlightMaterial->pipelineState.blending.sourceFactor = GL_ONE;
         highlightMaterial->pipelineState.blending.destinationFactor = GL_ONE;
 
         // Then we create a rectangle whose top-left corner is at the origin and its size is 1x1.
-        // Note that the texture coordinates at the origin is (0.0, 1.0) since we will use the 
+        // Note that the texture coordinates at the origin is (0.0, 1.0) since we will use the
         // projection matrix to make the origin at the the top-left corner of the screen.
         rectangle = new our::Mesh({
-            {{0.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
-            {{1.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
-            {{1.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-            {{0.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-        },{
-            0, 1, 2, 2, 3, 0,
-        });
+                                          {{0.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
+                                          {{1.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
+                                          {{1.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+                                          {{0.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+                                  },{
+                                          0, 1, 2, 2, 3, 0,
+                                  });
 
         // Reset the time elapsed since the state is entered.
         time = 0;
 
-       
+
     }
 
     void onDraw(double deltaTime) override {
         // Get a reference to the keyboard object
         auto& keyboard = getApp()->getKeyboard();
 
-       
-       if(keyboard.justPressed(GLFW_KEY_ESCAPE)) {
+
+        if(keyboard.justPressed(GLFW_KEY_ESCAPE)) {
             // If the escape key is pressed in this frame, exit the game
-             //getApp()->changeState("menu");
+            getApp()->changeState("menu");
         }
 
-       
+
 
         // Get the framebuffer size to set the viewport and the create the projection matrix.
         glm::ivec2 size = getApp()->getFrameBufferSize();
@@ -109,8 +110,8 @@ class GameOverstate: public our::State {
         rectangle->draw();
 
         // For every button, check if the mouse is inside it. If the mouse is inside, we draw the highlight rectangle over it.
-      
-        
+
+
     }
 
     void onDestroy() override {

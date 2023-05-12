@@ -181,7 +181,7 @@ namespace our {
             }
 
             auto light = entity->getComponent<LightComponent>();
-            if(light->enabled) {
+            if(light && light->enabled) {
                 if(light->typeLight == LightType::SKY) {
                     auto litShader = AssetLoader<ShaderProgram>::get("light");
                     litShader->use();
