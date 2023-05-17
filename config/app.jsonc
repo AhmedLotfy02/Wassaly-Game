@@ -279,7 +279,7 @@
                         
                        // "scale": [0.5, 0.5, 1.0],
                        "position": [0, -2, -5],
-                    
+                       "name":"player",
                        "rotation": [0, 180, 0],
                        "scale":[0.02,0.02,0.02],
                        "components": [
@@ -369,6 +369,7 @@
             {
                 "position": [-10.0, 0, 0],
                 "rotation": [0, 90, 0],
+                "name":"car2",
                 "scale":[0.02,0.02,0.02],
                 "components": [
                     {
@@ -385,6 +386,7 @@
             },
             {
                 "position": [-5.0, 1.2, -5.0],
+                "name": "battery",
                 "scale":[0.3,0.3,0.3],
                 "components": [
                     {
@@ -434,6 +436,7 @@
             {
                 "position": [10.0, 0, -10.0],
                 "rotation": [0, -90, 0],
+                "name":"car3",
                 "scale":[0.02,0.02,0.02],
                 "components": [
                     {
@@ -451,6 +454,7 @@
             {
                 "position": [10.0, 0, -30.0],
                 "rotation": [0, -90, 0],
+                "name":"car4",
                 "scale":[0.02,0.02,0.02],
                 "components": [
                     {
@@ -468,6 +472,7 @@
             {
                 "position": [10.0, 0, -20.0],
                 "rotation": [0,-90, 0],
+                "name":"car5",
                 "scale":[0.02,0.02,0.02],
                 "components": [
                     {

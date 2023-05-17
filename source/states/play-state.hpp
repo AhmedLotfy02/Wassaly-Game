@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <application.hpp>
-
+#include <systems/collision.hpp>
 #include <ecs/world.hpp>
 #include <systems/forward-renderer.hpp>
 #include <systems/free-camera-controller.hpp>
@@ -15,17 +15,13 @@ class Playstate: public our::State {
     our::ForwardRenderer renderer;
     our::FreeCameraControllerSystem cameraController;
     our::MovementSystem movementSystem;
+    our::CollisionSystem collisionSystem;    
+
     int numberOfBatteries=5;
     int counterToRemove=0;
     int tempCount=0;
-    void collision(){
-        // Entity* car = world.getEntityByName("player");
-        //car =get entity by name
-        //loop over all cars
-        //check if car.x==cars.x
-        //gameover
-        getApp()->changeState("gameover");
-    }
+
+    
     void increaseBatteries(){
         if(numberOfBatteries==4){
             numberOfBatteries=5;
@@ -51,9 +47,8 @@ class Playstate: public our::State {
             world.markAsUnRemoval("e3");
             cameraController.changeSpeed(0.4f);
         }
-
-
     }
+
     void decreaseBatteries(){
         if(counterToRemove==180){
             counterToRemove=0;
@@ -89,10 +84,12 @@ class Playstate: public our::State {
             }
         }
     }
+
     void onInitialize() override {
         numberOfBatteries=5;
         counterToRemove=0;
         tempCount=0;
+
         // First of all, we get the scene configuration from the app config
         auto& config = getApp()->getConfig()["scene"];
         // If we have assets in the scene config, we deserialize them
@@ -122,6 +119,18 @@ class Playstate: public our::State {
         // And finally we use the renderer system to draw the scene
         counterToRemove++;
         decreaseBatteries();
+
+        //Collioison
+        int collisionState = collisionSystem.update(&world, (float)deltaTime);
+        if( collisionState == 1 )
+        {
+            increaseBatteries();
+        }
+        else if ( collisionState == -1 )
+        {
+            getApp()->changeState("gameover");
+        }
+
         renderer.render(&world);
 
         // Get a reference to the keyboard object
