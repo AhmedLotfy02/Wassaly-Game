@@ -286,7 +286,23 @@ int our::Application::run(int run_for_frames)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImVec2 levelPos(10, 10);
 
+        ImGui::SetNextWindowPos(levelPos);
+        ImGui::SetNextWindowSize({320, 200});
+        ImGui::Begin("LEVEL", NULL,
+                     ImGuiWindowFlags_NoBackground |
+                         ImGuiWindowFlags_NoTitleBar |
+                         ImGuiWindowFlags_NoResize |
+                         ImGuiWindowFlags_NoMove |
+                         ImGuiWindowFlags_NoScrollbar |
+                         ImGuiWindowFlags_NoSavedSettings |
+                         ImGuiWindowFlags_NoInputs |
+                         ImGuiWindowFlags_AlwaysAutoResize);
+        // blue color
+        ImVec4 levelColor(0.0f, 0.0f, 1.0f, 1.0f);
+        ImGui::TextColored(levelColor, "LEVEL: %d", 3);
+        ImGui::End();
         if (currentState)
             currentState->onImmediateGui(); // Call to run any required Immediate GUI.
 
@@ -294,7 +310,7 @@ int our::Application::run(int run_for_frames)
         // For example, if you're focusing on an input and writing "W", the keyboard object shouldn't record this event.
         keyboard.setEnabled(!io.WantCaptureKeyboard, window);
         mouse.setEnabled(!io.WantCaptureMouse, window);
-        ImGui::Text("Hello, World!");
+
         // Render the ImGui commands we called (this doesn't actually draw to the screen yet.
         ImGui::Render();
 

@@ -120,7 +120,7 @@ namespace our
 
             else if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
             {
-                std::cout << "Heba";
+                //   std::cout << "Heba";
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
@@ -133,7 +133,7 @@ namespace our
 
             else if (position.x > -8.09 && position.x < -7.9 && !decreaseBat)
             {
-                std::cout << "Heba";
+                //   std::cout << "Heba";
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
@@ -152,7 +152,7 @@ namespace our
             // A & D moves the player left or right
             if (app->getKeyboard().isPressed(GLFW_KEY_D))
             {
-                std::cout << position.x << std::endl;
+                // std::cout << position.x << std::endl;
 
                 if (!(position.x > 6.1))
                     position += right * (deltaTime * current_sensitivity.x);
@@ -160,7 +160,7 @@ namespace our
 
             if (app->getKeyboard().isPressed(GLFW_KEY_A))
             {
-                std::cout << position.x << std::endl;
+                //  std::cout << position.x << std::endl;
                 if (!(position.x < -8))
                     position -= right * (deltaTime * current_sensitivity.x);
             }

@@ -21,7 +21,6 @@ namespace our
         // If any of the entities has children, this function will be called recursively for these children
         void deserialize(const nlohmann::json &data, Entity *parent = nullptr);
 
-
         /******************************************************************************************************
         // This adds an entity to the entities set and returns a pointer to that entity
         // WARNING The entity is owned by this world so don't use "delete" to delete it, instead, call "markForRemoval"
@@ -37,21 +36,30 @@ namespace our
             entities.insert(entity);
             return entity;
         }
-        
-        void removeBatteryEntity(std::string name){
-            for(auto entity:this->entities){
-                if(entity->name==name){
+
+        void removeBatteryEntity(std::string name)
+        {
+            for (auto entity : this->entities)
+            {
+                if (entity->name == name)
+                {
                     this->markForRemoval(entity);
                 }
             }
         }
-        void markAsUnRemoval(std::string name){
-            for(auto entity:this->entities){
-                if(entity->name==name){
-                    
+        void markAsUnRemoval(std::string name)
+        {
+            for (auto entity : this->entities)
+            {
+                if (entity->name == name)
+                {
+
                     this->markedForRemoval.erase(entity);
+                    std::
+                            cout
+                        << "removed from removal" << std::endl;
                 }
-            }   
+            }
         }
         /******************************************************************************************************
           // This returns and immutable reference to the set of all entites in the world.
@@ -61,7 +69,6 @@ namespace our
             return entities;
         }
 
-        
         /******************************************************************************************************
            // This marks an entity for removal by adding it to the "markedForRemoval" set.
            // The elements in the "markedForRemoval" set will be removed and deleted when "deleteMarkedEntities" is called.
@@ -74,16 +81,16 @@ namespace our
                 markedForRemoval.insert(entity);
             }
         }
-        
 
-        bool checkIfMarkedRemoval(Entity *entity){
+        bool checkIfMarkedRemoval(Entity *entity)
+        {
             if (markedForRemoval.find(entity) != markedForRemoval.end())
             {
                 return true;
             }
             return false;
         }
-        
+
         /******************************************************************************************************
             // This removes the elements in "markedForRemoval" from the "entities" set.
             // Then each of these elements are deleted.
@@ -106,8 +113,9 @@ namespace our
         {
             // TODO: (Req 8) Delete all the entites and make sure that the containers are empty
 
-            for (auto entityPtr : entities) {
-                 delete entityPtr;
+            for (auto entityPtr : entities)
+            {
+                delete entityPtr;
             }
 
             entities.clear();

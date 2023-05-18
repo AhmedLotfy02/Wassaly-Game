@@ -70,7 +70,7 @@ class Playstate : public our::State
         // Collioison
 
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
-        std::cout << "collisionState" << collisionState << std::endl;
+        // std::cout << "collisionState" << collisionState << std::endl;
         if (collisionState == 1)
         {
             std::cout << "collision with battery" << std::endl;

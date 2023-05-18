@@ -36,29 +36,35 @@ namespace our
         }
         void increaseBatteries(int *numberOfBatteries)
         {
+            for (auto &entity : world->getEntities())
+            {
+                std::cout << entity->name << std::endl;
+            }
+            std::cout << *numberOfBatteries;
             if (*numberOfBatteries == 4)
             {
+
                 *numberOfBatteries = 5;
 
-                world->markAsUnRemoval("e5");
+                world->markAsUnRemoval("plane5");
                 // cameraController.changeSpeed(0.7f);
             }
             else if (*numberOfBatteries == 3)
             {
                 *numberOfBatteries = 4;
-                world->markAsUnRemoval("e4");
+                world->markAsUnRemoval("plane4");
                 // cameraController.changeSpeed(0.6f);
             }
             else if (*numberOfBatteries == 2)
             {
                 *numberOfBatteries = 3;
-                world->markAsUnRemoval("e3");
+                world->markAsUnRemoval("plane3");
                 // cameraController.changeSpeed(0.5f);
             }
             else if (*numberOfBatteries == 1)
             {
                 *numberOfBatteries = 2;
-                world->markAsUnRemoval("e3");
+                world->markAsUnRemoval("plane2");
                 // cameraController.changeSpeed(0.4f);
             }
         }
@@ -66,42 +72,42 @@ namespace our
         float decreaseBatteries(int *counterToRemove, int *numberOfBatteries, bool remove)
         {
             // std::cout << counterToRemove;
-            if (*counterToRemove == 1180 || remove)
+            if (*counterToRemove == 180 || remove)
             {
                 std::cout << "decrease" << std::endl;
                 *counterToRemove = 0;
                 if (*numberOfBatteries == 5)
                 {
                     *numberOfBatteries = 4;
-                    world->removeBatteryEntity("e5");
+                    world->removeBatteryEntity("plane5");
                     // cameraController.changeSpeed(0.6f);
                     return 0.6f;
                 }
                 else if (*numberOfBatteries == 4)
                 {
                     *numberOfBatteries = 3;
-                    world->removeBatteryEntity("e4");
+                    world->removeBatteryEntity("plane4");
                     // cameraController.changeSpeed(0.5f);
                     return 0.5f;
                 }
                 else if (*numberOfBatteries == 3)
                 {
                     *numberOfBatteries = 2;
-                    world->removeBatteryEntity("e3");
+                    world->removeBatteryEntity("plane3");
                     // cameraController.changeSpeed(0.4f);
                     return 0.4f;
                 }
                 else if (*numberOfBatteries == 2)
                 {
                     *numberOfBatteries = 1;
-                    world->removeBatteryEntity("e2");
+                    world->removeBatteryEntity("plane2");
                     // cameraController.changeSpeed(0.3f);
                     return 0.3f;
                 }
                 else
                 {
                     *numberOfBatteries = 0;
-                    world->removeBatteryEntity("e1");
+                    world->removeBatteryEntity("plane1");
                     app->changeState("gameover");
                     return 0.0f;
 
