@@ -67,18 +67,25 @@ class Playstate : public our::State
         // }
         // And finally we use the renderer system to draw the scene
 
-        // decreaseBatteries();
+        // Collioison
 
-        // // Collioison
-        // int collisionState = collisionSystem.update(&world, (float)deltaTime);
-        // if (collisionState == 1)
-        // {
-        //     increaseBatteries();
-        // }
-        // else if (collisionState == -1)
-        // {
-        //     getApp()->changeState("gameover");
-        // }
+        int collisionState = collisionSystem.update(&world, (float)deltaTime);
+        std::cout << "collisionState" << collisionState << std::endl;
+        if (collisionState == 1)
+        {
+            std::cout << "collision with battery" << std::endl;
+            gameController.increaseBatteries(&numberOfBatteries);
+        }
+        else if (collisionState == -1)
+        {
+            std::cout << "gameover" << std::endl;
+            getApp()->changeState("gameover");
+        }
+        else if (collisionState == 2)
+        {
+            // TODO : add score for package
+            std::cout << "collision with package" << std::endl;
+        }
 
         renderer.render(&world);
 

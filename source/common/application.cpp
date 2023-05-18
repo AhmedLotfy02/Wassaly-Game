@@ -294,7 +294,7 @@ int our::Application::run(int run_for_frames)
         // For example, if you're focusing on an input and writing "W", the keyboard object shouldn't record this event.
         keyboard.setEnabled(!io.WantCaptureKeyboard, window);
         mouse.setEnabled(!io.WantCaptureMouse, window);
-
+        ImGui::Text("Hello, World!");
         // Render the ImGui commands we called (this doesn't actually draw to the screen yet.
         ImGui::Render();
 
