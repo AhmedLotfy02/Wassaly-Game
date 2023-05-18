@@ -50,7 +50,7 @@ class Playstate: public our::State {
     }
 
     void decreaseBatteries(){
-        if(counterToRemove==-180){
+        if(counterToRemove==180){
             counterToRemove=0;
             if(numberOfBatteries==5){
                 numberOfBatteries=4;
@@ -121,14 +121,23 @@ class Playstate: public our::State {
         decreaseBatteries();
 
         //Collioison
+        
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
+        std::cout << "collisionState" << collisionState << std::endl;
         if( collisionState == 1 )
         {
+            std::cout << "collision with battery" << std::endl;
             increaseBatteries();
         }
         else if ( collisionState == -1 )
         {
+            std::cout << "gameover" << std::endl;
             getApp()->changeState("gameover");
+        }
+        else if ( collisionState == 2 )
+        {
+            //TODO : add score for package
+            std::cout << "collision with package" << std::endl;
         }
 
         renderer.render(&world);
