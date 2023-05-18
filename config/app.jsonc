@@ -1,89 +1,93 @@
 {
     "start-scene": "menu",
-    "window":
-    {
-        "title":"Default Game Window",
-        "size":{
-            "width":1280,
-            "height":720
+    "window": {
+        "title": "Default Game Window",
+        "size": {
+            "width": 1280,
+            "height": 720
         },
         "fullscreen": false
     },
     "scene": {
-        "renderer":{
+        "renderer": {
             "sky": "assets/textures/sky.jpg",
             "postprocess": "assets/shaders/postprocess/vignette.frag"
         },
-        "assets":{
-            "shaders":{
-                "tinted":{
-                    "vs":"assets/shaders/tinted.vert",
-                    "fs":"assets/shaders/tinted.frag"
+        "assets": {
+            "shaders": {
+                "tinted": {
+                    "vs": "assets/shaders/tinted.vert",
+                    "fs": "assets/shaders/tinted.frag"
                 },
-                "textured":{
-                    "vs":"assets/shaders/textured.vert",
-                    "fs":"assets/shaders/textured.frag"
+                "textured": {
+                    "vs": "assets/shaders/textured.vert",
+                    "fs": "assets/shaders/textured.frag"
                 }
             },
-            "textures":{
+            "textures": {
                 "moon": "assets/textures/moon.jpg",
                 "grass": "assets/textures/grass_ground_d.jpg",
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
-                "truck":"assets/textures/truck_body_albedo.jpg",
-                "energybar":"assets/textures/energy.png",
-                "cartex":"assets/textures/casino_car.jpeg",
-                "road":"assets/textures/road.jpeg",
-                "road2":"assets/textures/road2.jpeg",
-                "battery":"assets/textures/battery.png",
-                "road3":"assets/textures/road3.jpeg",
-                "building":"assets/textures/building.png",
-                "building2":"assets/textures/building.jpeg",
-                "package":"assets/textures/package.png",
-                "arrowtex":"assets/textures/arrow.jpeg"
+                "truck": "assets/textures/truck_body_albedo.jpg",
+                "energybar": "assets/textures/energy.png",
+                "cartex": "assets/textures/casino_car.jpeg",
+                "road": "assets/textures/road.jpeg",
+                "road2": "assets/textures/road2.jpeg",
+                "battery": "assets/textures/battery.png",
+                "road3": "assets/textures/road3.jpeg",
+                "building": "assets/textures/building.png",
+                "building2": "assets/textures/building.jpeg",
+                "package": "assets/textures/package.png",
+                "arrowtex": "assets/textures/arrow.jpeg"
             },
-            "meshes":{
+            "meshes": {
                 "cube": "assets/models/cube.obj",
                 "monkey": "assets/models/monkey.obj",
                 "plane": "assets/models/plane.obj",
                 "sphere": "assets/models/sphere.obj",
-                "car":"assets/models/casino_car.obj",
-                "battery":"assets/models/Battery.obj",
-                "package":"assets/models/package.obj",
-                "arrow":"assets/models/arrow.obj"
+                "car": "assets/models/casino_car.obj",
+                "battery": "assets/models/Battery.obj",
+                "package": "assets/models/package.obj",
+                "arrow": "assets/models/arrow.obj"
             },
-            "samplers":{
-                "default":{},
-                "pixelated":{
+            "samplers": {
+                "default": {},
+                "pixelated": {
                     "MAG_FILTER": "GL_NEAREST"
                 }
             },
-            "materials":{
-                "metal":{ 
+            "materials": {
+                "metal": {
                     "type": "tinted",
                     "shader": "tinted",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [0.45, 0.4, 0.5, 1]
+                    "tint": [
+                        0.45,
+                        0.4,
+                        0.5,
+                        1
+                    ]
                 },
-                "glass":{
+                "glass": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         },
-                        "blending":{
+                        "blending": {
                             "enabled": true,
                             "sourceFactor": "GL_SRC_ALPHA",
                             "destinationFactor": "GL_ONE_MINUS_SRC_ALPHA"
@@ -91,168 +95,224 @@
                         "depthMask": false
                     },
                     "transparent": true,
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "glass",
                     "sampler": "pixelated"
                 },
-                "grass":{
+                "grass": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "grass",
                     "sampler": "default"
                 },
-                "buildingMaterial":{
+                "buildingMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "building2",
                     "sampler": "default"
                 },
-                "arrowMaterial":{
+                "arrowMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "arrowtex",
                     "sampler": "default"
                 },
-                "packageMaterial":{
+                "packageMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "package",
                     "sampler": "default"
                 },
-                "roadMaterial":{
+                "roadMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "road3",
                     "sampler": "default"
                 },
-                "monkey":{
+                "monkey": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "monkey",
                     "sampler": "default"
                 },
-                "batteryMaterial":{
+                "batteryMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "battery",
                     "sampler": "default"
                 },
-                "carMaterial":{
+                "carMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "cartex",
                     "sampler": "default"
                 },
-
-                "energy":{
+                "energy": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "energybar",
                     "sampler": "default"
                 },
-
-
-                "moon":{
+                "moon": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
-                        "faceCulling":{
+                        "faceCulling": {
                             "enabled": false
                         },
-                        "depthTesting":{
+                        "depthTesting": {
                             "enabled": true
                         }
                     },
-                    "tint": [1, 1, 1, 1],
+                    "tint": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
                     "texture": "moon",
                     "sampler": "default"
                 }
             }
         },
-        "world":[
+        "world": [
             {
-                "position": [0, 2, 10],
+                "position": [
+                    0,
+                    2,
+                    10
+                ],
                 "components": [
                     {
                         "type": "Camera"
@@ -275,101 +335,175 @@
                     //     ]
                     // },
                     {
-                       //"position": [0.1, -0.4, -2.0],
-                        
-                       // "scale": [0.5, 0.5, 1.0],
-                       "position": [0, -2, -5],
-                    
-                       "rotation": [0, 180, 0],
-                       "scale":[0.02,0.02,0.02],
-                       "components": [
-                           {
-                               "type": "Mesh Renderer",
-                               "mesh": "car",
-                               "material": "carMaterial"
-                           }
-                          
-                       ]
-
+                        //"position": [0.1, -0.4, -2.0],
+                        // "scale": [0.5, 0.5, 1.0],
+                        "position": [
+                            0,
+                            -2,
+                            -5
+                        ],
+                        "name": "player",
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ],
+                        "scale": [
+                            0.02,
+                            0.02,
+                            0.02
+                        ],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "car",
+                                "material": "carMaterial"
+                            }
+                        ]
                     },
-                {
-                    "position": [-13.0, 7.0, -8.0],
-                    "rotation": [0, 0, 0],
-                    "scale": [0.4, 0.4, 0.4],
-                    "name":"e1",
-                    "components": [
-                        {
-                            "type": "Mesh Renderer",
-                            "mesh": "plane",
-                            "material": "energy"
-                        }
-                    ]
-    
-                }
-                ,
-                {
-                    "position": [-12, 7.0, -8.0],
-                    "rotation": [0, 0, 0],
-                    "name":"e2",
-                    "scale": [0.4, 0.4, 0.4],
-                    "components": [
-                        {
-                            "type": "Mesh Renderer",
-                            "mesh": "plane",
-                            "material": "energy"
-                        }
-                    ]
-    
-                },
-                {
-                   
-                    "position": [-11.0, 7.0, -8.0],
-                    "rotation": [0, 0, 0],
-                    "name":"e3",
-                    "scale": [0.4, 0.4, 0.4],
-                    "components": [
-                        {
-                            "type": "Mesh Renderer",
-                            "mesh": "plane",
-                            "material": "energy"
-                        }
-                    ]
-    
-                },
-                {
-                    "position": [-10, 7.0, -8.0],
-                    "rotation": [0, 0, 0],
-                    "name":"e4",
-                    "scale": [0.4, 0.4, 0.4],
-                    "components": [
-                        {
-                            "type": "Mesh Renderer",
-                            "mesh": "plane",
-                            "material": "energy"
-                        }
-                    ]
-    
-                },
-                {
-                    "position": [-9.0, 7.0, -8.0],
-                    "rotation": [0, 0, 0],
-                    "name":"e5",
-                    "scale": [0.4, 0.4, 0.4],
-                    "components": [
-                        {
-                            "type": "Mesh Renderer",
-                            "mesh": "plane",
-                            "material": "energy"
-                        }
-                    ]
-    
-                }
+                    {
+                        "position": [
+                            -13.0,
+                            7.0,
+                            -8.0
+                        ],
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "scale": [
+                            0.4,
+                            0.4,
+                            0.4
+                        ],
+                        "name": "e1",
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "energy"
+                            }
+                        ]
+                    },
+                    {
+                        "position": [
+                            -12,
+                            7.0,
+                            -8.0
+                        ],
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "e2",
+                        "scale": [
+                            0.4,
+                            0.4,
+                            0.4
+                        ],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "energy"
+                            }
+                        ]
+                    },
+                    {
+                        "position": [
+                            -11.0,
+                            7.0,
+                            -8.0
+                        ],
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "e3",
+                        "scale": [
+                            0.4,
+                            0.4,
+                            0.4
+                        ],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "energy"
+                            }
+                        ]
+                    },
+                    {
+                        "position": [
+                            -10,
+                            7.0,
+                            -8.0
+                        ],
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "e4",
+                        "scale": [
+                            0.4,
+                            0.4,
+                            0.4
+                        ],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "energy"
+                            }
+                        ]
+                    },
+                    {
+                        "position": [
+                            -9.0,
+                            7.0,
+                            -8.0
+                        ],
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ],
+                        "name": "e5",
+                        "scale": [
+                            0.4,
+                            0.4,
+                            0.4
+                        ],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "plane",
+                                "material": "energy"
+                            }
+                        ]
+                    }
                 ]
             },
             {
-                "position": [-10.0, 0, 0],
-                "rotation": [0, 90, 0],
-                "scale":[0.02,0.02,0.02],
+                "position": [
+                    -10.0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -378,14 +512,26 @@
                     },
                     {
                         "type": "Movement",
-                        "linearVelocity": [0.5, 0, 0]
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
                         //"angularVelocity": [0, 45, 0]
                     }
                 ]
             },
             {
-                "position": [-5.0, 1.2, -5.0],
-                "scale":[0.3,0.3,0.3],
+                "position": [
+                    0,
+                    1.2,
+                    -25.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -395,13 +541,305 @@
                     {
                         "type": "Movement",
                         //"linearVelocity": [-0.5, 0, 0]
-                        "angularVelocity": [0, 45, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
                     }
                 ]
             },
             {
-                "position": [-5.0, 1.5, -5.0],
-                "scale":[0.01,0.01,0.01],
+                "position": [
+                    -2,
+                    1.2,
+                    -90.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    1,
+                    1.2,
+                    -170.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    -2,
+                    1.2,
+                    -250.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    1.2,
+                    -350.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    1,
+                    1.2,
+                    -450.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    -2,
+                    1.2,
+                    -520.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    2,
+                    1.2,
+                    -580.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    1,
+                    1.2,
+                    -650.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    -1,
+                    1.2,
+                    -690.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    2,
+                    1.2,
+                    -730.0
+                ],
+                "scale": [
+                    0.3,
+                    0.3,
+                    0.3
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "battery",
+                        "material": "batteryMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "position": [
+                    -5.0,
+                    1.5,
+                    -5.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -411,13 +849,26 @@
                     {
                         "type": "Movement",
                         //"linearVelocity": [-0.5, 0, 0]
-                        "angularVelocity": [0, 45, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
                     }
                 ]
             },
             {
-                "position": [2.0, 1.2, -5.0],
-                "scale":[0.01,0.01,0.01],
+                "name": "p1",
+                "position": [
+                    0,
+                    1.2,
+                    -70.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -427,14 +878,297 @@
                     {
                         "type": "Movement",
                         //"linearVelocity": [-0.5, 0, 0]
-                        "angularVelocity": [0, 45, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
                     }
                 ]
             },
             {
-                "position": [10.0, 0, -10.0],
-                "rotation": [0, -90, 0],
-                "scale":[0.02,0.02,0.02],
+                "name": "p2",
+                "position": [
+                    -2,
+                    1.2,
+                    -140.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p3",
+                "position": [
+                    2,
+                    1.2,
+                    -250.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p5",
+                "position": [
+                    2,
+                    1.2,
+                    -330.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p6",
+                "position": [
+                    -1,
+                    1.2,
+                    -390.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p7",
+                "position": [
+                    1,
+                    1.2,
+                    -440.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p8",
+                "position": [
+                    -1,
+                    1.2,
+                    -510.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p9",
+                "position": [
+                    2,
+                    1.2,
+                    -570.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "p7",
+                "position": [
+                    -2,
+                    1.2,
+                    -640.0
+                ],
+                "scale": [
+                    0.01,
+                    0.01,
+                    0.01
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "package",
+                        "material": "packageMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        //"linearVelocity": [-0.5, 0, 0]
+                        "angularVelocity": [
+                            0,
+                            45,
+                            0
+                        ]
+                    }
+                ]
+            },
+            // {
+            //     "name": "cr1",
+            //     "position": [
+            //         10.0,
+            //         0,
+            //         -10.0
+            //     ],
+            //     "rotation": [
+            //         0,
+            //         -90,
+            //         0
+            //     ],
+            //     "scale": [
+            //         0.02,
+            //         0.02,
+            //         0.02
+            //     ],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "car",
+            //             "material": "carMaterial"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             "linearVelocity": [
+            //                 -0.5,
+            //                 0,
+            //                 0
+            //             ]
+            //             //"angularVelocity": [0, 45, 0]
+            //         }
+            //     ]
+            // },
+            {
+                "name": "cr1",
+                "position": [
+                    10.0,
+                    0,
+                    -20.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -443,15 +1177,32 @@
                     },
                     {
                         "type": "Movement",
-                        "linearVelocity": [-0.5, 0, 0]
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
                         //"angularVelocity": [0, 45, 0]
                     }
                 ]
             },
             {
-                "position": [10.0, 0, -30.0],
-                "rotation": [0, -90, 0],
-                "scale":[0.02,0.02,0.02],
+                "name": "cr2",
+                "position": [
+                    10.0,
+                    0,
+                    -40.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -460,15 +1211,32 @@
                     },
                     {
                         "type": "Movement",
-                        "linearVelocity": [-0.5, 0, 0]
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
                         //"angularVelocity": [0, 45, 0]
                     }
                 ]
             },
             {
-                "position": [10.0, 0, -20.0],
-                "rotation": [0,-90, 0],
-                "scale":[0.02,0.02,0.02],
+                "name": "cr3",
+                "position": [
+                    10.0,
+                    0,
+                    -100.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -477,15 +1245,509 @@
                     },
                     {
                         "type": "Movement",
-                        "linearVelocity": [-0.5, 0, 0]
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
                         //"angularVelocity": [0, 45, 0]
                     }
                 ]
             },
             {
-                "position": [0, 0, 0],
-                "rotation": [-90, 0, 0],
-                "scale": [40, 10, 1],
+                "name": "cr4",
+                "position": [
+                    10.0,
+                    0,
+                    -140.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cr5",
+                "position": [
+                    10.0,
+                    0,
+                    -200.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cr6",
+                "position": [
+                    10.0,
+                    0,
+                    -240.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cr7",
+                "position": [
+                    10.0,
+                    0,
+                    -260.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cr8",
+                "position": [
+                    10.0,
+                    0,
+                    -300.0
+                ],
+                "rotation": [
+                    0,
+                    -90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            -0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+
+                    
+            {
+                "name": "cl1",
+                "position": [
+                    -10.0,
+                    0,
+                    -60.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cl2",
+                "position": [
+                    -10.0,
+                    0,
+                    -80.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cl3",
+                "position": [
+                    -10.0,
+                    0,
+                    -120.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cl4",
+                "position": [
+                    -10.0,
+                    0,
+                    -160.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cl5",
+                "position": [
+                    -10.0,
+                    0,
+                    -180.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cl6",
+                "position": [
+                    -10.0,
+                    0,
+                    -220.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+            {
+                "name": "cl7",
+                "position": [
+                    -10.0,
+                    0,
+                    -280.0
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    0.02,
+                    0.02,
+                    0.02
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "car",
+                        "material": "carMaterial"
+                    },
+                    {
+                        "type": "Movement",
+                        "linearVelocity": [
+                            0.5,
+                            0,
+                            0
+                        ]
+                        //"angularVelocity": [0, 45, 0]
+                    }
+                ]
+            },
+                {
+                    "name": "cl8",
+                    "position": [
+                        -10.0,
+                        0,
+                        -320.0
+                    ],
+                    "rotation": [
+                        0,
+                        90,
+                        0
+                    ],
+                    "scale": [
+                        0.02,
+                        0.02,
+                        0.02
+                    ],
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "car",
+                            "material": "carMaterial"
+                        },
+                        {
+                            "type": "Movement",
+                            "linearVelocity": [
+                                0.5,
+                                0,
+                                0
+                            ]
+                            //"angularVelocity": [0, 45, 0]
+                        }
+                    ]
+                },
+                    {
+                        "name": "cl9",
+                        "position": [
+                            -10.0,
+                            0,
+                            -340.0
+                        ],
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ],
+                        "scale": [
+                            0.02,
+                            0.02,
+                            0.02
+                        ],
+                        "components": [
+                            {
+                                "type": "Mesh Renderer",
+                                "mesh": "car",
+                                "material": "carMaterial"
+                            },
+                            {
+                                "type": "Movement",
+                                "linearVelocity": [
+                                    0.5,
+                                    0,
+                                    0
+                                ]
+                                //"angularVelocity": [0, 45, 0]
+                            }
+                        ]
+                    },
+            {
+                "position": [
+                    0,
+                    0,
+                    0
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -495,9 +1757,21 @@
                 ]
             },
             {
-                "position": [0, 0, -20],
-                "rotation": [-90, 0, 0],
-                "scale": [40, 10, 1],
+                "position": [
+                    0,
+                    0,
+                    -20
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -507,9 +1781,1246 @@
                 ]
             },
             {
-                "position": [9, 1, -3],
-                "rotation": [0, 0, 0],
-                "scale": [2, 10, 10],
+                "position": [
+                    0,
+                    0,
+                    -40
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -60
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -80
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -100
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -120
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -140
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -160
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -180
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -200
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -220
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -240
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -260
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -280
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -300
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -320
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -340
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -360
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -380
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -400
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -420
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -440
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -460
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -480
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -500
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -520
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -540
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -560
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -580
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -600
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -620
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -600
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -640
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -660
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -680
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -700
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -720
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -740
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -760
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -780
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -800
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -820
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -840
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -860
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -880
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -900
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -920
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -940
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -960
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    0,
+                    -980
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            { //
+                "position": [
+                    0,
+                    0,
+                    -1000
+                ],
+                "rotation": [
+                    -90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    40,
+                    10,
+                    1
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "roadMaterial"
+                    }
+                ]
+            },
+            // { //1st right
+            //     "position": [
+            //         27,
+            //         20,
+            //         -4.3
+            //     ],
+            //     "rotation": [
+            //         0,
+            //         0,
+            //         0
+            //     ],
+            //     "scale": [
+            //         20,
+            //         20,
+            //         10
+            //     ],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "plane",
+            //             "material": "buildingMaterial"
+            //         }
+            //     ]
+            // },
+            {
+                //first left straight
+                "position": [
+                    -23,
+                    10,
+                    -4
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -519,9 +3030,22 @@
                 ]
             },
             {
-                "position": [12, 1, -3],
-                "rotation": [0, 0, 0],
-                "scale": [2, 10, 10],
+                //2nd left straight
+                "position": [
+                    -23,
+                    10,
+                    -24
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -531,9 +3055,918 @@
                 ]
             },
             {
-                "position": [0, 1, -2],
-                "rotation": [0, 0, 0],
-                "scale": [2, 2, 2],
+                //3rd left straight
+                "position": [
+                    -23,
+                    10,
+                    -44
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //4th left straight
+                "position": [
+                    -23,
+                    10,
+                    -64
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //5th left straight
+                "position": [
+                    -23,
+                    10,
+                    -84
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //6th left straight
+                "position": [
+                    -23,
+                    10,
+                    -104
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //7th left straight
+                "position": [
+                    -23,
+                    10,
+                    -124
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //8th left straight
+                "position": [
+                    -23,
+                    10,
+                    -144
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //9th left straight
+                "position": [
+                    -23,
+                    10,
+                    -164
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //1st right straight
+                "position": [
+                    21,
+                    10,
+                    -4
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //2nd right straight
+                "position": [
+                    21,
+                    10,
+                    -24
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //3rd right straight
+                "position": [
+                    21,
+                    10,
+                    -44
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //4th right straight
+                "position": [
+                    21,
+                    10,
+                    -64
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //5th right straight
+                "position": [
+                    21,
+                    10,
+                    -84
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //6th right straight
+                "position": [
+                    21,
+                    10,
+                    -104
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //7th right straight
+                "position": [
+                    21,
+                    10,
+                    -124
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    14,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    -20,
+                    1,
+                    -10
+                ],
+                "rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "scale": [
+                    2,
+                    10,
+                    10
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            // {
+            //     "position": [10, 1, -10],
+            //     "rotation": [0, 0, 0],
+            //     "scale": [2, 10, 10],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "plane",
+            //             "material": "buildingMaterial"
+            //         }
+            //     ]
+            // },
+            // {
+            //     "position": [
+            //         0,
+            //         1,
+            //         -2
+            //     ],
+            //     "rotation": [
+            //         0,
+            //         0,
+            //         0
+            //     ],
+            //     "scale": [
+            //         2,
+            //         2,
+            //         2
+            //     ],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "plane",
+            //             "material": "glass"
+            //         }
+            //     ]
+            // },
+            // {
+            //     "position": [-2, 10.5, -3],
+            //     "rotation": [0, 90, 0],
+            //     "scale": [2, 10, 10],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "plane",
+            //             "material": "buildingMaterial"
+            //         }
+            //     ]
+            // },
+            {
+                //first left rotated
+                "position": [
+                    -9,
+                    10,
+                    -10
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //second left rotated
+                "position": [
+                    -9,
+                    10,
+                    -30
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //third left rotated
+                "position": [
+                    -9,
+                    10,
+                    -50
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //4th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -70
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //5th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -90
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //6th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -110
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //8th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -130
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //9th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -150
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //10th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -170
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //11th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -190
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //12th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -210
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //13th left rotated
+                "position": [
+                    -9,
+                    10,
+                    -230
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //first right rotated
+                "position": [
+                    7,
+                    10,
+                    -10
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //second right rotated
+                "position": [
+                    7,
+                    10,
+                    -30
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //third right rotated
+                "position": [
+                    7,
+                    10,
+                    -50
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //fourth right rotated
+                "position": [
+                    7,
+                    10,
+                    -70
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //5th right rotated
+                "position": [
+                    7,
+                    10,
+                    -90
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //6th right rotated
+                "position": [
+                    7,
+                    10,
+                    -110
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                //7th right rotated
+                "position": [
+                    7,
+                    10,
+                    -130
+                ],
+                "rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "scale": [
+                    6,
+                    10,
+                    40
+                ],
+                "components": [
+                    {
+                        "type": "Mesh Renderer",
+                        "mesh": "plane",
+                        "material": "buildingMaterial"
+                    }
+                ]
+            },
+            {
+                "position": [
+                    0,
+                    3,
+                    0
+                ],
+                "rotation": [
+                    90,
+                    0,
+                    0
+                ],
+                "scale": [
+                    2,
+                    2,
+                    2
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -543,45 +3976,21 @@
                 ]
             },
             {
-                "position": [7, 1, -5],
-                "rotation": [0, 90, 0],
-                "scale": [2, 10, 20],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "plane",
-                        "material": "buildingMaterial"
-                    }
-                ]
-            },
-            {
-                "position": [-7, 1, -5],
-                "rotation": [0, 90, 0],
-                "scale": [2, 10, 20],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "plane",
-                        "material": "buildingMaterial"
-                    }
-                ]
-            },
-            {
-                "position": [0, 3, 0],
-                "rotation": [90, 0, 0],
-                "scale": [2, 2, 2],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "plane",
-                        "material": "glass"
-                    }
-                ]
-            },
-            {
-                "position": [0, 30, -40],
-                "rotation": [45, 45, 0],
-                "scale": [5, 5, 5],
+                "position": [
+                    0,
+                    30,
+                    -40
+                ],
+                "rotation": [
+                    45,
+                    45,
+                    0
+                ],
+                "scale": [
+                    5,
+                    5,
+                    5
+                ],
                 "components": [
                     {
                         "type": "Mesh Renderer",
@@ -590,11 +3999,14 @@
                     },
                     {
                         "type": "Movement",
-                        "angularVelocity": [0, 30, 0]
+                        "angularVelocity": [
+                            0,
+                            30,
+                            0
+                        ]
                     }
                 ]
             }
-            
         ]
     }
 }

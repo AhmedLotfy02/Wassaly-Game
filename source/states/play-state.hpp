@@ -51,11 +51,9 @@ class Playstate: public our::State {
             world.markAsUnRemoval("e3");
             cameraController.changeSpeed(0.4f);
         }
-
-
     }
     void decreaseBatteries(){
-        if(counterToRemove==180){
+        if(counterToRemove==-180){
             counterToRemove=0;
             if(numberOfBatteries==5){
                 numberOfBatteries=4;
