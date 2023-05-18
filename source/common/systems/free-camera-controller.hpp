@@ -113,12 +113,25 @@ namespace our
             // AL: going forward
             current_sensitivity *= speed;
             position += front * (deltaTime * current_sensitivity.z);
-            if (!(position.x > 6.1 && position.x < 6.14) && decreaseBat)
+            if ((position.x > 5.5 && position.x < 5.7) && decreaseBat)
             {
                 decreaseBat = false;
             }
 
-            if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
+            else if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
+            {
+                std::cout << "Heba";
+                gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
+                decreaseBat = true;
+            }
+
+            if ((position.x < -6.5 && position.x > -7.7) && decreaseBat)
+            {
+                std::cout << "changetofalse";
+                decreaseBat = false;
+            }
+
+            else if (position.x > -8.09 && position.x < -7.9 && !decreaseBat)
             {
                 std::cout << "Heba";
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);

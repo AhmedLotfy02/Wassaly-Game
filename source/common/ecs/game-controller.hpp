@@ -68,6 +68,7 @@ namespace our
             // std::cout << counterToRemove;
             if (*counterToRemove == 1180 || remove)
             {
+                std::cout << "decrease" << std::endl;
                 *counterToRemove = 0;
                 if (*numberOfBatteries == 5)
                 {
