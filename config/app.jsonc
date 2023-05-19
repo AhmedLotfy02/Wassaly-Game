@@ -11,7 +11,7 @@
     "scene": {
         "renderer": {
             "sky": "assets/textures/sky.jpg",
-            "postprocess": "assets/shaders/postprocess/fish_eye.frag"
+            "postprocess": "assets/shaders/postprocess/fish-eye.frag"
         },
         "assets": {
             "shaders": {

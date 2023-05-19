@@ -23,12 +23,15 @@ class Playstate : public our::State
     int counterToRemove = 0;
     int tempCount = 0;
     int packagesNumber = 0;
+    float time = 0;
+    bool effect = false;
 
     void onInitialize() override
     {
         numberOfBatteries = 5;
         counterToRemove = 0;
         tempCount = 0;
+
         gameController.enter(getApp(), &world);
         // First of all, we get the scene configuration from the app config
         auto &config = getApp()->getConfig()["scene"];
@@ -74,6 +77,8 @@ class Playstate : public our::State
         if (collisionState == 1)
         {
             std::cout << "collision with battery" << std::endl;
+            effect = true;
+            time = glfwGetTime();
             gameController.increaseBatteries(&numberOfBatteries);
         }
         else if (collisionState == -1)
@@ -87,7 +92,14 @@ class Playstate : public our::State
             std::cout << "collision with package" << std::endl;
         }
 
-        renderer.render(&world);
+        if( effect && glfwGetTime()- time > 5.0f)
+        {
+            std::cout << "effect1111111111" << effect << std::endl;
+            effect = false;
+        }
+        
+        std::cout << "effect" << effect << std::endl;
+        renderer.render(&world, effect);
 
         // Get a reference to the keyboard object
         auto &keyboard = getApp()->getKeyboard();
