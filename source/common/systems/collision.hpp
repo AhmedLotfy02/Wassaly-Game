@@ -80,10 +80,12 @@ namespace our
                 {
                     cars.push_back(entity);
                 }
-                /*else if ( (entity->name.substr(0, 5) =="plane") )
+                /*
+                else if ( (entity->name.substr(0, 5) =="plane") )
                 {
                     planes.push_back(entity);
-                }*/
+                }
+                */
                 else if ( (entity->name.substr(0, 7) =="package") )
                 {
                     packages.push_back(entity);
@@ -125,6 +127,8 @@ namespace our
                 // if collision happened with a battery
                 if (checkCollision(plane, player ))
                 {
+                    world->markForRemoval(plane);
+                    world->deleteMarkedEntities();
                     return -1; //collision with car
                 }              
             }

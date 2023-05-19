@@ -104,6 +104,9 @@ namespace our
             // A & D moves the player left or right 
             if(app->getKeyboard().isPressed(GLFW_KEY_D)) position += right * (deltaTime * current_sensitivity.x);
             if(app->getKeyboard().isPressed(GLFW_KEY_A)) position -= right * (deltaTime * current_sensitivity.x);
+
+            // F changes the postprocessing mode between rgb_effect and vignette_effect
+            
         }
 
         // When the state exits, it should call this function to ensure the mouse is unlocked
