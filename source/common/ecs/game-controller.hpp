@@ -36,10 +36,7 @@ namespace our
         }
         void increaseBatteries(int *numberOfBatteries)
         {
-            for (auto &entity : world->getEntities())
-            {
-                std::cout << entity->name << std::endl;
-            }
+           
             std::cout << *numberOfBatteries;
             if (*numberOfBatteries == 4)
             {

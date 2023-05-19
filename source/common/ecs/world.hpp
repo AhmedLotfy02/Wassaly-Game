@@ -36,7 +36,17 @@ namespace our
             entities.insert(entity);
             return entity;
         }
-
+        Entity* getEntityByName(std::string name)
+        {
+            for (auto entity : this->entities)
+            {
+                if (entity->name == name)
+                {
+                    return entity;
+                }
+            }
+            return nullptr;
+        }
         void removeBatteryEntity(std::string name)
         {
             for (auto entity : this->entities)

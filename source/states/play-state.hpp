@@ -8,6 +8,8 @@
 #include <systems/movement.hpp>
 #include <asset-loader.hpp>
 #include "../common/ecs/game-controller.hpp"
+#include "../common/ecs/entity.hpp"
+
 // This state shows how to use the ECS framework and deserialization.
 class Playstate : public our::State
 {
@@ -18,7 +20,7 @@ class Playstate : public our::State
     our::MovementSystem movementSystem;
     our::CollisionSystem collisionSystem;
     our::GameController gameController;
-
+    
     int numberOfBatteries = 5;
     int counterToRemove = 0;
     int tempCount = 0;
@@ -42,6 +44,9 @@ class Playstate : public our::State
         {
             world.deserialize(config["world"]);
         }
+        
+        our::Entity* player = world.getEntityByName("player");
+        collisionSystem.setPlayer(player);
         // We initialize the camera controller system since it needs a pointer to the app
         cameraController.enter(getApp(), &gameController);
         // Then we initialize the renderer

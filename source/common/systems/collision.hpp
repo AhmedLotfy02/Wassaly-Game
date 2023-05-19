@@ -20,6 +20,10 @@ namespace our
         Entity *player;
 
     public:
+        void setPlayer(Entity *player)
+        {
+            this->player = player;
+        }
         float two_d_collides(const glm::vec4 &carMax, const glm::vec4 &carMin, const glm::vec4 &batteryMax, const glm::vec4 &batteryMin)
         {
             // calcculate the eclidian distance between the centers of the two objects
@@ -70,6 +74,7 @@ namespace our
 
             for (const auto &entity : world->getEntities())
             {
+                
                 if (entity->name.substr(0, 7) == "battery")
                 {
                     batteries.push_back(entity);
@@ -86,10 +91,10 @@ namespace our
                 {
                     packages.push_back(entity);
                 }
-                else if (entity->name.substr(0, 4) == "play")
-                {
-                    player = entity;
-                }
+                // else if (entity->name.substr(0, 4) == "play")
+                // {
+                //     player = entity;
+                // }
             }
 
             for (Entity *battery : batteries)
