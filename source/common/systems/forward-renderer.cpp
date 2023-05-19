@@ -5,7 +5,6 @@
 
 namespace our
 {
-
     void ForwardRenderer::initialize(glm::ivec2 windowSize, const nlohmann::json &config)
     {
         // First, we store the window size for later use
@@ -26,17 +25,13 @@ namespace our
             // TODO: (Req 10) Pick the correct pipeline state to draw the sky
             //  Hints: the sky will be draw after the opaque objects so we would need depth testing but which depth funtion should we pick?
             //  We will draw the sphere from the inside, so what options should we pick for the face culling.
+            
             PipelineState skyPipelineState{};
-
-            // ==> enavle face culling
-            skyPipelineState.faceCulling.enabled = true;
-            // ==> make the culled face the back face
-            skyPipelineState.faceCulling.culledFace = GL_BACK;
-
-            // Enable depth testing and set the depth function to GL_LEQUAL
-            skyPipelineState.depthTesting.enabled = true;
-            //  ==> if depth function is GL_LEQUAL, then the fragment will be drawn if the depth value of the fragment is less than or equal to the depth value stored in the depth buffer
+            skyPipelineState.depthTesting.enabled  = true;
             skyPipelineState.depthTesting.function = GL_LEQUAL;
+
+            skyPipelineState.faceCulling.enabled    = true;
+            skyPipelineState.faceCulling.culledFace = GL_FRONT;
 
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
             std::string skyTextureFile = config.value<std::string>("sky", "");
@@ -155,7 +150,7 @@ namespace our
         }
     }
 
-    void ForwardRenderer::render(World *world)
+    void ForwardRenderer::render(World *world, bool effect)
     {
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent *camera = nullptr;
@@ -427,7 +422,24 @@ namespace our
         if (postprocessMaterial)
         {
             // TODO: (Req 11) Return to the default framebuffer
-            //  bind the default framebuffer
+
+            // create a shader program for the postprocess
+            ShaderProgram *postprocessShader = new ShaderProgram();
+            // attach the vertex shader
+            postprocessShader->attach("assets/shaders/fullscreen.vert", GL_VERTEX_SHADER);
+            
+            // attach the fragment shader based on the effect type (fish eye or vignette)
+            if ( effect )
+                postprocessShader->attach("assets/shaders/postprocess/fish_eye.frag", GL_FRAGMENT_SHADER);
+            else
+                postprocessShader->attach("assets/shaders/postprocess/vignette.frag", GL_FRAGMENT_SHADER);
+            
+            // link the shader program
+            postprocessShader->link();
+
+            // create a postprocess material for the postprocess shader
+            postprocessMaterial->shader = postprocessShader;
+            
             glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
             // TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle

@@ -28,8 +28,8 @@ namespace our
         {
             // calcculate the eclidian distance between the centers of the two objects
             float distance = glm::distance(glm::vec3(carMax.x, carMax.y, carMax.z), glm::vec3(batteryMax.x, batteryMax.y, batteryMax.z));
-            // std::cout<< "distance: " << distance << std::endl;
             return distance;
+            
             /*
             // apply the following algorithm a.minX <= b.maxX && a.maxX >= b.minX && a.minY <= b.maxY && a.maxY >= b.minY && a.minZ <= b.maxZ && a.maxZ >= b.minZ
             if ( (carMax.x >= batteryMin.x && carMin.x <= batteryMax.x &&
@@ -52,7 +52,6 @@ namespace our
 
             // get centers and difference between centers
             glm::vec4 carCenter = carComponent->getLocalToWorldMatrix() * glm::vec4(carComponent->localTransform.position, 1.0);
-
             glm::vec4 batteryCenter = glm::vec4(batteryComponent->localTransform.position, 1.0);
 
             glm::vec4 carMax = carCenter + glm::vec4(carComponent->localTransform.scale, 0.0);
@@ -67,11 +66,13 @@ namespace our
             return result;
         }
 
+        // This should be called every frame to update all entities containing a FreeCameraControllerComponent
         int update(World *world, float deltaTime)
         {
             batteries.clear();
             cars.clear();
 
+            // iterate over all entities in the world and check for collisions with the player
             for (const auto &entity : world->getEntities())
             {
                 
@@ -83,11 +84,13 @@ namespace our
                 {
                     cars.push_back(entity);
                 }
-                /*else if ( (entity->name.substr(0, 5) =="plane") )
+                /*
+                else if ( (entity->name.substr(0, 5) =="plane") )
                 {
                     planes.push_back(entity);
-                }*/
-                else if ((entity->name.substr(0, 7) == "package"))
+                }
+                */
+                else if ( (entity->name.substr(0, 7) =="package") )
                 {
                     packages.push_back(entity);
                 }
@@ -126,6 +129,8 @@ namespace our
                 // if collision happened with a battery
                 if (checkCollision(plane, player ))
                 {
+                    world->markForRemoval(plane);
+                    world->deleteMarkedEntities();
                     return -1; //collision with car
                 }
             }
