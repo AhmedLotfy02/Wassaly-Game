@@ -11,7 +11,7 @@
     "scene": {
         "renderer": {
             "sky": "assets/textures/sky.jpg",
-            "postprocess": "assets/shaders/postprocess/fish-eye.frag"
+            "postprocess": "assets/shaders/postprocess/fish_eye.frag"
         },
         "assets": {
             "shaders": {
@@ -50,21 +50,11 @@
                 "roughness": "assets/textures/casino_car.jpeg",
                 "specular": "assets/textures/casino_car.jpeg",
                 "ambient_occlusion": "assets/textures/casino_car.jpeg",
-                "truck": "assets/textures/truck_body_albedo.jpg",
-                "energybar": "assets/textures/energy.png",
-                "cartex": "assets/textures/casino_car.jpeg",
-                "cartex2": "assets/textures/casino_car2.jpg",
-                "road": "assets/textures/road.jpeg",
-                "road2": "assets/textures/road2.jpeg",
-                "battery": "assets/textures/battery.png",
-                "road3": "assets/textures/road3.jpeg",
-                "building": "assets/textures/building.png",
-                "building2": "assets/textures/building.jpeg",
-                "package": "assets/textures/package.png",
-                "arrowtex": "assets/textures/arrow.jpeg",
                 "lampTex":"assets/textures/lamp.jpg",
                 "conanTex":"assets/textures/conan_body.png",
-                "finalroadTex":"assets/textures/finalroad.jpg"
+                "finalroadTex":"assets/textures/finalroad.jpg",
+                "package2":"assets/textures/package2.jpg",
+                "pizzaTex":"assets/textures/pizza.jpg"
             },
             "meshes": {
                 "cube": "assets/models/cube.obj",
@@ -74,9 +64,11 @@
                 "car": "assets/models/casino_car.obj",
                 "battery": "assets/models/Battery.obj",
                 "package": "assets/models/package.obj",
-                "arrow": "assets/models/arrow.obj",
+                "arrow2": "assets/models/arrow.obj",
+               
                 "lamp": "assets/models/streetlamp.obj",
-                "conan":"assets/models/conan.obj"
+                "conan":"assets/models/conan.obj",
+                "pizza":"assets/models/Pizza.obj"
             },
             "samplers": {
                 "default": {},
@@ -170,7 +162,7 @@
                     "texture": "building2",
                     "sampler": "default"
                 },
-                "arrowMaterial": {
+                "pizzaMaterial": {
                     "type": "textured",
                     "shader": "textured",
                     "pipelineState": {
@@ -187,9 +179,29 @@
                         1,
                         1
                     ],
-                    "texture": "arrowtex",
+                    "texture": "pizzaTex",
                     "sampler": "default"
                 },
+                // "arrowMaterial": {
+                //     "type": "textured",
+                //     "shader": "textured",
+                //     "pipelineState": {
+                //         "faceCulling": {
+                //             "enabled": false
+                //         },
+                //         "depthTesting": {
+                //             "enabled": true
+                //         }
+                //     },
+                //     "tint": [
+                //         1,
+                //         1,
+                //         1,
+                //         1
+                //     ],
+                //     "texture": "package",
+                //     "sampler": "default"
+                // },
                 "packageMaterial": {
                     "type": "textured",
                     "shader": "textured",
@@ -207,7 +219,7 @@
                         1,
                         1
                     ],
-                    "texture": "package",
+                    "texture": "package2",
                     "sampler": "default"
                 },
                 "lampMaterial": {
@@ -333,7 +345,7 @@
                 },
                 "carMaterial": {
                     "type": "textured",
-                    "shader": "texture",
+                    "shader": "textured",
                     "pipelineState": {
                         "faceCulling": {
                             "enabled": false
@@ -384,7 +396,8 @@
                             "enabled": false
                         },
                         "depthTesting": {
-                            "enabled": true
+                            "enabled": true,
+                            "function":"GL_LESS"
                         }
                     },
                     "tint": [
@@ -395,8 +408,9 @@
                     ],
                     "texture": "energybar",
                     "sampler": "default"
-                },
-
+                }
+                
+                ,
                 "moon": {
                   "type": "lighted",
                   "shader": "light",
@@ -451,7 +465,7 @@
                         
                        // "scale": [0.5, 0.5, 1.0],
                        "position": [0, -2, -5],
-                    
+                        "name":"player",
                        "rotation": [0, 180, 0],
                        "scale":[0.02,0.02,0.02],
                        "components": [
@@ -480,12 +494,13 @@
                           
                        ]
 
-                    },
+                    }
+                    ,
                 {
-                    "position": [-13.0, 7.0, -8.0],
+                    "position": [2.0, 7.0, -8.0],
                     "rotation": [0, 0, 0],
                     "scale": [0.4, 0.4, 0.4],
-                    "name":"e1",
+                    "name":"plane1",
                     "components": [
                         {
                             "type": "Mesh Renderer",
@@ -496,9 +511,9 @@
                 }
                 ,
                 {
-                    "position": [-12, 7.0, -8.0],
+                    "position": [1.0, 7.0, -8.0],
                     "rotation": [0, 0, 0],
-                    "name":"e2",
+                    "name":"plane2",
                     "scale": [0.4, 0.4, 0.4],
                     "components": [
                         {
@@ -511,9 +526,9 @@
                 },
                 {
                    
-                    "position": [-11.0, 7.0, -8.0],
+                    "position": [0.0, 7.0, -8.0],
                     "rotation": [0, 0, 0],
-                    "name":"e3",
+                    "name":"plane3",
                     "scale": [0.4, 0.4, 0.4],
                     "components": [
                         {
@@ -525,9 +540,9 @@
     
                 },
                 {
-                    "position": [-10, 7.0, -8.0],
+                    "position": [-1, 7.0, -8.0],
                     "rotation": [0, 0, 0],
-                    "name":"e4",
+                    "name":"plane4",
                     "scale": [0.4, 0.4, 0.4],
                     "components": [
                         {
@@ -539,9 +554,9 @@
     
                 },
                 {
-                    "position": [-9.0, 7.0, -8.0],
+                    "position": [-2.0, 7.0, -8.0],
                     "rotation": [0, 0, 0],
-                    "name":"e5",
+                    "name":"plane5",
                     "scale": [0.4, 0.4, 0.4],
                     "components": [
                         {
@@ -553,7 +568,8 @@
     
                 }
                 ]
-            },
+            }
+            ,
             {
                 "position": [
                     -10.0,
@@ -588,6 +604,34 @@
 
                 ]
             },
+            // {
+            //     "position": [
+            //         0,
+            //         1.2,
+            //         -100.0
+            //     ],
+            //     "scale": [
+            //         0.3,
+            //         0.3,
+            //         0.3
+            //     ],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "arrow",
+            //             "material": "arrowMaterial"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             //"linearVelocity": [-0.5, 0, 0]
+            //             "angularVelocity": [
+            //                 0,
+            //                 45,
+            //                 0
+            //             ]
+            //         }
+            //     ]
+            // },
             {
                 "position": [
                     0,
@@ -762,6 +806,36 @@
                     }
                 ]
             },
+            // {
+            //     "position": [
+            //         1,
+            //         1.2,
+            //         -80.0
+            //     ],
+               
+            //     "scale": [
+            //         0.01,
+            //         0.01,
+            //         0.01
+            //     ],
+            //     "rotation":[45,90,0],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "pizza",
+            //             "material": "pizzaMaterial"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             //"linearVelocity": [-0.5, 0, 0]
+            //             "angularVelocity": [
+            //                 0,
+            //                 45,
+            //                 0
+            //             ]
+            //         }
+            //     ]
+            // },
             {
                 "position": [
                     -2,
@@ -965,34 +1039,34 @@
                     }
                 ]
             },
-            {
-                "position": [
-                    -5.0,
-                    1.5,
-                    -5.0
-                ],
-                "scale": [
-                    0.01,
-                    0.01,
-                    0.01
-                ],
-                "components": [
-                    {
-                        "type": "Mesh Renderer",
-                        "mesh": "arrow",
-                        "material": "arrowMaterial"
-                    },
-                    {
-                        "type": "Movement",
-                        //"linearVelocity": [-0.5, 0, 0]
-                        "angularVelocity": [
-                            0,
-                            45,
-                            0
-                        ]
-                    }
-                ]
-            },
+            // {
+            //     "position": [
+            //         -5.0,
+            //         1.5,
+            //         -5.0
+            //     ],
+            //     "scale": [
+            //         0.01,
+            //         0.01,
+            //         0.01
+            //     ],
+            //     "components": [
+            //         {
+            //             "type": "Mesh Renderer",
+            //             "mesh": "arrow",
+            //             "material": "arrowMaterial"
+            //         },
+            //         {
+            //             "type": "Movement",
+            //             //"linearVelocity": [-0.5, 0, 0]
+            //             "angularVelocity": [
+            //                 0,
+            //                 45,
+            //                 0
+            //             ]
+            //         }
+            //     ]
+            // },
             {
                 "name": "p1",
                 "position": [
@@ -1005,12 +1079,13 @@
                     0.01,
                     0.01
                 ],
+                "rotation":[45,90,0],
                 "name": "package1",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1035,12 +1110,13 @@
                     0.01,
                     0.01
                 ],
+                "rotation":[45,90,0],
                 "name": "package2",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1087,12 +1163,13 @@
                     0.01,
                     0.01
                 ],
+                "rotation":[45,90,0],
                 "name": "package3",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1108,9 +1185,9 @@
             {
                
                 "position": [
-                    0,
+                    -2,
                     1.2,
-                    -10.0
+                    -60.0
                 ],
                 "scale": [
                     3,
@@ -1143,12 +1220,13 @@
                     0.01,
                     0.01
                 ],
+                "rotation":[45,90,0],
                 "name": "package4",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1172,13 +1250,13 @@
                     0.01,
                     0.01,
                     0.01
-                ],
+                ],   "rotation":[45,90,0],
                 "name": "package5",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1202,13 +1280,13 @@
                     0.01,
                     0.01,
                     0.01
-                ],
+                ],   "rotation":[45,90,0],
                 "name": "package6",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1232,13 +1310,13 @@
                     0.01,
                     0.01,
                     0.01
-                ],
+                ],   "rotation":[45,90,0],
                 "name": "package7",
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -1267,8 +1345,8 @@
                 "components": [
                     {
                         "type": "Mesh Renderer",
-                        "mesh": "package",
-                        "material": "packageMaterial"
+                        "mesh": "pizza",
+                        "material": "pizzaMaterial"
                     },
                     {
                         "type": "Movement",
@@ -3255,30 +3333,7 @@
                     }
                 ]
             },
-            // { //1st right
-            //     "position": [
-            //         27,
-            //         20,
-            //         -4.3
-            //     ],
-            //     "rotation": [
-            //         0,
-            //         0,
-            //         0
-            //     ],
-            //     "scale": [
-            //         20,
-            //         20,
-            //         10
-            //     ],
-            //     "components": [
-            //         {
-            //             "type": "Mesh Renderer",
-            //             "mesh": "plane",
-            //             "material": "buildingMaterial"
-            //         }
-            //     ]
-            // },
+            
             {
                 //first left straight
                 "position": [

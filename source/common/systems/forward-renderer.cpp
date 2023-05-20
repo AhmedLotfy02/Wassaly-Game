@@ -329,14 +329,19 @@ namespace our
             // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
 
         int numLights = lights.size();
+        //    for(auto command : opaqueCommands){
+        //     command.material->setup();
+        //     command.material->shader->set("transform", VP*command.localToWorld);
+        //     command.mesh->draw();
+        // }
+        int h=0;
         for(auto opaqueCommand: this->opaqueCommands) {
-            std::cout << "here\n";
             opaqueCommand.material->setup();
 
             //set the camera position
             if (dynamic_cast<our::LightMaterial *>(opaqueCommand.material)) {
 
-                std::cout << "dynamic cast\n";
+               // std::cout << "dynamic cast\n";
                 opaqueCommand.material->shader->set("camera_position", cameraForward);
                 //set the M matrix for the shader
                 opaqueCommand.material->shader->set("object_to_world", opaqueCommand.localToWorld);
@@ -355,8 +360,7 @@ namespace our
                 if(!light->enabled) continue;
 
                 std::string prefix = "lights[" + std::to_string(light_index) + "].";
-                std::cout << "light type = " << (int)light->typeLight  << '\n';
-                opaqueCommand.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
+                 opaqueCommand.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
                 auto lightPosition = glm::vec3((light)->getOwner()->getLocalToWorldMatrix() *
                                                glm::vec4((light)->getOwner()->localTransform.position, 1.0));
                 switch(light->typeLight) {
@@ -365,8 +369,7 @@ namespace our
                         opaqueCommand.material->shader->set(prefix + "color" , light->color);
                         break;
                     case LightType::POINT:
-                        std::cout << "light number " << light_index << "\n";
-                        opaqueCommand.material->shader->set(prefix + "position", lightPosition);
+                         opaqueCommand.material->shader->set(prefix + "position", lightPosition);
 
                         opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic,
                                                                                               light->attenuation.linear, light->attenuation.constant));
@@ -384,18 +387,18 @@ namespace our
                     case LightType::SKY:
                         break;
                     default:
-                        std::cout << "ya rab\n";
+                       h++;
                 }
                 light_index++;
                 if (light_index >= MAX_LIGHT_COUNT)
                     break;
             }
-            std::cout << "ya rab\n";
+          
 
             opaqueCommand.mesh->draw();
         }
 
-        std::cout << "ya rab2\n";
+      
 
         // If there is a sky material, draw the sky
             if (this->skyMaterial) {
@@ -451,18 +454,33 @@ namespace our
             if (postprocessMaterial) {
                 //TODO: (Req 11) Return to the default framebuffer
                 // bind the default framebuffer
-                glBindFramebuffer(GL_FRAMEBUFFER, 0);
+           ShaderProgram *postprocessShader = new ShaderProgram();
+            // attach the vertex shader
+            postprocessShader->attach("assets/shaders/fullscreen.vert", GL_VERTEX_SHADER);
 
-                //TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
-                postprocessMaterial->setup();
-                // draw the fullscreen triangle
-                // ==> The fullscreen triangle is drawn using the postprocess shader
-                // parameters:
-                // 1. The type of primitive to render (GL_TRIANGLES)
-                // 2. The starting index in the array
-                // 3. The number of vertices to render
-                glDrawArrays(GL_TRIANGLES, 0, 3);
+            // attach the fragment shader based on the effect type (fish eye or vignette)
+            if ( effect )
+                postprocessShader->attach("assets/shaders/postprocess/fish_eye.frag", GL_FRAGMENT_SHADER);
+            else
+                postprocessShader->attach("assets/shaders/postprocess/vignette.frag", GL_FRAGMENT_SHADER);
 
+            // link the shader program
+            postprocessShader->link();
+
+            // create a postprocess material for the postprocess shader
+            postprocessMaterial->shader = postprocessShader;
+
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+            // TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
+            postprocessMaterial->setup();
+            // draw the fullscreen triangle
+            // ==> The fullscreen triangle is drawn using the postprocess shader
+            // parameters:
+            // 1. The type of primitive to render (GL_TRIANGLES)
+            // 2. The starting index in the array
+            // 3. The number of vertices to render
+            glDrawArrays(GL_TRIANGLES, 0, 3);
             }
         }
     }

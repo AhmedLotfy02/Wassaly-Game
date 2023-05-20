@@ -73,7 +73,7 @@ class Playstate : public our::State
        ImVec2 packagePos(790, 80);
 
         ImGui::SetNextWindowPos(packagePos);
-        ImGui::SetNextWindowSize({260, 30});
+        ImGui::SetNextWindowSize({250, 40});
         ImGui::Begin("Package", NULL,
                          ImGuiWindowFlags_NoTitleBar |
                          ImGuiWindowFlags_NoResize |
@@ -83,7 +83,7 @@ class Playstate : public our::State
                          ImGuiWindowFlags_NoInputs |
                          ImGuiWindowFlags_AlwaysAutoResize);
         // blue color
-        ImVec4 packageColor(0.0f, 0.0f, 1.0f, 1.0f);
+        ImVec4 packageColor(1.0f, 1.0f, 0.0f, 1.0f);
         ImGui::TextColored(packageColor, "Packages: %d /4", packagesNumber);
         ImGui::SetWindowFontScale(2.0f);
         
