@@ -57,12 +57,12 @@ namespace our
         // the texture unit number is 0
         shader->set("tex", 0);
         // by default texture is binded to texuture 0
-        if(texture != NULL)
+        if(texture)
             texture->bind();
         else
             Texture2D::unbind();
         // bind the smapler to texture unit 0
-        if( sampler != NULL)
+        if( sampler)
             sampler->bind(0);
         else
             Sampler::unbind(0);
@@ -95,72 +95,47 @@ namespace our
     // set the "tint" uniform to the value in the member variable tint
     void  LightMaterial::setup() const {
 
-        TintedMaterial::setup();
-        this->shader->set("alphaThreshold", this->alphaThreshold);
-        this->sampler->bind(0);
+        TexturedMaterial::setup();
         if(albedo_map != nullptr)
         {
-            // select an active texture unit -> 0
-            glActiveTexture(GL_TEXTURE0);
-
-            // bind the texture to unit 0
-            this->albedo_map->bind();
-
-            // bind the sampler to unit 0
-            this->sampler->bind(0);
-            shader->set("material.diffuse", 0);
+            glActiveTexture(GL_TEXTURE0); // activate texture unit 0
+            albedo_map->bind();               // bind texture to texture2D
+            shader->set("material.albedo", 0);
+            sampler->bind(0);
         }
 
         if(specular_map != nullptr)
         {
-            // select an active texture unit -> 1
-            glActiveTexture(GL_TEXTURE1);
-
-            // bind the texture to unit 1
-            this->specular_map->bind();
-
-            // bind the sampler to unit 1
-            this->sampler->bind(1);
+            glActiveTexture(GL_TEXTURE1); // activate texture unit 1
+            specular_map->bind();               // bind texture to texture2D
             shader->set("material.specular", 1);
+            sampler->bind(1);
         }
 
         if(emissive_map != nullptr)
         {
-            // select an active texture unit -> 2
-            glActiveTexture(GL_TEXTURE2);
-
-            // bind the texture to unit 2
-            this->emissive_map->bind();
-
-            // bind the sampler to unit 2
-            this->sampler->bind(2);
+            glActiveTexture(GL_TEXTURE2); // activate texture unit 2
+            emissive_map->bind();               // bind texture to texture2D
             shader->set("material.emissive", 2);
+            sampler->bind(2);
         }
 
         if(ambient_occlusion_map != nullptr)
         {
             // select an active texture unit -> 3
-            glActiveTexture(GL_TEXTURE3);
-
-            // bind the texture to unit 3
-            this->ambient_occlusion_map->bind();
-
-            // bind the sampler to unit 3
-            this->sampler->bind(3);
+            glActiveTexture(GL_TEXTURE3); // activate texture unit 3
+            ambient_occlusion_map->bind();               // bind texture to texture2D
             shader->set("material.ambient_occlusion", 3);
+            sampler->bind(3);
         }
 
         if(roughness_map != nullptr)
         {
             // select an active texture unit -> 4
-            glActiveTexture(GL_TEXTURE4);
-
-            // bind the texture to unit 4
-            this->roughness_map->bind();
-
-            // bind the sampler to unit 4
-            this->sampler->bind(4);
+            glActiveTexture(GL_TEXTURE4); // activate texture unit 4
+            roughness_map->bind();               // bind texture to texture2D
             shader->set("material.roughness", 4);
+            sampler->bind(4);
         }
 
         glActiveTexture(GL_TEXTURE0);

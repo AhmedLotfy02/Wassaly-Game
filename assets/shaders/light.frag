@@ -62,6 +62,13 @@ void main() {
     vec3 normal = normalize(fs_in.normal);
     vec3 view = normalize(fs_in.view);
 
+    vec3 diffuse = texture(material.albedo, fs_in.tex_coord).rgb;
+    vec3 specular = texture(material.specular, fs_in.tex_coord).rgb;
+    float roughness = texture(material.roughness, fs_in.tex_coord).r;
+    vec3 ambient = diffuse * texture(material.ambient_occlusion, fs_in.tex_coord).r;
+    vec3 emissive = texture(material.emissive, fs_in.tex_coord).rgb;
+    float shininess = 2.0 / pow(clamp(roughness, 0.001, 0.999), 4.0) - 2.0;
+
     vec3 material_diffuse = texture(material.albedo, fs_in.tex_coord).rgb;
     vec3 material_specular = texture(material.specular, fs_in.tex_coord).rgb;
     vec3 material_ambient = material_diffuse * texture(material.ambient_occlusion, fs_in.tex_coord).r;

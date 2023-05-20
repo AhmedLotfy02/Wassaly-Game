@@ -19,10 +19,14 @@
                     "vs": "assets/shaders/tinted.vert",
                     "fs": "assets/shaders/tinted.frag"
                 },
-                "textured": {
-                    "vs": "assets/shaders/textured.vert",
-                    "fs": "assets/shaders/textured.frag"
-                }
+                "textured":{
+                    "vs":"assets/shaders/textured.vert",
+                    "fs":"assets/shaders/textured.frag"
+                },
+                 "light": {
+                     "vs": "assets/shaders/light.vert",
+                     "fs": "assets/shaders/light.frag"
+                 }
             },
             "textures": {
                 "moon": "assets/textures/moon.jpg",
@@ -30,6 +34,22 @@
                 "wood": "assets/textures/wood.jpg",
                 "glass": "assets/textures/glass-panels.png",
                 "monkey": "assets/textures/monkey.png",
+                "truck":"assets/textures/truck_body_albedo.jpg",
+                "energybar":"assets/textures/energy.png",
+                "cartex":"assets/textures/casino_car.jpeg",
+                "road":"assets/textures/road.jpeg",
+                "road2":"assets/textures/road2.jpeg",
+                "battery":"assets/textures/battery.png",
+                "road3":"assets/textures/road3.jpeg",
+                "building":"assets/textures/building.png",
+                "building2":"assets/textures/building.jpeg",
+                "package":"assets/textures/package.png",
+                "arrowtex":"assets/textures/arrow.jpeg",
+                "albedo": "assets/textures/casino_car.jpeg",
+                "emissive": "assets/textures/casino_car.jpeg",
+                "roughness": "assets/textures/casino_car.jpeg",
+                "specular": "assets/textures/casino_car.jpeg",
+                "ambient_occlusion": "assets/textures/casino_car.jpeg",
                 "truck": "assets/textures/truck_body_albedo.jpg",
                 "energybar": "assets/textures/energy.png",
                 "cartex": "assets/textures/casino_car.jpeg",
@@ -313,7 +333,7 @@
                 },
                 "carMaterial": {
                     "type": "textured",
-                    "shader": "textured",
+                    "shader": "texture",
                     "pipelineState": {
                         "faceCulling": {
                             "enabled": false
@@ -330,6 +350,11 @@
                     ],
                     "texture": "cartex",
                     "sampler": "default"
+//                     "albedo": "albedo",
+//                     "specular": "specular",
+//                     "emissive": "emissive",
+//                     "ambient_occlusion": "ambient_occlusion",
+//                     "roughness": "black"
                 },
                 "carMaterial2": {
                     "type": "textured",
@@ -371,25 +396,25 @@
                     "texture": "energybar",
                     "sampler": "default"
                 },
+
                 "moon": {
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling": {
-                            "enabled": false
-                        },
-                        "depthTesting": {
-                            "enabled": true
-                        }
+                  "type": "lighted",
+                  "shader": "light",
+                  "pipelineState": {
+                    "faceCulling": {
+                      "enabled": false
                     },
-                    "tint": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
-                    "texture": "moon",
-                    "sampler": "default"
+                    "depthTesting": {
+                      "enabled": true
+                    }
+                  },
+                  "tint": [1, 1, 1, 1],
+                  "texture": "moon",
+                  "sampler": "default",
+                  "albedo" : "moon",
+                  "roughness" : "moon",
+                  "emissive" : "moon",
+                  "ambient_occlusion" : "ambient_occlusion"
                 }
             }
         },
@@ -422,161 +447,111 @@
                     //     ]
                     // },
                     {
-                        //"position": [0.1, -0.4, -2.0],
-                        // "scale": [0.5, 0.5, 1.0],
-                        "position": [
-                            0,
-                            -2,
-                            -5
-                        ],
-                        "name": "player",
-                        "rotation": [
-                            0,
-                            180,
-                            0
-                        ],
-                        "scale": [
-                            0.02,
-                            0.02,
-                            0.02
-                        ],
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "car",
-                                "material": "carMaterial2"
-                            }
-                        ]
+                       //"position": [0.1, -0.4, -2.0],
+                        
+                       // "scale": [0.5, 0.5, 1.0],
+                       "position": [0, -2, -5],
+                    
+                       "rotation": [0, 180, 0],
+                       "scale":[0.02,0.02,0.02],
+                       "components": [
+                           {
+                               "type": "Mesh Renderer",
+                               "mesh": "car",
+                               "material": "carMaterial"
+                           }
+//                            {
+//                             // define point on pepsi man.
+//                                "type": "Light",
+//                                "lightType": "point",
+//                                "enabled" : true,
+//                                "direction": [ 0.0,0.0,0.0],
+//                                "color": [
+//                                    10000,
+//                                    10000,
+//                                    10000
+//                                ],
+//                                "attenuation": [
+//                                    1.0,
+//                                    0.0,
+//                                    0.0
+//                                ]
+//                            }
+                          
+                       ]
+
                     },
+                {
+                    "position": [-13.0, 7.0, -8.0],
+                    "rotation": [0, 0, 0],
+                    "scale": [0.4, 0.4, 0.4],
+                    "name":"e1",
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "plane",
+                            "material": "energy"
+                        }
+                    ]
+                }
+                ,
+                {
+                    "position": [-12, 7.0, -8.0],
+                    "rotation": [0, 0, 0],
+                    "name":"e2",
+                    "scale": [0.4, 0.4, 0.4],
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "plane",
+                            "material": "energy"
+                        }
+                    ]
+    
+                },
+                {
                    
-
-
-
-                    {
-                        "position": [
-                            -13.0,
-                            7.0,
-                            -8.0
-                        ],
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ],
-                        "scale": [
-                            0.4,
-                            0.4,
-                            0.4
-                        ],
-                        "name": "plane1",
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "plane",
-                                "material": "energy"
-                            }
-                        ]
-                    },
-                    {
-                        "position": [
-                            -12,
-                            7.0,
-                            -8.0
-                        ],
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ],
-                        "name": "plane2",
-                        "scale": [
-                            0.4,
-                            0.4,
-                            0.4
-                        ],
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "plane",
-                                "material": "energy"
-                            }
-                        ]
-                    },
-                    {
-                        "position": [
-                            -11.0,
-                            7.0,
-                            -8.0
-                        ],
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ],
-                        "name": "plane3",
-                        "scale": [
-                            0.4,
-                            0.4,
-                            0.4
-                        ],
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "plane",
-                                "material": "energy"
-                            }
-                        ]
-                    },
-                    {
-                        "position": [
-                            -10,
-                            7.0,
-                            -8.0
-                        ],
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ],
-                        "name": "plane4",
-                        "scale": [
-                            0.4,
-                            0.4,
-                            0.4
-                        ],
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "plane",
-                                "material": "energy"
-                            }
-                        ]
-                    },
-                    {
-                        "position": [
-                            -9.0,
-                            7.0,
-                            -8.0
-                        ],
-                        "rotation": [
-                            0,
-                            0,
-                            0
-                        ],
-                        "name": "plane5",
-                        "scale": [
-                            0.4,
-                            0.4,
-                            0.4
-                        ],
-                        "components": [
-                            {
-                                "type": "Mesh Renderer",
-                                "mesh": "plane",
-                                "material": "energy"
-                            }
-                        ]
-                    }
+                    "position": [-11.0, 7.0, -8.0],
+                    "rotation": [0, 0, 0],
+                    "name":"e3",
+                    "scale": [0.4, 0.4, 0.4],
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "plane",
+                            "material": "energy"
+                        }
+                    ]
+    
+                },
+                {
+                    "position": [-10, 7.0, -8.0],
+                    "rotation": [0, 0, 0],
+                    "name":"e4",
+                    "scale": [0.4, 0.4, 0.4],
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "plane",
+                            "material": "energy"
+                        }
+                    ]
+    
+                },
+                {
+                    "position": [-9.0, 7.0, -8.0],
+                    "rotation": [0, 0, 0],
+                    "name":"e5",
+                    "scale": [0.4, 0.4, 0.4],
+                    "components": [
+                        {
+                            "type": "Mesh Renderer",
+                            "mesh": "plane",
+                            "material": "energy"
+                        }
+                    ]
+    
+                }
                 ]
             },
             {
@@ -610,6 +585,7 @@
                         ]
                         //"angularVelocity": [0, 45, 0]
                     }
+
                 ]
             },
             {
@@ -4832,6 +4808,24 @@
                     },
                     {
                         "type": "Movement",
+                        "angularVelocity": [0, 30, 0]
+                    },
+                    {
+
+                        "type": "Light",
+                        "lightType": "point",
+                        "enabled" : true,
+                        "direction": [ 0.0,0.0,0.0],
+                        "color": [
+                            10000,
+                            10000,
+                            10000
+                        ],
+                        "attenuation": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ],
                         "angularVelocity": [
                             0,
                             30,

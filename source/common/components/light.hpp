@@ -18,11 +18,8 @@ namespace our {
             LightType typeLight;
             bool enabled = false;
 
-            glm::vec3 diffuse;
-            glm::vec3 specular;
-            glm::vec3 position;  // Used for Point and Spot Lights only
             glm::vec3 direction; // Used for Directional and Spot Lights only
-
+            glm::vec3 color;
             struct {
                 float quadratic, linear, constant;
             } attenuation; // Used for Point and Spot Lights only
@@ -41,34 +38,6 @@ namespace our {
              // Reads linearVelocity & angularVelocity from the given json object
             virtual void deserialize(const nlohmann::json &data) override;
 
-//            virtual void onImmediateGui() override {
-//                std::string lightId = std::to_string((long long)this);
-//                ImGui::Checkbox(("Light enabled##" + lightId).c_str(), &enabled);
-//                if(enabled) {
-//
-//                    if(typeLight == LightType::DIRECTIONAL ||
-//                    typeLight == LightType::POINT ||
-//                    typeLight == LightType::SPOT) {
-//                        ImGui::ColorPicker3(("Diffuse##" + lightId).c_str(), &diffuse.x);
-//                        ImGui::ColorPicker3(("Specular##" + lightId).c_str(), &specular.x);
-//                    }
-//
-//                    if(typeLight == LightType::POINT ||
-//                        typeLight == LightType::SPOT) {
-//                        ImGui::DragFloat3(("Attenuation##"+lightId).c_str(), &attenuation.quadratic);
-//                    }
-//
-//                    if (typeLight == LightType::SPOT) {
-//                        ImGui::DragFloat2(("Cone angles (inner/outer)##"+lightId).c_str(), &spot_angle.inner);
-//                    }
-//
-//                    if(typeLight==LightType::SKY){
-//                        ImGui::ColorPicker3(("Sky top##" + lightId).c_str(), &sky_light.top_color.x);
-//                        ImGui::ColorPicker3(("Sky middle##" + lightId).c_str(), &sky_light.middle_color.x);
-//                        ImGui::ColorPicker3(("Sky bottom##" + lightId).c_str(), &sky_light.bottom_color.x);
-//                    }
-//                }
-//            }
     };
 
 
