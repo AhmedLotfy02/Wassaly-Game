@@ -6,7 +6,6 @@
 #include <texture/texture-utils.hpp>
 #include <material/material.hpp>
 #include <mesh/mesh.hpp>
-//#include "states/menu-state.hpp"
 #include <functional>
 #include <array>
 
