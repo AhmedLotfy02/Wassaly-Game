@@ -6,35 +6,12 @@
 #include <texture/texture-utils.hpp>
 #include <material/material.hpp>
 #include <mesh/mesh.hpp>
-
 #include <functional>
 #include <array>
 
-// This struct is used to store the location and size of a button and the code it should execute when clicked
-struct Button {
-    // The position (of the top-left corner) of the button and its size in pixels
-    glm::vec2 position, size;
-    // The function that should be excuted when the button is clicked. It takes no arguments and returns nothing.
-    std::function<void()> action;
-
-    // This function returns true if the given vector v is inside the button. Otherwise, false is returned.
-    // This is used to check if the mouse is hovering over the button.
-    bool isInside(const glm::vec2& v) const {
-        return position.x <= v.x && position.y <= v.y &&
-            v.x <= position.x + size.x &&
-            v.y <= position.y + size.y;
-    }
-
-    // This function returns the local to world matrix to transform a rectangle of size 1x1
-    // (and whose top-left corner is at the origin) to be the button.
-    glm::mat4 getLocalToWorld() const {
-        return glm::translate(glm::mat4(1.0f), glm::vec3(position.x, position.y, 0.0f)) * 
-            glm::scale(glm::mat4(1.0f), glm::vec3(size.x, size.y, 1.0f));
-    }
-};
 
 // This state shows how to use some of the abstractions we created to make a menu.
-class Menustate: public our::State {
+class Instructionstate: public our::State {
 
     // A meterial holding the menu shader and the menu texture to draw
     our::TexturedMaterial* menuMaterial;
@@ -45,8 +22,6 @@ class Menustate: public our::State {
     // A variable to record the time since the state is entered (it will be used for the fading effect).
     float time;
     // An array of the button that we can interact with
-    std::array<Button, 2> buttons;
-
     void onInitialize() override {
         // First, we create a material for the menu's background
         menuMaterial = new our::TexturedMaterial();
@@ -56,7 +31,7 @@ class Menustate: public our::State {
         menuMaterial->shader->attach("assets/shaders/textured.frag", GL_FRAGMENT_SHADER);
         menuMaterial->shader->link();
         // Then we load the menu texture
-        menuMaterial->texture = our::texture_utils::loadImage("assets/textures/intro_screen.jpg");
+        menuMaterial->texture = our::texture_utils::loadImage("assets/textures/instruction2.jpg");
         // Initially, the menu material will be black, then it will fade in
         menuMaterial->tint = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -72,68 +47,41 @@ class Menustate: public our::State {
         //AL: i made it red
         highlightMaterial->tint = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
         // To create a negative effect, we enable blending, set the equation to be subtract,
-        // and set the factors to be one for both the source and the destination. 
+        // and set the factors to be one for both the source and the destination.
         highlightMaterial->pipelineState.blending.enabled = true;
         highlightMaterial->pipelineState.blending.equation = GL_FUNC_SUBTRACT;
         highlightMaterial->pipelineState.blending.sourceFactor = GL_ONE;
         highlightMaterial->pipelineState.blending.destinationFactor = GL_ONE;
 
         // Then we create a rectangle whose top-left corner is at the origin and its size is 1x1.
-        // Note that the texture coordinates at the origin is (0.0, 1.0) since we will use the 
+        // Note that the texture coordinates at the origin is (0.0, 1.0) since we will use the
         // projection matrix to make the origin at the the top-left corner of the screen.
         rectangle = new our::Mesh({
-            {{0.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
-            {{1.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
-            {{1.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-            {{0.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
-        },{
-            0, 1, 2, 2, 3, 0,
-        });
+                                          {{0.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
+                                          {{1.0f, 0.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 1.0f}, {0.0f, 0.0f, 1.0f}},
+                                          {{1.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {1.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+                                          {{0.0f, 1.0f, 0.0f}, {255, 255, 255, 255}, {0.0f, 0.0f}, {0.0f, 0.0f, 1.0f}},
+                                  },{
+                                          0, 1, 2, 2, 3, 0,
+                                  });
 
         // Reset the time elapsed since the state is entered.
         time = 0;
 
-        // Fill the positions, sizes and actions for the menu buttons
-        // Note that we use lambda expressions to set the actions of the buttons.
-        // A lambda expression consists of 3 parts:
-        // - The capture list [] which is the variables that the lambda should remember because it will use them during execution.
-        //      We store [this] in the capture list since we will use it in the action.
-        // - The argument list () which is the arguments that the lambda should receive when it is called.
-        //      We leave it empty since button actions receive no input.
-        // - The body {} which contains the code to be executed. 
-        buttons[0].position = {540.0f, 305.0f};
-        buttons[0].size = {270.0f, 66.0f};
-        buttons[0].action = [this](){this->getApp()->changeState("instructions");};
 
-        buttons[1].position = {540.0f, 394.0f};
-        buttons[1].size = {250.0f, 66.0f};
-        buttons[1].action = [this](){this->getApp()->close();};
     }
 
     void onDraw(double deltaTime) override {
         // Get a reference to the keyboard object
         auto& keyboard = getApp()->getKeyboard();
 
-        if(keyboard.justPressed(GLFW_KEY_SPACE)){
-            // If the space key is pressed in this frame, go to the play state
-            getApp()->changeState("instructions");
-        } else if(keyboard.justPressed(GLFW_KEY_ESCAPE)) {
+
+        if(keyboard.justPressed(GLFW_KEY_ENTER)) {
             // If the escape key is pressed in this frame, exit the game
-            getApp()->close();
+            getApp()->changeState("play");
         }
 
-        // Get a reference to the mouse object and get the current mouse position
-        auto& mouse = getApp()->getMouse();
-        glm::vec2 mousePosition = mouse.getMousePosition();
 
-        // If the mouse left-button is just pressed, check if the mouse was inside
-        // any menu button. If it was inside a menu button, run the action of the button.
-        if(mouse.justPressed(0)){
-            for(auto& button: buttons){
-                if(button.isInside(mousePosition))
-                    button.action();
-            }
-        }
 
         // Get the framebuffer size to set the viewport and the create the projection matrix.
         glm::ivec2 size = getApp()->getFrameBufferSize();
@@ -161,14 +109,8 @@ class Menustate: public our::State {
         rectangle->draw();
 
         // For every button, check if the mouse is inside it. If the mouse is inside, we draw the highlight rectangle over it.
-        for(auto& button: buttons){
-            if(button.isInside(mousePosition)){
-                highlightMaterial->setup();
-                highlightMaterial->shader->set("transform", VP*button.getLocalToWorld());
-                rectangle->draw();
-            }
-        }
-        
+
+
     }
 
     void onDestroy() override {

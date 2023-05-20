@@ -22,9 +22,11 @@ namespace our
     {
         Application *app;          // The application in which the state runs
         bool mouse_locked = false; // Is the mouse locked
-        float speed = 0.7f;
+        float speed = 7.0f;
         our::GameController *gameController;
         bool decreaseBat = false;
+        int powers=3;
+        float lastPowered=0.0f;
 
     public:
         // When a state enters, it should call this function and give it the pointer to the application
@@ -32,14 +34,17 @@ namespace our
         {
             this->app = app;
             this->gameController = gameCon;
+            this->speed=3.5f;
         }
         void changeSpeed(float speed)
         {
             this->speed = speed;
+           
         }
         // This should be called every frame to update all entities containing a FreeCameraControllerComponent
-        void update(World *world, float deltaTime, int *countToRemove, int *numOfBatteries)
+        void update(World *world, float deltaTime, int *countToRemove, int *numOfBatteries,bool* won,bool* end)
         {
+            
             // First of all, we search for an entity containing both a CameraComponent and a FreeCameraControllerComponent
             // As soon as we find one, we break
             CameraComponent *camera = nullptr;
@@ -107,9 +112,14 @@ namespace our
 
             glm::vec3 current_sensitivity = controller->positionSensitivity;
             // If the LEFT SHIFT key is pressed, we multiply the position sensitivity by the speed up factor
-            if (app->getKeyboard().isPressed(GLFW_KEY_LEFT_SHIFT))
+            if (app->getKeyboard().isPressed(GLFW_KEY_LEFT_SHIFT) &&powers>0&&glfwGetTime()-lastPowered>2.0f ){
+                
                 current_sensitivity *= controller->speedupFactor;
+                lastPowered=glfwGetTime();
 
+                powers--;
+            }
+                
             // AL: going forward
             current_sensitivity *= speed;
             position += front * (deltaTime * current_sensitivity.z);
@@ -117,14 +127,14 @@ namespace our
             {
                 decreaseBat = false;
             }
-
+          
             else if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
             {
                 //   std::cout << "Heba";
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
-
+  std::cout<<position.z<<std::endl;
             if ((position.x < -6.5 && position.x > -7.7) && decreaseBat)
             {
                 std::cout << "changetofalse";
@@ -137,11 +147,17 @@ namespace our
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
-
+            if(position.z<-220.0){
+                    *won=true;
+                    *end=true;
+            }
             // We change the camera position based on the keys WASD/QE
             // S & W moves the player back and forth
-            if (app->getKeyboard().isPressed(GLFW_KEY_W))
+            if (app->getKeyboard().isPressed(GLFW_KEY_W)){
                 position += front * (deltaTime * current_sensitivity.z);
+                std::cout<<position.z<<std::endl;
+            }
+               
             if (app->getKeyboard().isPressed(GLFW_KEY_S))
                 position -= front * (deltaTime * current_sensitivity.z);
             // Q & E moves the player up and down
@@ -152,8 +168,6 @@ namespace our
             // A & D moves the player left or right
             if (app->getKeyboard().isPressed(GLFW_KEY_D))
             {
-                // std::cout << position.x << std::endl;
-
                 if (!(position.x > 6.1))
                     position += right * (deltaTime * current_sensitivity.x);
             }

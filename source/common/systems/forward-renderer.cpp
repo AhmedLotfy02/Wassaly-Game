@@ -156,7 +156,7 @@ namespace our
         CameraComponent *camera = nullptr;
         opaqueCommands.clear();
         transparentCommands.clear();
-
+        
         // for lights
         std::vector<LightComponent *> lights;
         for (auto entity : world->getEntities())
@@ -430,7 +430,7 @@ namespace our
             
             // attach the fragment shader based on the effect type (fish eye or vignette)
             if ( effect )
-                postprocessShader->attach("assets/shaders/postprocess/fish_eye.frag", GL_FRAGMENT_SHADER);
+                postprocessShader->attach("assets/shaders/postprocess/radial-blur.frag", GL_FRAGMENT_SHADER);
             else
                 postprocessShader->attach("assets/shaders/postprocess/vignette.frag", GL_FRAGMENT_SHADER);
             

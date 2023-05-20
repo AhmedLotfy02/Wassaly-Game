@@ -27,14 +27,24 @@ class Playstate : public our::State
     int packagesNumber = 0;
     float time = 0;
     bool effect = false;
+    float lastCollisionTimeBattery = 0;
+    float lastCollisionTimePackage = 0;
+    bool won=false;
+    float speed=0;
+    bool end=false;
 
     void onInitialize() override
     {
         numberOfBatteries = 5;
         counterToRemove = 0;
         tempCount = 0;
-
+        packagesNumber = 0;
+        lastCollisionTimeBattery = 0;
+        lastCollisionTimePackage = 0;
+        won=false;
+        speed=0;
         gameController.enter(getApp(), &world);
+        end=false;
         // First of all, we get the scene configuration from the app config
         auto &config = getApp()->getConfig()["scene"];
         // If we have assets in the scene config, we deserialize them
@@ -52,19 +62,42 @@ class Playstate : public our::State
         collisionSystem.setPlayer(player);
         // We initialize the camera controller system since it needs a pointer to the app
         cameraController.enter(getApp(), &gameController);
+        cameraController.changeSpeed(3.0f);
         // Then we initialize the renderer
         auto size = getApp()->getFrameBufferSize();
         renderer.initialize(size, config["renderer"]);
     }
+    void onImmediateGui() override
+    {
+        // We use the immediate GUI to draw the debug information of the renderer
+       ImVec2 packagePos(790, 80);
 
+        ImGui::SetNextWindowPos(packagePos);
+        ImGui::SetNextWindowSize({260, 30});
+        ImGui::Begin("Package", NULL,
+                         ImGuiWindowFlags_NoTitleBar |
+                         ImGuiWindowFlags_NoResize |
+                         ImGuiWindowFlags_NoMove |
+                         ImGuiWindowFlags_NoScrollbar |
+                         ImGuiWindowFlags_NoSavedSettings |
+                         ImGuiWindowFlags_NoInputs |
+                         ImGuiWindowFlags_AlwaysAutoResize);
+        // blue color
+        ImVec4 packageColor(0.0f, 0.0f, 1.0f, 1.0f);
+        ImGui::TextColored(packageColor, "Packages: %d /4", packagesNumber);
+        ImGui::SetWindowFontScale(2.0f);
+        
+        ImGui::End();
+    }
     void onDraw(double deltaTime) override
     {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
-        cameraController.update(&world, (float)deltaTime, &counterToRemove, &numberOfBatteries);
+        cameraController.update(&world, (float)deltaTime, &counterToRemove, &numberOfBatteries, &won,&end);
         counterToRemove++;
 
-        float speed = gameController.decreaseBatteries(&counterToRemove, &numberOfBatteries, false);
+        speed = gameController.decreaseBatteries(&counterToRemove, &numberOfBatteries, false);
+        std::cout<<speed<<std::endl;
         cameraController.changeSpeed(speed);
         //    decreaseBatteries();
 
@@ -76,34 +109,60 @@ class Playstate : public our::State
         // And finally we use the renderer system to draw the scene
 
         // Collioison
-
+        if(end){
+            if(packagesNumber>=4){
+                 getApp()->changeState("youwon");
+            }
+            else{
+                    getApp()->changeState("gameover");
+            }
+        }
+        // if(won){
+        //     getApp()->changeState("youwon");
+        // }
+        
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
-        // std::cout << "collisionState" << collisionState << std::endl;
-        if (collisionState == 1)
+       
+           
+            if (collisionState == 1 && glfwGetTime()-lastCollisionTimeBattery>2.0f)
+            { 
+                
+                lastCollisionTimeBattery = glfwGetTime();
+                std::cout << "collision with battery" << std::endl;
+                effect = true;
+                time = glfwGetTime();
+               speed= gameController.increaseBatteries(&numberOfBatteries);
+               counterToRemove=0;
+               
+            }
+            else if (collisionState == -1)
+            {
+                std::cout << "gameover" << std::endl;
+                getApp()->changeState("gameover");
+            }
+            else if (collisionState == 2 && glfwGetTime()-lastCollisionTimePackage>2.0f)
+            {
+                  std::cout<<"inside"<<std::endl;
+                lastCollisionTimePackage = glfwGetTime();
+                packagesNumber++;
+                // if(packagesNumber==4)
+                // {
+                //     std::cout << "youwon" << std::endl;
+                //     getApp()->changeState("youwon");
+                // }
+                // TODO : add score for package
+            // std::cout << "collision with package" << std::endl;
+            }
+        
+        
+        
+        if( effect && glfwGetTime()- time > 2.0f)
         {
-            std::cout << "collision with battery" << std::endl;
-            effect = true;
-            time = glfwGetTime();
-            gameController.increaseBatteries(&numberOfBatteries);
-        }
-        else if (collisionState == -1)
-        {
-            std::cout << "gameover" << std::endl;
-            getApp()->changeState("gameover");
-        }
-        else if (collisionState == 2)
-        {
-            // TODO : add score for package
-            std::cout << "collision with package" << std::endl;
-        }
-
-        if( effect && glfwGetTime()- time > 5.0f)
-        {
-            std::cout << "effect1111111111" << effect << std::endl;
+           // std::cout << "effect1111111111" << effect << std::endl;
             effect = false;
         }
         
-        std::cout << "effect" << effect << std::endl;
+        //std::cout << "effect" << effect << std::endl;
         renderer.render(&world, effect);
 
         // Get a reference to the keyboard object

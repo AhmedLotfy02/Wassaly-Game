@@ -8,9 +8,9 @@ in vec2 tex_coord;
 out vec4 frag_color;
 
 // The number of samples we read to compute the blurring effect
-#define STEPS 16
+#define STEPS 10
 // The strength of the blurring effect
-#define STRENGTH 0.2
+#define STRENGTH 0.05
 
 void main(){
     // To apply radial blur, we compute the direction outward from the center to the current pixel

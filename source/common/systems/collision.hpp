@@ -16,7 +16,7 @@ namespace our
 
     class CollisionSystem
     {
-        std::vector<Entity *> cars, batteries, planes, packages;
+        //std::vector<Entity *> cars, batteries, planes, packages;
         Entity *player;
 
     public:
@@ -69,84 +69,39 @@ namespace our
         // This should be called every frame to update all entities containing a FreeCameraControllerComponent
         int update(World *world, float deltaTime)
         {
-            batteries.clear();
-            cars.clear();
-
+           
+             
             // iterate over all entities in the world and check for collisions with the player
             for (const auto &entity : world->getEntities())
             {
                 
-                if (entity->name.substr(0, 7) == "battery")
+
+               
+                if(checkCollision(entity, player)&&entity->name!="player")
                 {
-                    batteries.push_back(entity);
+                    std::cout<<"collision happened"<<std::endl;
+                    if(entity->name.substr(0, 7) == "battery")
+                    {
+                        world->markForRemoval(entity);
+                        return 1;
+                    }
+                    else if ((entity->name.substr(0, 2) == "cr") || (entity->name.substr(0, 2) == "cl"))
+                    {
+                        world->markForRemoval(entity);
+                        return -1;
+                    }
+                    else if ( (entity->name.substr(0, 7) =="package") )
+                    {
+                        world->markForRemoval(entity);
+                        return 2;
+                    }
+                    return 1;
                 }
-                else if ((entity->name.substr(0, 2) == "cr") || (entity->name.substr(0, 2) == "cl"))
-                {
-                    cars.push_back(entity);
-                }
-                /*
-                else if ( (entity->name.substr(0, 5) =="plane") )
-                {
-                    planes.push_back(entity);
-                }
-                */
-                else if ( (entity->name.substr(0, 7) =="package") )
-                {
-                    packages.push_back(entity);
-                }
-                // else if (entity->name.substr(0, 4) == "play")
-                // {
-                //     player = entity;
-                // }
+
+
+               
             }
 
-            for (Entity *battery : batteries)
-            {
-                // if collision happened with a battery
-                if (checkCollision(battery, player))
-                {
-                    world->markForRemoval(battery);
-                    // world->deleteMarkedEntities();
-
-                    return 1; // collision with battery
-                }
-            }
-
-            for (Entity *car : cars)
-            {
-                // if collision happened with a battery
-                if (checkCollision(car, player))
-                {
-                    world->markForRemoval(car);
-                    // world->deleteMarkedEntities();
-                    return -1; // collision with car
-                }
-            }
-
-            /*
-            for ( Entity* plane : planes)
-            {
-                // if collision happened with a battery
-                if (checkCollision(plane, player ))
-                {
-                    world->markForRemoval(plane);
-                    world->deleteMarkedEntities();
-                    return -1; //collision with car
-                }
-            }
-            */
-
-            for (Entity *package : packages)
-            {
-                // std::cout<< "in packagggggggggggggggggggggggggggggggge" << std::endl;
-                //  if collision happened with a battery
-                if (checkCollision(package, player))
-                {
-                    world->markForRemoval(package);
-                    //  world->deleteMarkedEntities();
-                    return 2; // collision with car
-                }
-            }
 
             return 0;
         }
