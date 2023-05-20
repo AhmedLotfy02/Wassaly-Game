@@ -150,34 +150,34 @@ namespace our {
 
 
 
-    void ForwardRenderer::render(World* world){
+    void ForwardRenderer::render(World* world) {
         // First of all, we search for a camera and for all the mesh renderers
-        CameraComponent* camera = nullptr;
+        CameraComponent *camera = nullptr;
         opaqueCommands.clear();
         transparentCommands.clear();
 
         // for lights
-        std::vector<LightComponent*> lights;
-        for(auto entity : world->getEntities()){
+        std::vector<LightComponent *> lights;
+        for (auto entity: world->getEntities()) {
             // If we hadn't found a camera yet, we look for a camera in this entity
-            if(!camera) camera = entity->getComponent<CameraComponent>();
+            if (!camera) camera = entity->getComponent<CameraComponent>();
             // If this entity has a mesh renderer component
-            if(auto meshRenderer = entity->getComponent<MeshRendererComponent>(); meshRenderer){
-               if(!(world->checkIfMarkedRemoval(entity))){ 
-                // We construct a command from it
+            if (auto meshRenderer = entity->getComponent<MeshRendererComponent>(); meshRenderer) {
+                if (!(world->checkIfMarkedRemoval(entity))) {
+                    // We construct a command from it
                     RenderCommand command;
                     command.localToWorld = meshRenderer->getOwner()->getLocalToWorldMatrix();
                     command.center = glm::vec3(command.localToWorld * glm::vec4(0, 0, 0, 1));
                     command.mesh = meshRenderer->mesh;
                     command.material = meshRenderer->material;
                     // if it is transparent, we add it to the transparent commands list
-                    if(command.material->transparent){
+                    if (command.material->transparent) {
                         transparentCommands.push_back(command);
                     } else {
-                    // Otherwise, we add it to the opaque command list
+                        // Otherwise, we add it to the opaque command list
                         opaqueCommands.push_back(command);
                     }
-               }
+                }
             }
 
             auto light = entity->getComponent<LightComponent>();
@@ -190,236 +190,250 @@ namespace our {
                     litShader->set("sky.bottom", light->sky_light.bottom_color);
                 } else lights.push_back(light);
             }
+
         }
 
-        // If there is no camera, we return (we cannot render without a camera)
-        if(camera == nullptr) return;
+            // If there is no camera, we return (we cannot render without a camera)
+            if (camera == nullptr) return;
 
-        //TODO: (Req 9) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
-        // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
-        glm::vec3 cameraForward = camera->getViewMatrix()[2];
-        std::sort(transparentCommands.begin(), transparentCommands.end(), [cameraForward](const RenderCommand& first, const RenderCommand& second){
-            //TODO: (Req 9) Finish this function
-           //dot product
-            float firstDistance = glm::dot(first.center, cameraForward);
-            float secondDistance = glm::dot(second.center, cameraForward);
-            return firstDistance < secondDistance;
+            //TODO: (Req 9) Modify the following line such that "cameraForward" contains a vector pointing the camera forward direction
+            // HINT: See how you wrote the CameraComponent::getViewMatrix, it should help you solve this one
+            glm::vec3 cameraForward = camera->getViewMatrix()[2];
+            std::sort(transparentCommands.begin(), transparentCommands.end(),
+                      [cameraForward](const RenderCommand &first, const RenderCommand &second) {
+                          //TODO: (Req 9) Finish this function
+                          //dot product
+                          float firstDistance = glm::dot(first.center, cameraForward);
+                          float secondDistance = glm::dot(second.center, cameraForward);
+                          return firstDistance < secondDistance;
 
-            /******************************************************************************************************
-              -- Function parameters:
-                  1,2) transparentCommands.begin() and transparentCommands.end() are the iterators that define the range of elements to be sorted.
-                       transparentCommands is a vector of RenderCommand objects that need to be sorted.
-                  3) a lambda function that compares two RenderCommand objects based on their distance from the camera's forward vector.
-                     The lambda function takes two RenderCommand objects as input and returns a boolean value indicating whether the first object is less than the second object.
-  
-              -- It calculates the distance of the center of each object from the camera's forward vector using the dot product of the center vector
-                 and the camera's forward vector. The object with the smaller distance is considered "less than" the object with the larger distance
-                 and will be placed before it in the sorted range.
-             ******************************************************************************************************/
- 
-        });
+                          /******************************************************************************************************
+                            -- Function parameters:
+                                1,2) transparentCommands.begin() and transparentCommands.end() are the iterators that define the range of elements to be sorted.
+                                     transparentCommands is a vector of RenderCommand objects that need to be sorted.
+                                3) a lambda function that compares two RenderCommand objects based on their distance from the camera's forward vector.
+                                   The lambda function takes two RenderCommand objects as input and returns a boolean value indicating whether the first object is less than the second object.
 
-        //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP
-        glm::mat4 VP= camera->getProjectionMatrix(windowSize)*camera->getViewMatrix();
-         
-        
-        //TODO: (Req 9) Set the OpenGL viewport using viewportStart and viewportSize
-        glViewport(0,0, windowSize.x, windowSize.y);
-        /***************************************************************************************************************
-          'glViewport' is a function that sets the viewport dimensions of the rendering window.
+                            -- It calculates the distance of the center of each object from the camera's forward vector using the dot product of the center vector
+                               and the camera's forward vector. The object with the smaller distance is considered "less than" the object with the larger distance
+                               and will be placed before it in the sorted range.
+                           ******************************************************************************************************/
 
-          -- The function takes four parameters:
-             1) '0' an integer value that specifies the x-coordinate of the lower-left corner of the viewport, in window coordinates.
-                    In this case, the viewport starts at the left edge of the window.
-             2) '0' an integer value that specifies the y-coordinate of the lower-left corner of the viewport, in window coordinates.
-                    In this case, the value is set to 0, which means that the viewport starts at the bottom edge of the window.
-             3) 'windowSize.x' an integer value that specifies the width of the viewport in pixels.
-             4) 'windowSize.x' an integer value that specifies the height of the viewport in pixels.
-         ***************************************************************************************************************/
+                      });
 
-        //TODO: (Req 9) Set the clear color to black and the clear depth to 1
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        /***************************************************************************************************************
-          'glClearColor' is a function that specifys the clear color for the color buffer.
-          -- The function takes four parameters: which represent the red, green, blue, and alpha.
-         ***************************************************************************************************************/
+            //TODO: (Req 9) Get the camera ViewProjection matrix and store it in VP
+            glm::mat4 VP = camera->getProjectionMatrix(windowSize) * camera->getViewMatrix();
 
-        glClearDepth(1.0f);
-        /***************************************************************************************************************
-          'glClearDepth()' is a function that specifys the clear value for the depth buffer.
-          -- The function takes a single parameter, which represents the clear value for the depth buffer.
-         ***************************************************************************************************************/
 
-        // TODO: (Req 9) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
-        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-        /***************************************************************************************************************
-          'glColorMask' is a function that  enables or disables writing to the color buffer for each color component (red, green, blue, and alpha).
+            //TODO: (Req 9) Set the OpenGL viewport using viewportStart and viewportSize
+            glViewport(0, 0, windowSize.x, windowSize.y);
+            /***************************************************************************************************************
+              'glViewport' is a function that sets the viewport dimensions of the rendering window.
 
-          -- The function takes four parameters, each representing a boolean value that determines whether writing
-             to the corresponding color component is enabled (GL_TRUE) or disabled (GL_FALSE).
-             The four parameters correspond to the red, green, blue, and alpha components of the color buffer, respectively.
-         ***************************************************************************************************************/
+              -- The function takes four parameters:
+                 1) '0' an integer value that specifies the x-coordinate of the lower-left corner of the viewport, in window coordinates.
+                        In this case, the viewport starts at the left edge of the window.
+                 2) '0' an integer value that specifies the y-coordinate of the lower-left corner of the viewport, in window coordinates.
+                        In this case, the value is set to 0, which means that the viewport starts at the bottom edge of the window.
+                 3) 'windowSize.x' an integer value that specifies the width of the viewport in pixels.
+                 4) 'windowSize.x' an integer value that specifies the height of the viewport in pixels.
+             ***************************************************************************************************************/
 
-        glDepthMask(GL_TRUE);
-        /***************************************************************************************************************
-          'glDepthMask' is a function that enables or disables writing to the depth buffer.
-          -- The function takes a single parameter, which represents a boolean value that determines whether writing
-              to the depth buffer is enabled (GL_TRUE) or disabled (GL_FALSE).
-         ***************************************************************************************************************/
+            //TODO: (Req 9) Set the clear color to black and the clear depth to 1
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            /***************************************************************************************************************
+              'glClearColor' is a function that specifys the clear color for the color buffer.
+              -- The function takes four parameters: which represent the red, green, blue, and alpha.
+             ***************************************************************************************************************/
 
-        // If there is a postprocess material, bind the framebuffer
-        if(postprocessMaterial){
-            //TODO: (Req 11) bind the framebuffer
-            // bind the postprocess framebuffer
-            glBindFramebuffer(GL_FRAMEBUFFER, postprocessFrameBuffer);
-        }
+            glClearDepth(1.0f);
+            /***************************************************************************************************************
+              'glClearDepth()' is a function that specifys the clear value for the depth buffer.
+              -- The function takes a single parameter, which represents the clear value for the depth buffer.
+             ***************************************************************************************************************/
 
-        //TODO: (Req 9) Clear the color and depth buffers
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        /***************************************************************************************************************
-          'glClear' is a function that clears the specified buffers to their default values.
+            // TODO: (Req 9) Set the color mask to true and the depth mask to true (to ensure the glClear will affect the framebuffer)
+            glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+            /***************************************************************************************************************
+              'glColorMask' is a function that  enables or disables writing to the color buffer for each color component (red, green, blue, and alpha).
 
-          -- The function takes a single parameter, which is a bitwise OR combination of one or more constants that represent the buffers to be cleared.
-             In this case, both the color buffer and the depth buffer should be cleared.
-         ***************************************************************************************************************/
+              -- The function takes four parameters, each representing a boolean value that determines whether writing
+                 to the corresponding color component is enabled (GL_TRUE) or disabled (GL_FALSE).
+                 The four parameters correspond to the red, green, blue, and alpha components of the color buffer, respectively.
+             ***************************************************************************************************************/
 
-        glEnable(GL_DEPTH_TEST);
-        /***************************************************************************************************************
-         'glEnable' is a function that enables various features and capabilities in the graphics pipeline.
+            glDepthMask(GL_TRUE);
+            /***************************************************************************************************************
+              'glDepthMask' is a function that enables or disables writing to the depth buffer.
+              -- The function takes a single parameter, which represents a boolean value that determines whether writing
+                  to the depth buffer is enabled (GL_TRUE) or disabled (GL_FALSE).
+             ***************************************************************************************************************/
 
-         -- The function takes a single parameter, which is a constant that represents the feature or capability to be enabled.
-            In this case, GL_DEPTH_TEST enables depth testing in the graphics pipeline.
-            
-         -- Depth testing is a technique used to ensure that closer objects are rendered in front of farther objects,
-            based on their distance from the viewer's perspective. This is typically achieved by comparing the depth values of pixels
-             in the depth buffer during the rendering process.
-        ***************************************************************************************************************/
+            // If there is a postprocess material, bind the framebuffer
+            if (postprocessMaterial) {
+                //TODO: (Req 11) bind the framebuffer
+                // bind the postprocess framebuffer
+                glBindFramebuffer(GL_FRAMEBUFFER, postprocessFrameBuffer);
+            }
 
-        //TODO: (Req 9) Draw all the opaque commands
-        // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+            //TODO: (Req 9) Clear the color and depth buffers
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            /***************************************************************************************************************
+              'glClear' is a function that clears the specified buffers to their default values.
+
+              -- The function takes a single parameter, which is a bitwise OR combination of one or more constants that represent the buffers to be cleared.
+                 In this case, both the color buffer and the depth buffer should be cleared.
+             ***************************************************************************************************************/
+
+            glEnable(GL_DEPTH_TEST);
+            /***************************************************************************************************************
+             'glEnable' is a function that enables various features and capabilities in the graphics pipeline.
+
+             -- The function takes a single parameter, which is a constant that represents the feature or capability to be enabled.
+                In this case, GL_DEPTH_TEST enables depth testing in the graphics pipeline.
+
+             -- Depth testing is a technique used to ensure that closer objects are rendered in front of farther objects,
+                based on their distance from the viewer's perspective. This is typically achieved by comparing the depth values of pixels
+                 in the depth buffer during the rendering process.
+            ***************************************************************************************************************/
+
+            //TODO: (Req 9) Draw all the opaque commands
+            // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
 
         int numLights = lights.size();
+        for(auto opaqueCommand: this->opaqueCommands) {
+            std::cout << "here\n";
+            opaqueCommand.material->setup();
 
-        for(auto command : opaqueCommands){
-            command.material->setup();
-            command.material->shader->set("transform", VP*command.localToWorld);
-            command.material->shader->set("view_projection", VP);
-            command.material->shader->set("camera_position", cameraForward);
-            command.material->shader->set("object_to_world", command.localToWorld);
-            command.material->shader->set("object_to_world_inv_transpose", glm::transpose(glm::inverse(command.localToWorld)));
+            //set the camera position
+            if (dynamic_cast<our::LightMaterial *>(opaqueCommand.material)) {
 
+                std::cout << "dynamic cast\n";
+                opaqueCommand.material->shader->set("camera_position", cameraForward);
+                //set the M matrix for the shader
+                opaqueCommand.material->shader->set("object_to_world", opaqueCommand.localToWorld);
+                //set the M_IT matrix for the shader
+                opaqueCommand.material->shader->set("object_to_world_inv_transpose", glm::transpose(glm::inverse(opaqueCommand.localToWorld)));
+                //set the VP matrix for the shader
+                opaqueCommand.material->shader->set("view_projection", VP);
+            }
+            else opaqueCommand.material->shader->set("transform", VP * opaqueCommand.localToWorld);
             const int MAX_LIGHT_COUNT = 8;
-            command.material->shader->set("light_count", numLights);
+
+            opaqueCommand.material->shader->set("light_count", numLights);
+
             int light_index = 0;
             for(LightComponent* light : lights) {
                 if(!light->enabled) continue;
-                light->position = light->getOwner()->getWorldTranslation();
-                light->direction = light->getOwner()->getLocalToWorldMatrix() *
-                glm::vec4(0.0, -1.0, 0.0, 0);
 
                 std::string prefix = "lights[" + std::to_string(light_index) + "].";
-
-                command.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
-
+                std::cout << "light type = " << (int)light->typeLight  << '\n';
+                opaqueCommand.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
+                auto lightPosition = glm::vec3((light)->getOwner()->getLocalToWorldMatrix() *
+                                               glm::vec4((light)->getOwner()->localTransform.position, 1.0));
                 switch(light->typeLight) {
-                case LightType::DIRECTIONAL:
-                    command.material->shader->set(prefix + "direction", light->direction);
-                    command.material->shader->set(prefix + "diffuse", light->diffuse);
-                    command.material->shader->set(prefix + "specular", light->specular);
-                    break;
-                case LightType::POINT:
-                    command.material->shader->set(prefix + "position", light->position);
-                    command.material->shader->set(prefix + "diffuse", light->diffuse);
-                    command.material->shader->set(prefix + "specular", light->specular);
-                    command.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic, light->attenuation.linear, light->attenuation.constant));
-                    break;
-                case LightType::SPOT:
-                    command.material->shader->set(prefix + "position", light->position);
-                    command.material->shader->set(prefix + "direction", light->direction);
-                    command.material->shader->set(prefix + "diffuse", light->diffuse);
-                    command.material->shader->set(prefix + "specular", light->specular);
-                    command.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic, light->attenuation.linear, light->attenuation.constant));
-                    command.material->shader->set(prefix + "cone_angles", glm::vec2(light->spot_angle.inner, light->spot_angle.outer));
-                    break;
-                case LightType::SKY:
-                    break;
+                    case LightType::DIRECTIONAL:
+                        opaqueCommand.material->shader->set(prefix + "direction", light->direction);
+                        opaqueCommand.material->shader->set(prefix + "color" , light->color);
+                        break;
+                    case LightType::POINT:
+                        std::cout << "light number " << light_index << "\n";
+                        opaqueCommand.material->shader->set(prefix + "position", lightPosition);
+
+                        opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic,
+                                                                                              light->attenuation.linear, light->attenuation.constant));
+                        opaqueCommand.material->shader->set(prefix + "color" , light->color);
+                        break;
+                    case LightType::SPOT:
+                        opaqueCommand.material->shader->set(prefix + "position", lightPosition);
+                        opaqueCommand.material->shader->set(prefix + "direction", light->direction);
+
+                        opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic,
+                                                                                              light->attenuation.linear, light->attenuation.constant));
+                        opaqueCommand.material->shader->set(prefix + "cone_angles", glm::vec2(light->spot_angle.inner, light->spot_angle.outer));
+                        opaqueCommand.material->shader->set(prefix + "color" , light->color);
+                        break;
+                    case LightType::SKY:
+                        break;
+                    default:
+                        std::cout << "ya rab\n";
                 }
                 light_index++;
                 if(light_index >= MAX_LIGHT_COUNT) break;
             }
+            std::cout << "ya rab\n";
 
-            command.mesh->draw();
-        
+            opaqueCommand.mesh->draw();
         }
 
-
+        std::cout << "ya rab2\n";
 
         // If there is a sky material, draw the sky
-        if(this->skyMaterial){
-            //TODO: (Req 10) setup the sky material
-            skyMaterial->setup();
+            if (this->skyMaterial) {
+                //TODO: (Req 10) setup the sky material
+                skyMaterial->setup();
 
-            //TODO: (Req 10) Get the camera position
-            // ==> The camera position is the origin of the world in camera space
-            glm::vec3 cameraPosition = camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0, 0, 0, 1);
+                //TODO: (Req 10) Get the camera position
+                // ==> The camera position is the origin of the world in camera space
+                glm::vec3 cameraPosition = camera->getOwner()->getLocalToWorldMatrix() * glm::vec4(0, 0, 0, 1);
 
-            //TODO: (Req 10) Create a model matrix for the sky such that it always follows the camera (sky sphere center = camera position)
-            // ==> The sky sphere is centered at the camera position
-            glm::mat4 skyModelMatrix = glm::translate(glm::mat4(1.0f), cameraPosition);
-            
-            //TODO: (Req 10) We want the sky to be drawn behind everything (in NDC space, z=1)
-            // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
-            // ==> The sky sphere is always behind everything (in NDC space, z=1)
-            // ==> to make the sky sphere always behind everything
-            // make z = 0 then translate it to z = 1 to make it the farthest object in the scene
-            
-            // x=x, y=y, z=1
-            // 1 0 0 0     x     x
-            // 0 1 0 0  *  y  =  y
-            // 0 0 0 1     z     1
-            // 0 0 0 1     1     1
+                //TODO: (Req 10) Create a model matrix for the sky such that it always follows the camera (sky sphere center = camera position)
+                // ==> The sky sphere is centered at the camera position
+                glm::mat4 skyModelMatrix = glm::translate(glm::mat4(1.0f), cameraPosition);
 
-            glm::mat4 alwaysBehindTransform = glm::mat4(
-                //  Row1, Row2, Row3, Row4
-                1.0, 0.0f, 0.0f, 0.0f,  // Column1
-                0.0f, 1.0f, 0.0f, 0.0f, // Column2
-                0.0f, 0.0f, 0.0f, 0.0f, // Column3
-                0.0f, 0.0f, 1.0f, 1.0f  // Column4
-            );
-            //TODO: (Req 10) set the "transform" uniform
-            // ==> the matrix that we want to set is the product of the alwaysBehindTransform, the projection matrix, the view matrix, and the skyModelMatrix
-            skyMaterial->shader->set("transform", alwaysBehindTransform * camera->getProjectionMatrix(windowSize) * camera->getViewMatrix() * skyModelMatrix);
+                //TODO: (Req 10) We want the sky to be drawn behind everything (in NDC space, z=1)
+                // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
+                // ==> The sky sphere is always behind everything (in NDC space, z=1)
+                // ==> to make the sky sphere always behind everything
+                // make z = 0 then translate it to z = 1 to make it the farthest object in the scene
 
-            //TODO: (Req 10) draw the sky sphere
-            skySphere->draw();
+                // x=x, y=y, z=1
+                // 1 0 0 0     x     x
+                // 0 1 0 0  *  y  =  y
+                // 0 0 0 1     z     1
+                // 0 0 0 1     1     1
 
-        }
-        //TODO: (Req 9) Draw all the transparent commands
-        // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
-        for(auto command : transparentCommands){
-            command.material->setup();
-            command.material->shader->set("transform", VP*command.localToWorld);
-            command.mesh->draw();
-        }
-        
+                glm::mat4 alwaysBehindTransform = glm::mat4(
+                        //  Row1, Row2, Row3, Row4
+                        1.0, 0.0f, 0.0f, 0.0f,  // Column1
+                        0.0f, 1.0f, 0.0f, 0.0f, // Column2
+                        0.0f, 0.0f, 0.0f, 0.0f, // Column3
+                        0.0f, 0.0f, 1.0f, 1.0f  // Column4
+                );
+                //TODO: (Req 10) set the "transform" uniform
+                // ==> the matrix that we want to set is the product of the alwaysBehindTransform, the projection matrix, the view matrix, and the skyModelMatrix
+                skyMaterial->shader->set("transform", alwaysBehindTransform * camera->getProjectionMatrix(windowSize) *
+                                                      camera->getViewMatrix() * skyModelMatrix);
 
-        // If there is a postprocess material, apply postprocessing
-        if(postprocessMaterial){
-            //TODO: (Req 11) Return to the default framebuffer
-            // bind the default framebuffer
-            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+                //TODO: (Req 10) draw the sky sphere
+                skySphere->draw();
 
-            //TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
-            postprocessMaterial->setup();
-            // draw the fullscreen triangle
-            // ==> The fullscreen triangle is drawn using the postprocess shader
-            // parameters:
-            // 1. The type of primitive to render (GL_TRIANGLES)
-            // 2. The starting index in the array
-            // 3. The number of vertices to render
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            }
+            //TODO: (Req 9) Draw all the transparent commands
+            // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
+            for (auto command: transparentCommands) {
+                command.material->setup();
+                command.material->shader->set("transform", VP * command.localToWorld);
+                command.mesh->draw();
+            }
 
+
+            // If there is a postprocess material, apply postprocessing
+            if (postprocessMaterial) {
+                //TODO: (Req 11) Return to the default framebuffer
+                // bind the default framebuffer
+                glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+                //TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
+                postprocessMaterial->setup();
+                // draw the fullscreen triangle
+                // ==> The fullscreen triangle is drawn using the postprocess shader
+                // parameters:
+                // 1. The type of primitive to render (GL_TRIANGLES)
+                // 2. The starting index in the array
+                // 3. The number of vertices to render
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+
+            }
         }
     }
-
-}

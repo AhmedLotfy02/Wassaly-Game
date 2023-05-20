@@ -23,7 +23,11 @@
                 "textured":{
                     "vs":"assets/shaders/textured.vert",
                     "fs":"assets/shaders/textured.frag"
-                }
+                },
+                 "light": {
+                     "vs": "assets/shaders/light.vert",
+                     "fs": "assets/shaders/light.frag"
+                 }
             },
             "textures":{
                 "moon": "assets/textures/moon.jpg",
@@ -41,7 +45,12 @@
                 "building":"assets/textures/building.png",
                 "building2":"assets/textures/building.jpeg",
                 "package":"assets/textures/package.png",
-                "arrowtex":"assets/textures/arrow.jpeg"
+                "arrowtex":"assets/textures/arrow.jpeg",
+                "albedo": "assets/textures/casino_car.jpeg",
+                "emissive": "assets/textures/casino_car.jpeg",
+                "roughness": "assets/textures/casino_car.jpeg",
+                "specular": "assets/textures/casino_car.jpeg",
+                "ambient_occlusion": "assets/textures/casino_car.jpeg"
             },
             "meshes":{
                 "cube": "assets/models/cube.obj",
@@ -202,7 +211,7 @@
                 },
                 "carMaterial":{
                     "type": "textured",
-                    "shader": "textured",
+                    "shader": "texture",
                     "pipelineState": {
                         "faceCulling":{
                             "enabled": false
@@ -214,6 +223,11 @@
                     "tint": [1, 1, 1, 1],
                     "texture": "cartex",
                     "sampler": "default"
+//                     "albedo": "albedo",
+//                     "specular": "specular",
+//                     "emissive": "emissive",
+//                     "ambient_occlusion": "ambient_occlusion",
+//                     "roughness": "black"
                 },
 
                 "energy":{
@@ -232,21 +246,24 @@
                     "sampler": "default"
                 },
 
-
-                "moon":{
-                    "type": "textured",
-                    "shader": "textured",
-                    "pipelineState": {
-                        "faceCulling":{
-                            "enabled": false
-                        },
-                        "depthTesting":{
-                            "enabled": true
-                        }
+                "moon": {
+                  "type": "lighted",
+                  "shader": "light",
+                  "pipelineState": {
+                    "faceCulling": {
+                      "enabled": false
                     },
-                    "tint": [1, 1, 1, 1],
-                    "texture": "moon",
-                    "sampler": "default"
+                    "depthTesting": {
+                      "enabled": true
+                    }
+                  },
+                  "tint": [1, 1, 1, 1],
+                  "texture": "moon",
+                  "sampler": "default",
+                  "albedo" : "moon",
+                  "roughness" : "moon",
+                  "emissive" : "moon",
+                  "ambient_occlusion" : "ambient_occlusion"
                 }
             }
         },
@@ -288,6 +305,23 @@
                                "mesh": "car",
                                "material": "carMaterial"
                            }
+//                            {
+//                             // define point on pepsi man.
+//                                "type": "Light",
+//                                "lightType": "point",
+//                                "enabled" : true,
+//                                "direction": [ 0.0,0.0,0.0],
+//                                "color": [
+//                                    10000,
+//                                    10000,
+//                                    10000
+//                                ],
+//                                "attenuation": [
+//                                    1.0,
+//                                    0.0,
+//                                    0.0
+//                                ]
+//                            }
                           
                        ]
 
@@ -304,7 +338,6 @@
                             "material": "energy"
                         }
                     ]
-    
                 }
                 ,
                 {
@@ -381,6 +414,7 @@
                         "linearVelocity": [0.5, 0, 0]
                         //"angularVelocity": [0, 45, 0]
                     }
+
                 ]
             },
             {
@@ -591,10 +625,27 @@
                     {
                         "type": "Movement",
                         "angularVelocity": [0, 30, 0]
+                    },
+                    {
+
+                        "type": "Light",
+                        "lightType": "point",
+                        "enabled" : true,
+                        "direction": [ 0.0,0.0,0.0],
+                        "color": [
+                            10000,
+                            10000,
+                            10000
+                        ],
+                        "attenuation": [
+                            1.0,
+                            0.0,
+                            0.0
+                        ]
                     }
                 ]
             }
-            
+
         ]
     }
 }

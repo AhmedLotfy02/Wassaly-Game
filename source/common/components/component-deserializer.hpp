@@ -4,6 +4,7 @@
 #include "camera.hpp"
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
+#include "light.hpp"
 #include "movement.hpp"
 
 namespace our
@@ -33,8 +34,9 @@ namespace our
         }
         else if (type == MeshRendererComponent::getID())
         {
-            
             component = entity->addComponent<MeshRendererComponent>();
+        } else if (type == LightComponent::getID()) {
+            component = entity->addComponent<LightComponent>();
         }
         if (component)
             component->deserialize(data);
