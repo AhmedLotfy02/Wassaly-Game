@@ -28,10 +28,10 @@ out Varyings {
 
 
 void main() {
-    // First we compute the world position.
+    // compute the world position.
     vsout.world = (object_to_world * vec4(position, 1.0f)).xyz;
 
-    // Then we compute the view vector (vertex to eye vector in the world space) to be used for specular computation later.
+    // Then compute the view vector (vertex to eye vector in the world space) to be used for specular computation later.
     vsout.view = normalize(camera_position - vsout.world);
 
     // Then we compute normal in the world space (Note that w=0 since this is a vector).

@@ -329,11 +329,7 @@ namespace our
             // Don't forget to set the "transform" uniform to be equal the model-view-projection matrix for each render command
 
         int numLights = lights.size();
-        //    for(auto command : opaqueCommands){
-        //     command.material->setup();
-        //     command.material->shader->set("transform", VP*command.localToWorld);
-        //     command.mesh->draw();
-        // }
+
         int h=0;
         for(auto opaqueCommand: this->opaqueCommands) {
             opaqueCommand.material->setup();
@@ -341,12 +337,14 @@ namespace our
             //set the camera position
             if (dynamic_cast<our::LightMaterial *>(opaqueCommand.material)) {
 
-               // std::cout << "dynamic cast\n";
                 opaqueCommand.material->shader->set("camera_position", cameraForward);
+
                 //set the M matrix for the shader
                 opaqueCommand.material->shader->set("object_to_world", opaqueCommand.localToWorld);
+
                 //set the M_IT matrix for the shader
                 opaqueCommand.material->shader->set("object_to_world_inv_transpose", glm::transpose(glm::inverse(opaqueCommand.localToWorld)));
+
                 //set the VP matrix for the shader
                 opaqueCommand.material->shader->set("view_projection", VP);
             }
@@ -361,31 +359,33 @@ namespace our
 
                 std::string prefix = "lights[" + std::to_string(light_index) + "].";
                  opaqueCommand.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
+
                 auto lightPosition = glm::vec3((light)->getOwner()->getLocalToWorldMatrix() *
                                                glm::vec4((light)->getOwner()->localTransform.position, 1.0));
 
                 auto lightDirection = glm::normalize(glm::vec3((light)->getOwner()->getLocalToWorldMatrix() *
                                                                glm::vec4(light->direction, 0.0)));
+                opaqueCommand.material->shader->set(prefix + "color" , light->color);
                 switch(light->typeLight) {
                     case LightType::DIRECTIONAL:
+                        // the direction light only needs the direction and the color
                         opaqueCommand.material->shader->set(prefix + "direction", glm::normalize(light->direction));
-                        opaqueCommand.material->shader->set(prefix + "color" , light->color);
                         break;
                     case LightType::POINT:
-                         opaqueCommand.material->shader->set(prefix + "position", lightPosition);
+                        // the direction light only needs the position, attenuation and the color
+                        opaqueCommand.material->shader->set(prefix + "position", lightPosition);
 
                         opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic,
                                                                                               light->attenuation.linear, light->attenuation.constant));
-                        opaqueCommand.material->shader->set(prefix + "color" , light->color);
                         break;
                     case LightType::SPOT:
+                        // the spot light  needs the position, attenuation, direction, cone_angles and the color
                         opaqueCommand.material->shader->set(prefix + "position", lightPosition);
                         opaqueCommand.material->shader->set(prefix + "direction", lightDirection);
 
                         opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic,
                                                                                               light->attenuation.linear, light->attenuation.constant));
                         opaqueCommand.material->shader->set(prefix + "cone_angles", glm::vec2(light->spot_angle.inner, light->spot_angle.outer));
-                        opaqueCommand.material->shader->set(prefix + "color" , light->color);
                         break;
                     case LightType::SKY:
                         break;
