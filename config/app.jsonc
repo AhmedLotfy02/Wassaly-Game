@@ -420,10 +420,9 @@
                 "lightType": "point",
                 "enabled": true,
                 "direction": [
-                  // directional not matter in point light
                   0.0, 0.0, 0.0
                 ],
-                "color": [50000, 50000, 250000],
+                "color": [50000, 50000, 25000],
                 "attenuation": [1.0, 0.0, 0.0]
               }
             ]
@@ -452,7 +451,7 @@
                     "direction": [0, -1, 1],
                     "color": [35, 34, 22],
                     "attenuation": [1, 0.01995, 0.011],
-                    "cone_angles": [0.4, 1.3]
+                    "cone_angles": [0.4, 1.0]
                   }
                 ]
               }
@@ -1182,6 +1181,7 @@
             "linearVelocity": [1.2, 0, 0]
             //"angularVelocity": [0, 45, 0]
           }
+          
         ]
       },
       {
