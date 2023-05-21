@@ -150,7 +150,7 @@ namespace our
         }
     }
 
-    void ForwardRenderer::render(World *world, bool effect)
+    void ForwardRenderer::render(World *world, bool effect,bool effect2,bool effect3)
     {
         // First of all, we search for a camera and for all the mesh renderers
         CameraComponent *camera = nullptr;
@@ -460,7 +460,11 @@ namespace our
 
             // attach the fragment shader based on the effect type (fish eye or vignette)
             if ( effect )
-                postprocessShader->attach("assets/shaders/postprocess/fish_eye.frag", GL_FRAGMENT_SHADER);
+                postprocessShader->attach("assets/shaders/postprocess/power_up.frag", GL_FRAGMENT_SHADER);
+            else if(effect2)
+                postprocessShader->attach("assets/shaders/postprocess/blur.frag", GL_FRAGMENT_SHADER);
+            else if(effect3)
+                 postprocessShader->attach("assets/shaders/postprocess/radial-blur.frag", GL_FRAGMENT_SHADER);
             else
                 postprocessShader->attach("assets/shaders/postprocess/vignette.frag", GL_FRAGMENT_SHADER);
 

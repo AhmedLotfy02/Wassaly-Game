@@ -47,7 +47,7 @@ namespace our
         // Clean up the renderer
         void destroy();
         // This function should be called every frame to draw the given world
-        void render(World* world, bool effect);
+        void render(World* world, bool effect,bool effect2,bool effect3);
 
 
     };
