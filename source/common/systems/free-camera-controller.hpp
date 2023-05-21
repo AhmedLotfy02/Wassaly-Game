@@ -27,6 +27,9 @@ namespace our
         bool decreaseBat = false;
         int powers=3;
         float lastPowered=0.0f;
+        bool powered=false;
+        float lastBuildingCollision=0.0f;
+        bool donotrepeatpower=true;
 
     public:
         // When a state enters, it should call this function and give it the pointer to the application
@@ -42,7 +45,7 @@ namespace our
            
         }
         // This should be called every frame to update all entities containing a FreeCameraControllerComponent
-        void update(World *world, float deltaTime, int *countToRemove, int *numOfBatteries,bool* won,bool* end)
+        void update(World *world, float deltaTime, int *countToRemove, int *numOfBatteries,bool* won,bool* end,bool* effect2,bool* effect3,int* powerUPs)
         {
             
             // First of all, we search for an entity containing both a CameraComponent and a FreeCameraControllerComponent
@@ -112,14 +115,32 @@ namespace our
 
             glm::vec3 current_sensitivity = controller->positionSensitivity;
             // If the LEFT SHIFT key is pressed, we multiply the position sensitivity by the speed up factor
-            if (app->getKeyboard().isPressed(GLFW_KEY_LEFT_SHIFT) &&powers>0&&glfwGetTime()-lastPowered>2.0f ){
-                
-                current_sensitivity *= controller->speedupFactor;
-                lastPowered=glfwGetTime();
 
+            if (app->getKeyboard().isPressed(GLFW_KEY_LEFT_SHIFT) &&powers>0&&donotrepeatpower){
+                std::cout<<"powered"<<std::endl;
                 powers--;
+                *powerUPs=*powerUPs-1;
+                lastPowered=glfwGetTime();
+                 powered=true;
+                 *effect3=true;
+                 donotrepeatpower=false;
+              
             }
+            if(powered){
+               
+                current_sensitivity *= controller->speedupFactor;
                 
+            }
+            if(glfwGetTime()-lastPowered>0.5f){
+                powered=false;
+                *effect3=false;
+                donotrepeatpower=true;
+            }
+            
+
+            if(glfwGetTime()-lastBuildingCollision>2.0f){
+                *effect2=false;
+            }
             // AL: going forward
             current_sensitivity *= speed;
             position += front * (deltaTime * current_sensitivity.z);
@@ -131,10 +152,12 @@ namespace our
             else if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
             {
                 //   std::cout << "Heba";
-                gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
+              lastBuildingCollision=glfwGetTime();
+                *effect2=true;
+                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
-  std::cout<<position.z<<std::endl;
+
             if ((position.x < -6.5 && position.x > -7.7) && decreaseBat)
             {
                 std::cout << "changetofalse";
@@ -143,7 +166,10 @@ namespace our
 
             else if (position.x > -8.09 && position.x < -7.9 && !decreaseBat)
             {
+                 lastBuildingCollision=glfwGetTime();
                 //   std::cout << "Heba";
+                 *effect2=true;
+               
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
@@ -155,7 +181,7 @@ namespace our
             // S & W moves the player back and forth
             if (app->getKeyboard().isPressed(GLFW_KEY_W)){
                 position += front * (deltaTime * current_sensitivity.z);
-                std::cout<<position.z<<std::endl;
+              
             }
                
             if (app->getKeyboard().isPressed(GLFW_KEY_S))

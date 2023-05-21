@@ -32,6 +32,9 @@ class Playstate : public our::State
     bool won=false;
     float speed=0;
     bool end=false;
+    bool effect2 = false;
+    bool effect3= false;
+    int powerUps=3;
 
     void onInitialize() override
     {
@@ -45,6 +48,9 @@ class Playstate : public our::State
         speed=0;
         gameController.enter(getApp(), &world);
         end=false;
+         effect2 = false;
+         effect3= false;
+         powerUps=3;
         // First of all, we get the scene configuration from the app config
         auto &config = getApp()->getConfig()["scene"];
         // If we have assets in the scene config, we deserialize them
@@ -70,10 +76,19 @@ class Playstate : public our::State
     void onImmediateGui() override
     {
         // We use the immediate GUI to draw the debug information of the renderer
-       ImVec2 packagePos(790, 80);
-
+        float y=0;
+        float x=0;
+       if(powerUps!=0){
+            x=250;
+            y=70;
+       }
+       else{
+         x=270;
+           y=70;
+       }
+        ImVec2 packagePos(820, 80);
         ImGui::SetNextWindowPos(packagePos);
-        ImGui::SetNextWindowSize({250, 40});
+        ImGui::SetNextWindowSize({x, y});
         ImGui::Begin("Package", NULL,
                          ImGuiWindowFlags_NoTitleBar |
                          ImGuiWindowFlags_NoResize |
@@ -85,6 +100,14 @@ class Playstate : public our::State
         // blue color
         ImVec4 packageColor(1.0f, 1.0f, 0.0f, 1.0f);
         ImGui::TextColored(packageColor, "Packages: %d /4", packagesNumber);
+        if(powerUps==0){
+            ImGui::TextColored(packageColor, "No Power Ups!");
+        
+        }
+        else{
+             ImGui::TextColored(packageColor, "Power Ups: %d", powerUps);
+       
+        }
         ImGui::SetWindowFontScale(2.0f);
         
         ImGui::End();
@@ -93,21 +116,11 @@ class Playstate : public our::State
     {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
-        cameraController.update(&world, (float)deltaTime, &counterToRemove, &numberOfBatteries, &won,&end);
+        cameraController.update(&world, (float)deltaTime, &counterToRemove, &numberOfBatteries, &won,&end,&effect2,&effect3,&powerUps);
         counterToRemove++;
-
         speed = gameController.decreaseBatteries(&counterToRemove, &numberOfBatteries, false);
-        std::cout<<speed<<std::endl;
-        cameraController.changeSpeed(speed);
-        //    decreaseBatteries();
-
-        // tempCount++;
-        //   if(tempCount==400){
-        //     tempCount=0;
-        //     increaseBatteries();
-        // }
-        // And finally we use the renderer system to draw the scene
-
+         cameraController.changeSpeed(speed);
+        
         // Collioison
         if(end){
             if(packagesNumber>=4){
@@ -161,9 +174,10 @@ class Playstate : public our::State
            // std::cout << "effect1111111111" << effect << std::endl;
             effect = false;
         }
+     
         
         //std::cout << "effect" << effect << std::endl;
-        renderer.render(&world, effect);
+        renderer.render(&world, effect, effect2,effect3);
 
         // Get a reference to the keyboard object
         auto &keyboard = getApp()->getKeyboard();
