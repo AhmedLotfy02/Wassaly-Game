@@ -363,9 +363,12 @@ namespace our
                  opaqueCommand.material->shader->set(prefix + "type", static_cast<int>(light->typeLight));
                 auto lightPosition = glm::vec3((light)->getOwner()->getLocalToWorldMatrix() *
                                                glm::vec4((light)->getOwner()->localTransform.position, 1.0));
+
+                auto lightDirection = glm::normalize(glm::vec3((light)->getOwner()->getLocalToWorldMatrix() *
+                                                               glm::vec4(light->direction, 0.0)));
                 switch(light->typeLight) {
                     case LightType::DIRECTIONAL:
-                        opaqueCommand.material->shader->set(prefix + "direction", light->direction);
+                        opaqueCommand.material->shader->set(prefix + "direction", glm::normalize(light->direction));
                         opaqueCommand.material->shader->set(prefix + "color" , light->color);
                         break;
                     case LightType::POINT:
@@ -377,7 +380,7 @@ namespace our
                         break;
                     case LightType::SPOT:
                         opaqueCommand.material->shader->set(prefix + "position", lightPosition);
-                        opaqueCommand.material->shader->set(prefix + "direction", light->direction);
+                        opaqueCommand.material->shader->set(prefix + "direction", lightDirection);
 
                         opaqueCommand.material->shader->set(prefix + "attenuation", glm::vec3(light->attenuation.quadratic,
                                                                                               light->attenuation.linear, light->attenuation.constant));

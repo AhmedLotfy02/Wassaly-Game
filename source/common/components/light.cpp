@@ -36,7 +36,7 @@ namespace our {
             attenuation.constant = read_attenuation[0];
             attenuation.linear = read_attenuation[1];
             attenuation.quadratic = read_attenuation[2];
-            glm::vec2 cone_angles = data.value("spot_angle", glm::vec2(0.0));
+            glm::vec2 cone_angles = data.value("cone_angles", glm::vec2(0.0));
             spot_angle.inner = cone_angles[0];
             spot_angle.outer = cone_angles[1];
         } else if(typeLocal == "sky") {
