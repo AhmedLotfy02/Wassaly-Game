@@ -99,7 +99,7 @@ class Playstate : public our::State
                          ImGuiWindowFlags_AlwaysAutoResize);
         // blue color
         ImVec4 packageColor(1.0f, 1.0f, 0.0f, 1.0f);
-        ImGui::TextColored(packageColor, "Packages: %d /4", packagesNumber);
+        ImGui::TextColored(packageColor, "Packages: %d /6", packagesNumber);
         if(powerUps==0){
             ImGui::TextColored(packageColor, "No Power Ups!");
         
@@ -123,16 +123,14 @@ class Playstate : public our::State
         
         // Collioison
         if(end){
-            if(packagesNumber>=4){
+            if(packagesNumber>=6){
                  getApp()->changeState("youwon");
             }
             else{
                     getApp()->changeState("gameover");
             }
         }
-        // if(won){
-        //     getApp()->changeState("youwon");
-        // }
+       
         
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
        
@@ -158,25 +156,19 @@ class Playstate : public our::State
                   std::cout<<"inside"<<std::endl;
                 lastCollisionTimePackage = glfwGetTime();
                 packagesNumber++;
-                // if(packagesNumber==4)
-                // {
-                //     std::cout << "youwon" << std::endl;
-                //     getApp()->changeState("youwon");
-                // }
-                // TODO : add score for package
-            // std::cout << "collision with package" << std::endl;
+           
             }
         
         
         
         if( effect && glfwGetTime()- time > 2.0f)
         {
-           // std::cout << "effect1111111111" << effect << std::endl;
+          
             effect = false;
         }
      
         
-        //std::cout << "effect" << effect << std::endl;
+      
         renderer.render(&world, effect, effect2,effect3);
 
         // Get a reference to the keyboard object
