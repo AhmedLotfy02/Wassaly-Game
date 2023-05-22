@@ -34,9 +34,8 @@ The game sets the challenge of collecting 9️⃣ pizzas within the designated t
 
 ## Demo 🎥
 
-Watch the gameplay demo on YouTube!
-
-[![Drive Me Home Gameplay](./documentation/screenshots/4-level-up.png)](http://www.youtube.com/watch?v=-o9Z7iQaBZQ "Drive Me Home Gameplay")
+Watch the gameplay demo!
+https://drive.google.com/file/d/1YIMmZXs6dU6q1VdIMJPgSI9fuWre0kyV/view?usp=sharing
 
 ## Getting Started 💻
 
