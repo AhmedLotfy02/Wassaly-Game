@@ -99,7 +99,7 @@ class Playstate : public our::State
                          ImGuiWindowFlags_AlwaysAutoResize);
         // blue color
         ImVec4 packageColor(1.0f, 1.0f, 0.0f, 1.0f);
-        ImGui::TextColored(packageColor, "Packages: %d /4", packagesNumber);
+        ImGui::TextColored(packageColor, "Packages: %d /6", packagesNumber);
         if(powerUps==0){
             ImGui::TextColored(packageColor, "No Power Ups!");
         
@@ -117,31 +117,33 @@ class Playstate : public our::State
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime, &counterToRemove, &numberOfBatteries, &won,&end,&effect2,&effect3,&powerUps);
+          /* Increase the timer used to determine the time of a battery removal */
         counterToRemove++;
+           /* Determine the speed based on the timer & the number of batteries */
         speed = gameController.decreaseBatteries(&counterToRemove, &numberOfBatteries, false);
+         /* Change the speed to the above calculated value */
          cameraController.changeSpeed(speed);
         
-        // Collioison
+         /* Determine the state when reaching the race flag based on the number of packages */
         if(end){
-            if(packagesNumber>=4){
+            if(packagesNumber>=6){
                  getApp()->changeState("youwon");
             }
             else{
                     getApp()->changeState("gameover");
             }
         }
-        // if(won){
-        //     getApp()->changeState("youwon");
-        // }
+       
+          // Collioison
         
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
        
-           
+           //Collision  with battery
             if (collisionState == 1 && glfwGetTime()-lastCollisionTimeBattery>2.0f)
             { 
                 
                 lastCollisionTimeBattery = glfwGetTime();
-                std::cout << "collision with battery" << std::endl;
+              
                 effect = true;
                 time = glfwGetTime();
                speed= gameController.increaseBatteries(&numberOfBatteries);
@@ -149,34 +151,28 @@ class Playstate : public our::State
                
             }
             else if (collisionState == -1)
-            {
-                std::cout << "gameover" << std::endl;
+            { //Collision with crossing Car
+                
                 getApp()->changeState("gameover");
             }
             else if (collisionState == 2 && glfwGetTime()-lastCollisionTimePackage>2.0f)
-            {
-                  std::cout<<"inside"<<std::endl;
+            { //Collision with package
+                 
                 lastCollisionTimePackage = glfwGetTime();
                 packagesNumber++;
-                // if(packagesNumber==4)
-                // {
-                //     std::cout << "youwon" << std::endl;
-                //     getApp()->changeState("youwon");
-                // }
-                // TODO : add score for package
-            // std::cout << "collision with package" << std::endl;
+           
             }
         
         
-        
+        //calculate effect time
         if( effect && glfwGetTime()- time > 2.0f)
         {
-           // std::cout << "effect1111111111" << effect << std::endl;
+          
             effect = false;
         }
      
         
-        //std::cout << "effect" << effect << std::endl;
+      
         renderer.render(&world, effect, effect2,effect3);
 
         // Get a reference to the keyboard object

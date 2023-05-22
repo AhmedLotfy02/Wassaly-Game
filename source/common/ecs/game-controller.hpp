@@ -36,10 +36,16 @@ namespace our
             this->lastSpeed=3.0f;
             
         }
+        /***************************************************************************************************************
+          'increaseBatteries()' is a function used to increase the number of battaries when a collision with a battery happens.
+         
+         -- The function takes one parameter:
+             1) 'numberOfBatteries', specifies the current number of batteries.
+        ****************************************************************************************************************/
         int increaseBatteries(int *numberOfBatteries)
         {
            
-        //std::cout << *numberOfBatteries;
+       
             if (*numberOfBatteries == 4)
             {
 
@@ -47,7 +53,7 @@ namespace our
 
                 world->markAsUnRemoval("plane5");
 
-                // cameraController.changeSpeed(0.7f);
+                
                 this->lastSpeed=3.0f;
                 return 3.0f;
             }
@@ -57,7 +63,7 @@ namespace our
                 world->markAsUnRemoval("plane4");
                 this->lastSpeed=2.5f;
                 return 2.5f;
-                // cameraController.changeSpeed(0.6f);
+                
             }
             else if (*numberOfBatteries == 2)
             {
@@ -65,7 +71,7 @@ namespace our
                 world->markAsUnRemoval("plane3");
                 this->lastSpeed=2.0f;
                 return 2.0f;
-                // cameraController.changeSpeed(0.5f);
+               
             }
             else if (*numberOfBatteries == 1)
             {
@@ -73,13 +79,20 @@ namespace our
                 world->markAsUnRemoval("plane2");
                 this->lastSpeed=1.7f;
                 return 1.7f;
-                // cameraController.changeSpeed(0.4f);
             }
         }
+         /***************************************************************************************************************
+         'decreaseBatteries()' is a function used to decrease the number of battaries when a collision with a battery happens.
+
+         -- The function takes three parameter:
+            1) 'counterToRemove', specifies the timer used to determine the time of a battery removal.
+            2) 'numberOfBatteries', specifies the current number of batteries.
+            3) 'remove', a boolean vaiable determines if a collision with the buildings happens.
+        ****************************************************************************************************************/
 
         float decreaseBatteries(int *counterToRemove, int *numberOfBatteries, bool remove)
         {
-            // std::cout << counterToRemove;
+           
             if (*counterToRemove == -180 || remove)
             {
                 std::cout << "decrease" << std::endl;
@@ -88,7 +101,7 @@ namespace our
                 {
                     *numberOfBatteries = 4;
                     world->removeBatteryEntity("plane5");
-                    // cameraController.changeSpeed(0.6f);
+                  
                     lastSpeed=2.5f;
                     return 2.5f;
                 }
@@ -96,7 +109,7 @@ namespace our
                 {
                     *numberOfBatteries = 3;
                     world->removeBatteryEntity("plane4");
-                    // cameraController.changeSpeed(0.5f);
+                  
                     lastSpeed=2.0f;
                     return 2.0f;
                 }
@@ -104,7 +117,7 @@ namespace our
                 {
                     *numberOfBatteries = 2;
                     world->removeBatteryEntity("plane3");
-                    // cameraController.changeSpeed(0.4f);
+                   
                     lastSpeed=1.7f;
                     return 1.7f;
                 }
@@ -112,18 +125,18 @@ namespace our
                 {
                     *numberOfBatteries = 1;
                     world->removeBatteryEntity("plane2");
-                    // cameraController.changeSpeed(0.3f);
+                   
                     lastSpeed=1.5f;
                     return 1.5f;
                 }
                 else
                 {
+                    /// Game over
                     *numberOfBatteries = 0;
                     world->removeBatteryEntity("plane1");
                     app->changeState("gameover");
                     return 0.0f;
 
-                    /// Game over
                 }
                
             }

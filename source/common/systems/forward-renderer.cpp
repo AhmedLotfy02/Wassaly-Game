@@ -461,7 +461,7 @@ namespace our
             // attach the vertex shader
             postprocessShader->attach("assets/shaders/fullscreen.vert", GL_VERTEX_SHADER);
 
-            // attach the fragment shader based on the effect type (fish eye or vignette)
+            // attach the fragment shader based on the effect type (fish eye or blur or power up or radial blur or vignette)
             if ( effect )
                 postprocessShader->attach("assets/shaders/postprocess/power_up.frag", GL_FRAGMENT_SHADER);
             else if(effect2)

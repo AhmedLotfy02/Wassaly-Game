@@ -116,9 +116,8 @@ namespace our
 
             glm::vec3 current_sensitivity = controller->positionSensitivity;
             // If the LEFT SHIFT key is pressed, we multiply the position sensitivity by the speed up factor
-
             if (app->getKeyboard().isPressed(GLFW_KEY_LEFT_SHIFT) &&powers>0&&donotrepeatpower){
-                std::cout<<"powered"<<std::endl;
+                
                 powers--;
                 *powerUPs=*powerUPs-1;
                 lastPowered=glfwGetTime();
@@ -132,13 +131,14 @@ namespace our
                 current_sensitivity *= controller->speedupFactor;
                 
             }
+            //Calculate the duration of effect of powerup
             if(glfwGetTime()-lastPowered>0.5f){
                 powered=false;
                 *effect3=false;
                 donotrepeatpower=true;
             }
             
-
+            //Calculate the duration of effect of last building collision
             if(glfwGetTime()-lastBuildingCollision>2.0f){
                 *effect2=false;
             }
@@ -147,12 +147,13 @@ namespace our
             position += front * (deltaTime * current_sensitivity.z);
             if ((position.x > 5.5 && position.x < 5.7) && decreaseBat)
             {
+                //remove the effect of collision with building
                 decreaseBat = false;
             }
           
             else if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
             {
-                //   std::cout << "Heba";
+             //Determine when the car collides with building
               lastBuildingCollision=glfwGetTime();
                 *effect2=true;
                  gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
@@ -161,39 +162,30 @@ namespace our
 
             if ((position.x < -6.5 && position.x > -7.7) && decreaseBat)
             {
-                std::cout << "changetofalse";
+               //remove the effect of collision with building
                 decreaseBat = false;
             }
 
             else if (position.x > -8.09 && position.x < -7.9 && !decreaseBat)
             {
+                 //Determine when the car collides with building
                  lastBuildingCollision=glfwGetTime();
-                //   std::cout << "Heba";
-                 *effect2=true;
+                  *effect2=true;
                
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
-            std::cout<<position.z<<std::endl;
-            if(position.z<-220.0){
+             if(position.z<-490.0){
                     *won=true;
-                    //*end=true;
+                    *end=true;
             }
             // We change the camera position based on the keys WASD/QE
             // S & W moves the player back and forth
-            // if (app->getKeyboard().isPressed(GLFW_KEY_W)){
-            //     position += front * (deltaTime * current_sensitivity.z);
-              
-            // }
+           
                
             if (app->getKeyboard().isPressed(GLFW_KEY_S))
                 position -= front * (deltaTime * current_sensitivity.z);
-            // Q & E moves the player up and down
-            // if (app->getKeyboard().isPressed(GLFW_KEY_Q))
-            //     position += up * (deltaTime * current_sensitivity.y);
-            // if (app->getKeyboard().isPressed(GLFW_KEY_E))
-            //     position -= up * (deltaTime * current_sensitivity.y);
-            // A & D moves the player left or right
+          
             if (app->getKeyboard().isPressed(GLFW_KEY_D))
             {
                 if (!(position.x > 6.1))
@@ -202,7 +194,7 @@ namespace our
 
             if (app->getKeyboard().isPressed(GLFW_KEY_A))
             {
-                //  std::cout << position.x << std::endl;
+               
                 if (!(position.x < -8))
                     position -= right * (deltaTime * current_sensitivity.x);
             }
