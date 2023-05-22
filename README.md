@@ -50,7 +50,7 @@ Follow these steps to run the game:
 4. Build the project from the IDE.
 5. Run the project.
 
-## Important Note
+## Important Note 📝
 
 **You should make Visual Studio Compiler (any version >= 2019) to be the default compiler of the IDE you use for development of this project.**
 
