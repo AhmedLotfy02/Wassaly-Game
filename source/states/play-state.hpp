@@ -99,7 +99,7 @@ class Playstate : public our::State
                          ImGuiWindowFlags_AlwaysAutoResize);
         // blue color
         ImVec4 packageColor(1.0f, 1.0f, 0.0f, 1.0f);
-        ImGui::TextColored(packageColor, "Packages: %d /6", packagesNumber);
+        ImGui::TextColored(packageColor, "Packages: %d /9", packagesNumber);
         if(powerUps==0){
             ImGui::TextColored(packageColor, "No Power Ups!");
         
@@ -126,7 +126,7 @@ class Playstate : public our::State
         
          /* Determine the state when reaching the race flag based on the number of packages */
         if(end){
-            if(packagesNumber>=6){
+            if(packagesNumber>=9){
                  getApp()->changeState("youwon");
             }
             else{
