@@ -71,7 +71,6 @@
         "battery": "assets/models/Battery.obj",
         "package": "assets/models/package.obj",
         "arrow2": "assets/models/arrow.obj",
-
         "lamp": "assets/models/streetlamp.obj",
         "conan": "assets/models/conan.obj",
         "pizza": "assets/models/Pizza.obj"
@@ -844,18 +843,18 @@
           }
         ]
       },
-      {
-        "position": [-2, 1.2, -60.0],
-        "scale": [3, 5, 5],
-        "rotation": [-90, 0, 90],
-        "components": [
-          {
-            "type": "Mesh Renderer",
-            "mesh": "conan",
-            "material": "conanMaterial"
-          }
-        ]
-      },
+    //   {
+    //     "position": [-2, 1.2, -60.0],
+    //     "scale": [3, 5, 5],
+    //     "rotation": [-90, 0, 90],
+    //     "components": [
+    //       {
+    //         "type": "Mesh Renderer",
+    //         "mesh": "conan",
+    //         "material": "conanMaterial"
+    //       }
+    //     ]
+    //   },
       {
         "name": "p4",
         "position": [1, 1.2, -140.0],
@@ -2385,7 +2384,7 @@
         ]
       },
       {
-        //15th right straight
+        //16th right straight
         "position": [21, 10, -304],
         "rotation": [0, 0, 0],
         "scale": [14, 10, 10],
@@ -2399,8 +2398,134 @@
         ]
       },
       {
-        //15th right straight
+        //17th right straight
         "position": [21, 10, -324],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //18th right straight
+        "position": [21, 10, -344],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane74",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //19th right straight
+        "position": [21, 10, -364],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //20th right straight
+        "position": [21, 10, -384],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //21th right straight
+        "position": [21, 10, -404],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //22th right straight
+        "position": [21, 10, -424],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //23th right straight
+        "position": [21, 10, -444],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //24th right straight
+        "position": [21, 10, -464],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //25th right straight
+        "position": [21, 10, -484],
+        "rotation": [0, 0, 0],
+        "scale": [14, 10, 10],
+        "name": "plane73",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      },
+      {
+        //26th right straight
+        "position": [21, 10, -504],
         "rotation": [0, 0, 0],
         "scale": [14, 10, 10],
         "name": "plane73",
@@ -2809,35 +2934,231 @@
           }
         ]
       },
-
       {
-        "position": [0, 3, 0],
-        "rotation": [90, 0, 0],
-        "scale": [2, 2, 2],
-        "name": "plane94",
+        //13th right rotated
+        "position": [7, 10, -250],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
         "components": [
           {
             "type": "Mesh Renderer",
             "mesh": "plane",
-            "material": "glass"
-          }
-        ]
-      },
-      {
-        //"position": [0.1, -0.4, -2.0],
-        // "scale": [0.5, 0.5, 1.0],
-        "position": [0, 3, -300],
-        "name": "conan",
-        "rotation": [-90, 0, 90],
-        "scale": [3, 5, 5],
-        "components": [
-          {
-            "type": "Mesh Renderer",
-            "mesh": "conan",
-            "material": "conanMaterial"
+            "material": "buildingMaterial"
           }
         ]
       }
+      ,
+      {
+        //14th right rotated
+        "position": [7, 10, -270],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //15th right rotated
+        "position": [7, 10, -290],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //16th right rotated
+        "position": [7, 10, -310],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //17th right rotated
+        "position": [7, 10, -330],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //18th right rotated
+        "position": [7, 10, -350],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //19th right rotated
+        "position": [7, 10, -370],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //20th right rotated
+        "position": [7, 10, -390],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //21th right rotated
+        "position": [7, 10, -410],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //22th right rotated
+        "position": [7, 10, -430],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //23th right rotated
+        "position": [7, 10, -450],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //24th right rotated
+        "position": [7, 10, -470],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      ,
+      {
+        //25th right rotated
+        "position": [7, 10, -490],
+        "rotation": [0, 90, 0],
+        "scale": [6, 10, 40],
+        "name": "plane93",
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "plane",
+            "material": "buildingMaterial"
+          }
+        ]
+      }
+      
+      
+
+    //   {
+    //     "position": [0, 3, 0],
+    //     "rotation": [90, 0, 0],
+    //     "scale": [2, 2, 2],
+    //     "name": "plane94",
+    //     "components": [
+    //       {
+    //         "type": "Mesh Renderer",
+    //         "mesh": "plane",
+    //         "material": "glass"
+    //       }
+    //     ]
+    //   },
+    //   {
+    //     //"position": [0.1, -0.4, -2.0],
+    //     // "scale": [0.5, 0.5, 1.0],
+    //     "position": [0, 3, -300],
+    //     "name": "conan",
+    //     "rotation": [-90, 0, 90],
+    //     "scale": [3, 5, 5],
+    //     "components": [
+    //       {
+    //         "type": "Mesh Renderer",
+    //         "mesh": "conan",
+    //         "material": "conanMaterial"
+    //       }
+    //     ]
+    //   }
     ]
   }
 }

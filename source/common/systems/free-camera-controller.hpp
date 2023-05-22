@@ -38,6 +38,7 @@ namespace our
             this->app = app;
             this->gameController = gameCon;
             this->speed=3.5f;
+            this->powers=3;
         }
         void changeSpeed(float speed)
         {
@@ -173,9 +174,10 @@ namespace our
                 gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
                 decreaseBat = true;
             }
+            std::cout<<position.z<<std::endl;
             if(position.z<-220.0){
                     *won=true;
-                    *end=true;
+                    //*end=true;
             }
             // We change the camera position based on the keys WASD/QE
             // S & W moves the player back and forth

@@ -80,7 +80,7 @@ namespace our
         float decreaseBatteries(int *counterToRemove, int *numberOfBatteries, bool remove)
         {
             // std::cout << counterToRemove;
-            if (*counterToRemove == 180 || remove)
+            if (*counterToRemove == -180 || remove)
             {
                 std::cout << "decrease" << std::endl;
                 *counterToRemove = 0;
