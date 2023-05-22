@@ -117,11 +117,14 @@ class Playstate : public our::State
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
         cameraController.update(&world, (float)deltaTime, &counterToRemove, &numberOfBatteries, &won,&end,&effect2,&effect3,&powerUps);
+          /* Increase the timer used to determine the time of a battery removal */
         counterToRemove++;
+           /* Determine the speed based on the timer & the number of batteries */
         speed = gameController.decreaseBatteries(&counterToRemove, &numberOfBatteries, false);
+         /* Change the speed to the above calculated value */
          cameraController.changeSpeed(speed);
         
-        // Collioison
+         /* Determine the state when reaching the race flag based on the number of packages */
         if(end){
             if(packagesNumber>=6){
                  getApp()->changeState("youwon");
@@ -131,6 +134,7 @@ class Playstate : public our::State
             }
         }
        
+          // Collioison
         
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
        

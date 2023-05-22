@@ -36,6 +36,12 @@ namespace our
             this->lastSpeed=3.0f;
             
         }
+        /***************************************************************************************************************
+          'increaseBatteries()' is a function used to increase the number of battaries when a collision with a battery happens.
+         
+         -- The function takes one parameter:
+             1) 'numberOfBatteries', specifies the current number of batteries.
+        ****************************************************************************************************************/
         int increaseBatteries(int *numberOfBatteries)
         {
            
@@ -75,6 +81,14 @@ namespace our
                 return 1.7f;
             }
         }
+         /***************************************************************************************************************
+         'decreaseBatteries()' is a function used to decrease the number of battaries when a collision with a battery happens.
+
+         -- The function takes three parameter:
+            1) 'counterToRemove', specifies the timer used to determine the time of a battery removal.
+            2) 'numberOfBatteries', specifies the current number of batteries.
+            3) 'remove', a boolean vaiable determines if a collision with the buildings happens.
+        ****************************************************************************************************************/
 
         float decreaseBatteries(int *counterToRemove, int *numberOfBatteries, bool remove)
         {

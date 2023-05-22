@@ -147,12 +147,13 @@ namespace our
             position += front * (deltaTime * current_sensitivity.z);
             if ((position.x > 5.5 && position.x < 5.7) && decreaseBat)
             {
+                //remove the effect of collision with building
                 decreaseBat = false;
             }
           
             else if (position.x > 6.1 && position.x < 6.14 && !decreaseBat)
             {
-              
+             //Determine when the car collides with building
               lastBuildingCollision=glfwGetTime();
                 *effect2=true;
                  gameController->decreaseBatteries(countToRemove, numOfBatteries, true);
@@ -161,12 +162,13 @@ namespace our
 
             if ((position.x < -6.5 && position.x > -7.7) && decreaseBat)
             {
-              
+               //remove the effect of collision with building
                 decreaseBat = false;
             }
 
             else if (position.x > -8.09 && position.x < -7.9 && !decreaseBat)
             {
+                 //Determine when the car collides with building
                  lastBuildingCollision=glfwGetTime();
                   *effect2=true;
                
