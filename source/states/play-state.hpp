@@ -134,12 +134,12 @@ class Playstate : public our::State
         
         int collisionState = collisionSystem.update(&world, (float)deltaTime);
        
-           
+           //Collision  with battery
             if (collisionState == 1 && glfwGetTime()-lastCollisionTimeBattery>2.0f)
             { 
                 
                 lastCollisionTimeBattery = glfwGetTime();
-                std::cout << "collision with battery" << std::endl;
+              
                 effect = true;
                 time = glfwGetTime();
                speed= gameController.increaseBatteries(&numberOfBatteries);
@@ -147,20 +147,20 @@ class Playstate : public our::State
                
             }
             else if (collisionState == -1)
-            {
-                std::cout << "gameover" << std::endl;
+            { //Collision with crossing Car
+                
                 getApp()->changeState("gameover");
             }
             else if (collisionState == 2 && glfwGetTime()-lastCollisionTimePackage>2.0f)
-            {
-                  std::cout<<"inside"<<std::endl;
+            { //Collision with package
+                 
                 lastCollisionTimePackage = glfwGetTime();
                 packagesNumber++;
            
             }
         
         
-        
+        //calculate effect time
         if( effect && glfwGetTime()- time > 2.0f)
         {
           

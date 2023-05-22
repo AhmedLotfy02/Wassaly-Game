@@ -116,7 +116,6 @@ namespace our
 
             glm::vec3 current_sensitivity = controller->positionSensitivity;
             // If the LEFT SHIFT key is pressed, we multiply the position sensitivity by the speed up factor
-
             if (app->getKeyboard().isPressed(GLFW_KEY_LEFT_SHIFT) &&powers>0&&donotrepeatpower){
                 
                 powers--;
@@ -132,13 +131,14 @@ namespace our
                 current_sensitivity *= controller->speedupFactor;
                 
             }
+            //Calculate the duration of effect of powerup
             if(glfwGetTime()-lastPowered>0.5f){
                 powered=false;
                 *effect3=false;
                 donotrepeatpower=true;
             }
             
-
+            //Calculate the duration of effect of last building collision
             if(glfwGetTime()-lastBuildingCollision>2.0f){
                 *effect2=false;
             }
