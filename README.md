@@ -32,10 +32,13 @@ The game sets the challenge of collecting 9️⃣ pizzas within the designated t
 
 
 
+
+
+
 ## Demo 🎥
 
-Watch the gameplay demo!
-https://drive.google.com/file/d/1YIMmZXs6dU6q1VdIMJPgSI9fuWre0kyV/view?usp=sharing
+https://github.com/Orange-Hackathon/tapcash-Cross-Platform/assets/90224487/6f79d053-9fff-4112-90e6-7d0751a6507a
+
 
 ## Getting Started 💻
 
